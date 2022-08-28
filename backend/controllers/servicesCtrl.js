@@ -16,7 +16,7 @@ const servicesCtrl = {
         image,
       } = req.body;
 
-      if (!image) return res.status(400).json({ msg: "No image upload" });
+      if (!image) return res.status(400).json({ msg: "No image uploaded" });
       const newService = new Services({
         title,
         description,
