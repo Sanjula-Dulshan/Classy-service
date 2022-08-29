@@ -7,6 +7,7 @@ import cors from "cors";
 import fileUpload from "express-fileupload";
 
 import servicesRouter from "./routes/servicesRouter.js";
+import uploadRouter from "./routes/uploadRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -19,6 +20,7 @@ app.use(fileUpload({ useTempFiles: true }));
 
 //Routes
 app.use("/services", servicesRouter);
+app.use("/image", uploadRouter);
 
 // Connect to MongoDB
 mongoose
