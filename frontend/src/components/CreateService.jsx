@@ -44,6 +44,18 @@ export default function CreateService() {
     }
   };
 
+  //delete image on cloudinary
+  const handleDestroy = async () => {
+    try {
+      setLoading(true);
+      await axios.post("/image/destroy", { public_id: image.public_id });
+      setLoading(false);
+      setImage(false);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
   const styleUpload = {
     display: image ? "block" : "none",
   };
@@ -58,7 +70,7 @@ export default function CreateService() {
         ) : (
           <div id="file_img" style={styleUpload}>
             <img src={image ? image.url : ""} alt="" />
-            <span>X</span>
+            <span onClick={handleDestroy}>X</span>
           </div>
         )}
       </div>
