@@ -11,6 +11,7 @@ cloudinary.config({
 });
 
 const uploadCtrl = {
+  //upload image on cloudinary
   upload: (req, res) => {
     try {
       if (!req.files || Object.keys(req.files).length === 0)
@@ -49,6 +50,8 @@ const uploadCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  //delete image on cloudinary
   destroy: (req, res) => {
     try {
       const { public_id } = req.body;

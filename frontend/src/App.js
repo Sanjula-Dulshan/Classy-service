@@ -1,7 +1,12 @@
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import AddServices from "./components/AddServices";
+
 function App() {
   return (
     <div>
-      <h1>Hello World</h1>
+      <Router>
+        <Route path="/addService" component={AddServices} />
+      </Router>
     </div>
   );
 }
