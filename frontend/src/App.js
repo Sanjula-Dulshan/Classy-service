@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Router>
-        <Route path="/addService" component={CreateService} />
+        <Route path="/addService" exact component={CreateService} />
       </Router>
     </div>
   );
