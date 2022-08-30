@@ -3,6 +3,7 @@ import Services from "../models/servicesModel.js";
 const servicesCtrl = {
   createService: async (req, res) => {
     try {
+      console.log("req.body", req.body);
       const {
         title,
         description,

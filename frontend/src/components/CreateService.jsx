@@ -6,6 +6,7 @@ import "./createService.css";
 export default function CreateService() {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(false);
+  const [service, setService] = useState({});
 
   const [onEdit, setOnEdit] = useState(false);
 
@@ -56,6 +57,34 @@ export default function CreateService() {
     }
   };
 
+  const handleChangeInput = (e) => {
+    if (e.target.type === "checkbox") {
+      const { name, checked } = e.target;
+      setService({ ...service, [name]: checked });
+    } else {
+      const { name, value } = e.target;
+      setService({ ...service, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!image) return alert("No Image Upload");
+
+      await axios
+        .post("/services", { ...service, image })
+        .then(() => {
+          alert("Service created");
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
   const styleUpload = {
     display: image ? "block" : "none",
   };
@@ -75,7 +104,7 @@ export default function CreateService() {
         )}
       </div>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row mt-4">
           <div className="col">
             <label htmlFor="title" className="form-label">
@@ -87,6 +116,7 @@ export default function CreateService() {
               name="title"
               id="title"
               required
+              onChange={handleChangeInput}
             />
           </div>
         </div>
@@ -103,16 +133,23 @@ export default function CreateService() {
               id="description"
               required
               rows="5"
+              onChange={handleChangeInput}
             />
           </div>
         </div>
         <div className="row mt-3">
           <div className="col">
             <label htmlFor="categories" className="form-label">
-              Categories:{" "}
+              Categories:
             </label>
-            <select name="category" className="form-control">
-              <option value="">Please select a category</option>
+            <select
+              name="category"
+              className="form-control"
+              onChange={handleChangeInput}
+            >
+              <option value="">Select a category</option>
+              <option value="IT">IT</option>
+              <option value="Repair">Repair</option>
             </select>
           </div>
           <div className="col">
@@ -125,6 +162,7 @@ export default function CreateService() {
               className="form-control"
               id="location"
               required
+              onChange={handleChangeInput}
             />
           </div>
         </div>
@@ -140,6 +178,7 @@ export default function CreateService() {
               className="form-control"
               id="fee"
               required
+              onChange={handleChangeInput}
             />
           </div>
 
@@ -151,14 +190,7 @@ export default function CreateService() {
             >
               Location
             </label>
-            <input
-              type="text"
-              name="location"
-              className="form-control"
-              id="location"
-              style={{ visibility: "hidden" }}
-              required
-            />
+            <input type="text" style={{ visibility: "hidden" }} />
           </div>
         </div>
 
@@ -169,7 +201,9 @@ export default function CreateService() {
                 <input
                   type="checkbox"
                   className="form-check-input"
+                  name="needBuyerAddress"
                   id="exampleCheck1"
+                  onChange={handleChangeInput}
                 />
                 <label className="form-check-label" htmlFor="exampleCheck1">
                   I need buyer’s address to provide the service
@@ -179,10 +213,12 @@ export default function CreateService() {
                 <input
                   type="checkbox"
                   className="form-check-input"
+                  name="needDate"
                   id="exampleCheck1"
+                  onChange={handleChangeInput}
                 />
                 <label className="form-check-label" htmlFor="exampleCheck1">
-                  I need the date and time to deliver my service{" "}
+                  I need the date and time to deliver my service
                 </label>
               </div>
             </div>
@@ -199,10 +235,12 @@ export default function CreateService() {
               <input
                 type="checkbox"
                 className="form-check-input"
+                name="isCOD"
                 id="exampleCheck1"
+                onChange={handleChangeInput}
               />
               <label className="form-check-label" htmlFor="exampleCheck1">
-                I need the date and time to deliver my service{" "}
+                Cash On Deliver
               </label>
             </div>
 
@@ -210,10 +248,12 @@ export default function CreateService() {
               <input
                 type="checkbox"
                 className="form-check-input"
+                name="isOnlinePayment"
                 id="exampleCheck1"
+                onChange={handleChangeInput}
               />
               <label className="form-check-label" htmlFor="exampleCheck1">
-                I need the date and time to deliver my service{" "}
+                Online Payments
               </label>
             </div>
           </div>
