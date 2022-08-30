@@ -3,10 +3,23 @@ import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./createService.css";
 
+const initialState = {
+  title: "",
+  description: "",
+  category: "",
+  location: "",
+  fee: "",
+  phone: "",
+  needBuyerAddress: false,
+  needDate: false,
+  isCOD: false,
+  isOnlinePayment: false,
+  image: "",
+};
 export default function CreateService() {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(false);
-  const [service, setService] = useState({});
+  const [service, setService] = useState(initialState);
 
   const [onEdit, setOnEdit] = useState(false);
 
@@ -69,9 +82,11 @@ export default function CreateService() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("service", service);
     try {
       if (!image) return alert("No Image Upload");
-
+      if (!(service.isCOD || service.isOnlinePayment))
+        return alert("Please select a payment method");
       await axios
         .post("/services", { ...service, image })
         .then(() => {
@@ -188,6 +203,37 @@ export default function CreateService() {
                     id="fee"
                     required
                     onChange={handleChangeInput}
+                  />
+                </div>
+
+                <div className="col">
+                  <label
+                    htmlFor="location"
+                    className="form-label"
+                    style={{ visibility: "hidden" }}
+                  >
+                    Location
+                  </label>
+                  <input type="text" style={{ visibility: "hidden" }} />
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col">
+                  <label htmlFor="fee" className="form-label">
+                    Mobile No:
+                  </label>
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    className="form-control"
+                    id="phone"
+                    required
+                    onChange={handleChangeInput}
+                    pattern="07[1,2,5,6,7,8][0-9]{7}"
+                    maxLength="10"
+                    placeholder="07xxxxxxxx"
                   />
                 </div>
 
