@@ -1,17 +1,27 @@
+.title {
+  font-size: 35px;
+  font-weight: bold;
+  color: #000;
+  margin-left: 60px;
+  margin-top: 30px;
+}
 .create_service {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: right;
 }
 .upload {
-  max-width: 450px;
-  height: 500px;
+  max-width: 350px;
+  height: 420px;
   width: 100%;
   border: 1px solid #ddd;
   padding: 15px;
-  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-top: 40px;
   position: relative;
 }
 #file_up {
@@ -109,4 +119,40 @@
   margin-top: 70px;
   display: flex;
   justify-content: space-between;
+}
+
+/* Float four columns side by side */
+.card-column {
+  float: right;
+  width: 70%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.card-row {
+  margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.card-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+/* @media screen and (max-width: 600px) {
+  .card-column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+} */
+
+/* Style the counter cards */
+.bg-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  margin: 30px 10px;
+  background-color: #fbfdf3;
 }
