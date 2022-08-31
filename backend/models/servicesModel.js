@@ -19,6 +19,10 @@ const servicesSchema = new Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: Number,
+      required: true,
+    },
     fee: {
       type: Number,
       required: true,
