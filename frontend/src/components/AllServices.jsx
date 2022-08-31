@@ -22,13 +22,17 @@ export default function () {
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">
             <i class="heart icon right floated"></i>
-            <img class="left floated mini ui image" src={data.image.url} />
+            <img
+              class="left floated ui image"
+              style={{ height: "60px", width: "70px" }}
+              src={data.image.url}
+            />
 
             <div class="header">
               <b>{data.title}</b>
             </div>
             <div class="meta">{data.location}</div>
-            <div class="description">{data.phone}</div>
+            <i class="bi bi-telephone ">{data.phone}</i>
           </div>
           <div class="extra content">
             <div class="ui two buttons" style={{ marginLeft: "10%" }}>
