@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button } from "reactstrap";
+import "./allServices.css";
 
 export default function () {
   const [services, setServices] = useState([]);
@@ -21,7 +23,12 @@ export default function () {
       {services.map((data, index) => (
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">
-            <i class="heart icon right floated"></i>
+            <div className="heart">
+              <a href="#">
+                <i class="heart icon right floated" />
+              </a>
+            </div>
+
             <img
               class="left floated ui image"
               style={{ height: "60px", width: "70px" }}
