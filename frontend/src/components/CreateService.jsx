@@ -90,7 +90,7 @@ export default function CreateService() {
       await axios
         .post("/services", { ...service, image })
         .then(() => {
-          alert("Service created");
+          alert("Service created.");
         })
         .catch((err) => {
           alert(err.message);
