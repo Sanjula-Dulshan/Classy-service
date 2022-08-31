@@ -49,6 +49,15 @@ const servicesCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getUserServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+      const services = await Services.find({ userEmail });
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default servicesCtrl;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./allServices.css";
 
-export default function () {
+export default function AllServices() {
   const [services, setServices] = useState([]);
   useEffect(() => {
     axios
