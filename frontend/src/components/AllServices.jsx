@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button } from "reactstrap";
 import "./allServices.css";
 
 export default function () {
@@ -18,13 +17,19 @@ export default function () {
       });
   }, []);
 
+  const setData = (data) => {
+    axios.post("http://localhost:8070/wishlist/", data).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <div class="ui cards mt-4 container" style={{ marginLeft: "10%" }}>
       {services.map((data, index) => (
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">
             <div className="heart">
-              <a href="#">
+              <a href="#" onClick={() => setData(data)}>
                 <i class="heart icon right floated" />
               </a>
             </div>
