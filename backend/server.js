@@ -10,6 +10,7 @@ import bodyParser  from  "body-parser";
 import servicesRouter from "./routes/servicesRouter.js";
 import uploadRouter from "./routes/uploadRouter.js";
 import wishListRouter from "./routes/wishListRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use("/services", servicesRouter);
 app.use("/image", uploadRouter);
 app.use("/wishlist", wishListRouter);
+app.use("/user", userRouter);
 
 // Connect to MongoDB
 mongoose

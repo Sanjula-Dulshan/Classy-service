@@ -63,6 +63,6 @@ const sendEmail = (to, url,txt) => {
         if(err) return err;
         return infor
     })
-
 }
-module.exports=sendEmail
+
+export default sendEmail;

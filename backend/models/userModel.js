@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
 
-  
     name: {
         type: String,
         required: [true,"Please enter your name"],
@@ -43,4 +42,6 @@ const userSchema = new Schema({
 })
 
  
-module.exports = mongoose.model("Users", userSchema);
+const Users = mongoose.model("Users", userSchema);
+export default Users;
+

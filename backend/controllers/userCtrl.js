@@ -11,7 +11,7 @@ const userCtrl={
         try {
             const {name, email, nic, mobile, password} = req.body
             
-            if(!name || !email || !password)
+            if(!name || !email || !nic || !mobile || !password)
             return res.status(400).json({msg: "Please fill in all fields."})
 
             if(!validateEmail(email))
@@ -118,4 +118,4 @@ const createRefreshToken = (payload) => {
     return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
 }
 
-module.exports = userCtrl
+export default userCtrl;
