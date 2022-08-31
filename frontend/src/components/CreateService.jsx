@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
-import "./createService.css";
+import "./styles/createService.css";
 
 const initialState = {
+  userEmail: "sdulshan10@gmail.com",
   title: "",
   description: "",
   category: "",
@@ -91,6 +92,8 @@ export default function CreateService() {
         .post("/services", { ...service, image })
         .then(() => {
           alert("Service created");
+          setService(initialState);
+          setImage(false);
         })
         .catch((err) => {
           alert(err.message);
@@ -193,34 +196,7 @@ export default function CreateService() {
 
               <div className="row mt-4">
                 <div className="col">
-                  <label htmlFor="fee" className="form-label">
-                    Fee
-                  </label>
-                  <input
-                    type="number"
-                    name="fee"
-                    className="form-control"
-                    id="fee"
-                    required
-                    onChange={handleChangeInput}
-                  />
-                </div>
-
-                <div className="col">
-                  <label
-                    htmlFor="location"
-                    className="form-label"
-                    style={{ visibility: "hidden" }}
-                  >
-                    Location
-                  </label>
-                  <input type="text" style={{ visibility: "hidden" }} />
-                </div>
-              </div>
-
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="fee" className="form-label">
+                  <label htmlFor="phone" className="form-label">
                     Mobile No:
                   </label>
 
@@ -236,16 +212,18 @@ export default function CreateService() {
                     placeholder="07xxxxxxxx"
                   />
                 </div>
-
                 <div className="col">
-                  <label
-                    htmlFor="location"
-                    className="form-label"
-                    style={{ visibility: "hidden" }}
-                  >
-                    Location
+                  <label htmlFor="fee" className="form-label">
+                    Fee (Rs.)
                   </label>
-                  <input type="text" style={{ visibility: "hidden" }} />
+                  <input
+                    type="number"
+                    name="fee"
+                    className="form-control"
+                    id="fee"
+                    required
+                    onChange={handleChangeInput}
+                  />
                 </div>
               </div>
 
@@ -286,7 +264,7 @@ export default function CreateService() {
                 </div>
               </div>
 
-              <div className="row mt-5">
+              <div className="row mt-4">
                 <div className="col">
                   <label
                     htmlFor="description"

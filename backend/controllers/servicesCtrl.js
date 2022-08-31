@@ -3,9 +3,8 @@ import Services from "../models/servicesModel.js";
 const servicesCtrl = {
   createService: async (req, res) => {
     try {
-      console.log("req.body", req.body);
-
       const {
+        userEmail,
         title,
         description,
         category,
@@ -21,6 +20,7 @@ const servicesCtrl = {
 
       if (!image) return res.status(400).json({ msg: "No image uploaded" });
       const newService = new Services({
+        userEmail,
         title,
         description,
         category,
