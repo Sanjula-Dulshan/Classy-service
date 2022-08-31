@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import sendMail from './sendMail.js';
 
-import {CLIENT_URL} from process.env;
+const CLIENT_URL = 'http://localhost:3000';
 
 const userCtrl={
 

@@ -64,5 +64,4 @@ const sendEmail = (to, url,txt) => {
         return infor
     })
 }
-
 export default sendEmail;
