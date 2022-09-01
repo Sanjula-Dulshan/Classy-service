@@ -1,6 +1,26 @@
 import React from "react";
+import { useEffect, useState } from "react";
 
 export default function ViewService() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [location, setLocation] = useState("");
+  const [fee, setFee] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [_id, set_id] = useState("");
+
+  useEffect(() => {
+    set_id(localStorage.getItem("_id"));
+    setTitle(localStorage.getItem("title"));
+    setDescription(localStorage.getItem("description"));
+    setCategory(localStorage.getItem("category"));
+    setLocation(localStorage.getItem("location"));
+    setFee(localStorage.getItem("fee"));
+    setPhone(localStorage.getItem("phone"));
+  }, []);
+
   return (
     <div>
       <div className="mt-5 ">
@@ -18,7 +38,7 @@ export default function ViewService() {
         >
           <div>
             <h4>
-              <b>Service Name</b>
+              <b>{title}</b>
             </h4>
           </div>
           <hr></hr>
@@ -28,25 +48,25 @@ export default function ViewService() {
               style={{ fontSize: "18px" }}
             >
               {" "}
-              Num
+              {phone}
             </i>
           </div>
           <br></br>
           <h5>
-            <b>Location :</b> fffffffffff
+            <b>Location :</b> {location}
           </h5>
           <br></br>
 
           <h5>
-            <b>Category :</b>dddddddd
+            <b>Category :</b> {category}
           </h5>
           <br></br>
           <h5>
-            <b>Fee :</b>dddddddd
+            <b>Fee :</b> {fee}
           </h5>
           <br></br>
           <h5>
-            <b>Description :</b>dddddddd
+            <b>Description :</b> {description}
           </h5>
           <br></br>
           <br></br>

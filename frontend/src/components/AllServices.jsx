@@ -17,10 +17,22 @@ export default function () {
       });
   }, []);
 
-  const setData = (data) => {
+  const wishlistHandler = (data) => {
     axios.post("http://localhost:8070/wishlist/", data).then((res) => {
       console.log(res);
     });
+  };
+
+  const setData = (data) => {
+    let { title, description, category, location, fee, phone } = data;
+    localStorage.setItem("title", title);
+    localStorage.setItem("description", description);
+    localStorage.setItem("category", category);
+    localStorage.setItem("location", location);
+    localStorage.setItem("fee", fee);
+    localStorage.setItem("phone", phone);
+
+    console.log(data);
   };
 
   return (
@@ -29,7 +41,7 @@ export default function () {
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">
             <div className="heart">
-              <a href="#" onClick={() => setData(data)}>
+              <a href="#" onClick={() => wishlistHandler(data)}>
                 <i class="heart icon right floated" />
               </a>
             </div>
@@ -58,16 +70,18 @@ export default function () {
                   </div>
                 </td>
                 <td>
-                  <div
+                  <a
                     class="ui button"
+                    href="/viewService"
                     style={{
                       marginLeft: "50px",
                       backgroundColor: "#423E3B",
                       color: "white",
                     }}
+                    onClick={() => setData(data)}
                   >
                     View
-                  </div>
+                  </a>
                 </td>
               </tr>
             </div>
