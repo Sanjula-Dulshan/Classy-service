@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Wishlist() {
   return (
@@ -13,7 +15,10 @@ export default function Wishlist() {
       </h1>
 
       <div className="mt-5" style={{ marginLeft: "25%" }}>
-        <div className="card mb-3" style={{ maxWidth: "740px" }}>
+        <div
+          className="card mb-3"
+          style={{ maxWidth: "740px", backgroundColor: "#FBFDF3" }}
+        >
           <div className="row g-0">
             <div className="col-md-4">
               <img src="..." className="img-fluid rounded-start" />
@@ -28,17 +33,23 @@ export default function Wishlist() {
                   <div className="ui two buttons" style={{ marginLeft: "10%" }}>
                     <tr>
                       <td>
-                        <div className="ui button">Buy</div>
-                      </td>
-                      <td>
                         <div
                           className="ui button"
+                          style={{ backgroundColor: "#FEA82F", color: "black" }}
+                        >
+                          Buy
+                        </div>
+                      </td>
+                      <td>
+                        <button
+                          class="btn mb-2"
                           style={{
                             marginLeft: "50px",
+                            color: "red",
                           }}
                         >
-                          View
-                        </div>
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
                       </td>
                     </tr>
                   </div>
