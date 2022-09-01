@@ -6,6 +6,23 @@ export default function UserAllServices() {
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
 
+  const deleteService = async (id, public_id) => {
+    console.log("deleteService", id, public_id);
+    try {
+      setLoading(true);
+      const destroyImg = axios.post("/image/destroy", { public_id });
+      const deleteService = axios.delete(`/services/${id}`);
+
+      await destroyImg;
+      await deleteService;
+
+      setLoading(false);
+      window.location.reload(false);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
   useEffect(() => {
     axios
       .get("/services")
@@ -33,6 +50,7 @@ export default function UserAllServices() {
           key={index}
           style={{ backgroundColor: "#FBFDF3" }}
         >
+          {console.log("data", data)}
           <div className="content">
             <div className="header mt-2 mb-4">
               <b>{data.title}</b>
@@ -62,6 +80,9 @@ export default function UserAllServices() {
                       backgroundColor: "red",
                       color: "white",
                     }}
+                    onClick={() =>
+                      deleteService(data._id, data.image.public_id)
+                    }
                   >
                     Delete
                   </div>

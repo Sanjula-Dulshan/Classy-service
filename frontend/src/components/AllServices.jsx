@@ -38,6 +38,7 @@ export default function AllServices() {
               class="left floated ui image"
               style={{ height: "60px", width: "70px" }}
               src={data.image.url}
+              alt=""
             />
 
             <div class="header">

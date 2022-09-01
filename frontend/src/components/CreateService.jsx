@@ -94,6 +94,7 @@ export default function CreateService() {
           alert("Service created");
           setService(initialState);
           setImage(false);
+          window.location.reload(false);
         })
         .catch((err) => {
           alert(err.message);
