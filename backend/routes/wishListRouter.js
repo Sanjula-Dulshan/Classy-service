@@ -8,4 +8,6 @@ router
   .post(wishListCtrl.createWishList)
   .get(wishListCtrl.getAllWishLists);
 
+router.route("/:id").delete(wishListCtrl.deleteWishList);
+
 export default router;

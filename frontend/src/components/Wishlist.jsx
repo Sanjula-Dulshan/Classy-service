@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
@@ -11,11 +13,43 @@ export default function Wishlist() {
       .get("http://localhost:8070/wishlist/")
       .then((res) => {
         setWishlist(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const onDelete = (_id) => {
+    axios.delete(`http://localhost:8070/wishlist/${_id}`);
+    window.location
+      .reload()
+
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const confirm = (_id) => {
+    confirmAlert({
+      image:
+        "https://res.cloudinary.com/sliit-yasantha/image/upload/v1653068950/logo11_ggebb3.png",
+      title: "Are you sure?",
+      message: "You won't be able to revert this!",
+
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => onDelete(_id),
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
+  };
 
   return (
     <div className="mt-4">
@@ -60,15 +94,16 @@ export default function Wishlist() {
                             </div>
                           </td>
                           <td>
-                            <button
+                            <a
                               class="btn mb-2"
                               style={{
                                 marginLeft: "50px",
                                 color: "red",
                               }}
+                              onClick={() => confirm(data._id)}
                             >
                               <FontAwesomeIcon icon={faTrash} />
-                            </button>
+                            </a>
                           </td>
                         </tr>
                       </div>
