@@ -34,8 +34,6 @@ export default function Wishlist() {
   };
   const confirm = (_id) => {
     confirmAlert({
-      image:
-        "https://res.cloudinary.com/sliit-yasantha/image/upload/v1653068950/logo11_ggebb3.png",
       title: "Are you sure?",
       message: "You won't be able to revert this!",
 
@@ -52,7 +50,7 @@ export default function Wishlist() {
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 container">
       <div style={{ textAlign: "center" }}>
         <i class="heart icon "></i>
       </div>
@@ -67,19 +65,25 @@ export default function Wishlist() {
             key={index}
             style={{ backgroundColor: "#FBFDF3" }}
           >
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img src="" className="img-fluid rounded-start" />
+            <div className="row g-0 ">
+              <div className="col-md-2">
+                <img
+                  src={data.image.url}
+                  className="img mt-2"
+                  style={{ height: "90%", width: "90%" }}
+                />
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <h5 className="card-title">{data.title}</h5>
+                  <h5 className="card-title">
+                    <b>{data.title}</b>
+                  </h5>
                   <p className="card-text d-flex justify-content-between align-items-center">
                     {data.description}
                     <div className="extra content">
                       <div
                         className="ui two buttons"
-                        style={{ marginLeft: "10%" }}
+                        style={{ marginLeft: "40%" }}
                       >
                         <tr>
                           <td>
@@ -94,8 +98,8 @@ export default function Wishlist() {
                             </div>
                           </td>
                           <td>
-                            <a
-                              class="btn mb-2"
+                            <button
+                              class="ui button mb-2"
                               style={{
                                 marginLeft: "50px",
                                 color: "red",
@@ -103,7 +107,7 @@ export default function Wishlist() {
                               onClick={() => confirm(data._id)}
                             >
                               <FontAwesomeIcon icon={faTrash} />
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       </div>
