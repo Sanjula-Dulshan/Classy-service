@@ -1,10 +1,10 @@
-import "./CSS/topicsub.css";
-import "./CSS/btrap.css";
+import "./CSS/userFunction.css";
 import React, {useState} from 'react'
-import { Link,useHistory} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import axios from 'axios'
 import {showErrMsg, showSuccessMsg} from './utils/notification/Notification'
 import {isEmpty, isEmail, isLength, isMatch} from './utils/validation/Validation.js';
+
 
 
 const initialState = {
@@ -19,9 +19,6 @@ const initialState = {
 }
 
 function Register() {
-
-    const dispatch = useDispatch()
-    const history = useHistory()
 
   const [user, setUser] = useState(initialState)
 
@@ -64,20 +61,21 @@ const handleSubmit = async e => {
 
   return (
     <div className="topic-container">
-    <div style={{backgroundColor:"#0F0934"}}>
-
-        <div>
-            <img className="img-side" src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1653068950/logo11_ggebb3.png"></img>
-        </div>
+    <div style={{backgroundColor:"#FEA82F"}}>
 
         <div  className="t-title-container">
-            <label className="sideLable" style={{color:"#FF5631"}}>SLIIT </label> <br className="br1" />
-            <label className="sideLable" >Classy</label><br className="br1" />
-            <label className="sideLable" >Services </label> <br className="br1" />
+            <label className="sideLable1" >Classy</label><br></br>
+            <label className="sideLable" >Services. </label> <br className="br1" />
         </div>
 
         <div className="sublable-container">
-            <label className="subLable">Already a member?</label>
+            <label className="subLable">Get Demand For Your Skills.
+            <br></br> Hire The Best Experts For Your Needs.
+            </label>
+        </div>
+
+        <div className="sublable-container2">
+            <label className="subLable2">Already a member?</label>
         </div>
         <br/>
         <Link to="/login">< button type="submit" className="side-btn">
@@ -85,18 +83,20 @@ const handleSubmit = async e => {
     </div>
        <div style={{backgroundColor:"white"}}>
 
-       <h1 className="Hfont" style={{color:"#322B5F",fontWeight:"bold"}}>Register Here</h1> 
+       <h1 className="Hfontreg" >Register Here</h1> 
             <div className="reg-from-container">  
 
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
-            
+            <br></br>
 
           <form onSubmit={handleSubmit}>
 
              <div className="mb-3">
-                            <label className="t-form-label" style={{color:"#322B5F"}}> Name</label>
-                            <input type="text"  style={{width:"450px"}} className="t-form-control" id="name"
+                            <label className="t-form-label" > 
+                            <label className="t-form-label2">*</label>
+                            Name</label>
+                            <input type="text"  style={{width:"450px"}} className="t-form-reg" id="name"
                                 placeholder="Enter Name"
                                 value={name}
                                 name="name"
@@ -106,8 +106,10 @@ const handleSubmit = async e => {
                  </div>
 
                <div className="mb-3">
-                            <label className="t-form-label" style={{color:"#322B5F"}}>Email Address</label>
-                            <input type="email"  style={{width:"450px"}} className="t-form-control" id="email"
+                            <label className="t-form-label">
+                            <label className="t-form-label2">*</label>
+                                Email Address</label>
+                            <input type="email"  style={{width:"450px"}} className="t-form-reg" id="email"
                                 placeholder="Enter Email"
                                 value={email}
                                 name="email"
@@ -116,9 +118,24 @@ const handleSubmit = async e => {
                             />
                    </div>
 
+                   <div className="mb-3">
+                            <label className="t-form-label">
+                            <label className="t-form-label2">*</label>
+                                NIC Number</label>
+                            <input type="text"  style={{width:"450px"}} className="t-form-reg" id="nic"
+                                placeholder="Enter NIC Number"
+                                value={nic}
+                                name="nic"
+                                onChange={handleChangeInput}
+                                required
+                                   />
+                   </div>
+
                <div className="mb-3">
-                            <label className="t-form-label" style={{color:"#322B5F"}}>Mobile Number</label>
-                            <input type="text"  style={{width:"450px"}} className="t-form-control" id="mobile"
+                            <label className="t-form-label">
+                            <label className="t-form-label2">*</label>
+                            Mobile Number</label>
+                            <input type="text"  style={{width:"450px"}} className="t-form-reg" id="mobile"
                                 placeholder="Enter Mobile Number"
                                 value={mobile}
                                 name="mobile"
@@ -128,8 +145,10 @@ const handleSubmit = async e => {
                    </div>
 
                <div className="mb-3">
-                            <label className="t-form-label" style={{color:"#322B5F"}}>Enter Password</label>
-                            <input type="password"  style={{width:"450px"}} className="t-form-control" id="password"
+                            <label className="t-form-label">
+                            <label className="t-form-label2">*</label>
+                                Enter Password</label>
+                            <input type="password"  style={{width:"450px"}} className="t-form-reg" id="password"
                                 placeholder="Enter Password(At least 8 characters)"
                                 value={password}
                                 name="password"
@@ -139,8 +158,10 @@ const handleSubmit = async e => {
                    </div>
 
               <div className="mb-3">
-                            <label className="t-form-label" style={{color:"#322B5F"}}>Confirm Password</label>
-                            <input type="password"  style={{width:"450px"}} className="t-form-control" id="cf_password"
+                            <label className="t-form-label">
+                            <label className="t-form-label2">*</label>
+                                Confirm Password</label>
+                            <input type="password"  style={{width:"450px"}} className="t-form-reg" id="cf_password"
                                placeholder="Confirm Password"
                                 value={cf_password}
                                 name="cf_password"
@@ -148,9 +169,9 @@ const handleSubmit = async e => {
                                 required
                             />
                  </div>
-
+                 <label className="t-form-label3">All fields with * are required.</label> <br></br> <br></br>
               
-                 <button type="submit" className="btn btn-success" style={{width:"200px",fontWeight:"bold"}} >Register</button>
+                 <button type="submit" className="btn-register" style={{width:"140px",fontWeight:"bold",borderRadius:"12px"}} >Register</button>
                     </form>
             
                 </div>
