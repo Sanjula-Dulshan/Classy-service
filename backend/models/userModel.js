@@ -30,7 +30,7 @@ const userSchema = new Schema({
     },
     role: {
         type: Number,
-        default:0 // 0 => Normal User , 1 => Admin User
+        default:0          // 0 => Normal User , 1 => Admin User
     },
     avatar: {
         type: String,
