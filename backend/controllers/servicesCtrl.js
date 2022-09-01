@@ -58,6 +58,15 @@ const servicesCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  deleteService: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await Services.findByIdAndDelete(id);
+      res.status(200).json({ msg: "Service deleted" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default servicesCtrl;

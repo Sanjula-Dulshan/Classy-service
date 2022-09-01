@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Loading from "./utils/loading/Loading";
 
 export default function UserAllServices() {
   const [services, setServices] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -17,6 +19,12 @@ export default function UserAllServices() {
       });
   }, []);
 
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   return (
     <div className="ui cards mt-4 container" style={{ marginLeft: "10%" }}>
       {services?.map((data, index) => (
