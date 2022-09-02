@@ -119,10 +119,15 @@ function Login() {
                             </select>
                     
                 </div>
-                     <br></br> <br></br>
+                     <br></br> 
+                     <div style={{display:"flex"}}>
                      <label className="t-form-label3">*Select your need from the dropdown.</label> 
-                     <br></br> <br></br>
-                  
+                      
+                     <div className="pwd" style={{display:"flex"}}>
+                        <Link to="#" >Forgot Password?</Link>
+                     </div>
+                     </div>
+                     
                      <button type="submit" className="btn-login" style={{width:"140px",fontWeight:"bold",borderRadius:"12px"}} >Login</button>
                         </form>
                 
