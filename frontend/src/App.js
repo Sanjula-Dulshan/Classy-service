@@ -5,7 +5,7 @@ import "/node_modules/bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
 import axios from "axios";
-import { NotFound } from "./components/utils/NotFound/NotFound.js";
+import  NotFound from "./components/utils/NotFound/NotFound";
 import {useDispatch, useSelector} from 'react-redux'
 import {dispatchLogin,fetchUser, dispatchGetUser} from './redux/actions/authAction'
 // import "semantic-ui-css/semantic.min.css";
@@ -15,12 +15,14 @@ import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import ActivationEmail from './components/ActivationEmail';
+import Profile from "./components/Profile";
 
 function App() {
 
   const dispatch = useDispatch()
   const token = useSelector(state => state.token)
   const auth = useSelector(state => state.auth)
+  const {isLogged} = auth
 
 
   useEffect(() => {
@@ -59,6 +61,7 @@ function App() {
         <Route path="/register" exact component={Register} />
         <Route path="/user/activate/:activation_token" exact component={ActivationEmail}/>
         <Route path="/login" exact component={Login} />
+        <Route path="/profile" exact component={ isLogged ? Profile :NotFound}/>
       </Router>
 
     </div>

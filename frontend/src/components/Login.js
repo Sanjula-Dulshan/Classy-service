@@ -1,3 +1,4 @@
+import "./CSS/userFunction.css";
 import React, {useState} from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
@@ -38,7 +39,7 @@ function Login() {
             localStorage.setItem('firstLogin', true)
          
             dispatch(dispatchLogin())
-            history.push("/")
+            history.push("/profile")
 
         } catch (err) {
             err.response.data.msg && 
