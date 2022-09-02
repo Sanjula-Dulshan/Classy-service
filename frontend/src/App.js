@@ -50,8 +50,8 @@ function App() {
       <Router>
         <Route path="/" exact component={AllServices} />
         <Route path="/addService" component={CreateService} />
-        <Route path="/register"  component={Register} />
-        <Route path="/login"  component={Login} />
+        <Route path="/register" exact component={Register} />
+        <Route path="/login" exact component={Login} />
       </Router>
     </div>
   );

@@ -9,6 +9,7 @@ import {useDispatch} from 'react-redux'
 const initialState = {
     email: '',
     password: '',
+    user_role:'',
     err: '',
     success: ''
 }
@@ -19,7 +20,7 @@ function Login() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const {email, password, err, success} = user
+    const {email, password,user_role, err, success} = user
 
     const handleChangeInput = e => {
         const {name, value} = e.target
@@ -63,26 +64,28 @@ function Login() {
                 <label className="subLable2">Don't Have An Account?</label>
             </div>
             <br/>
-            <Link to="/register">< button type="submit" className="side-btn">
+            <Link to="/register">< button type="submit" className="side-btn1">
              Signup Here</button></Link>
         </div>
            <div style={{backgroundColor:"white"}}>
-    
-           <h1 className="Hfontreg" style={{color:'#FFFFFFF'}}>Login</h1> 
-                <div className="reg-from-container">  
+           <br></br>
+           <h1 className="Hfontreg2" >Login</h1> 
+           <br></br>
+           <h1 className="Hfontreg3" >Welcome Again!</h1> 
+                <div>  
     
                 {err && showErrMsg(err)}
                 {success && showSuccessMsg(success)}
-                <br></br>
+                <br></br> <br></br>
     
               <form onSubmit={handleSubmit}>
     
                    <div className="mb-3">
-                                <label className="t-form-label">
+                                <label className="t-form-label-login">
                                 <label className="t-form-label2">*</label>
                                     Email Address</label>
                                 <input type="email"  style={{width:"450px"}} className="t-form-reg" id="email"
-                                    placeholder="Enter Email"
+                                    placeholder="Enter Valid Email"
                                     value={email}
                                     name="email"
                                     onChange={handleChangeInput}
@@ -91,21 +94,36 @@ function Login() {
                        </div>
     
                    <div className="mb-3">
-                                <label className="t-form-label">
+                                <label className="t-form-label-login">
                                 <label className="t-form-label2">*</label>
-                                    Enter Password</label>
+                                 Password</label>
                                 <input type="password"  style={{width:"450px"}} className="t-form-reg" id="password"
-                                    placeholder="Enter Password(At least 8 characters)"
+                                    placeholder="Enter Password"
                                     value={password}
                                     name="password"
                                     onChange={handleChangeInput}
                                     required
                                 />
                        </div>
-    
-                     <label className="t-form-label3">All fields with * are required.</label> <br></br> <br></br>
+
+                       <div className="mb-3">
+                            <label className="t-form-label-login">What Do You Want?</label>
+                            
+                            <select className='form-control' name="user_role" id="user_role" 
+                               style={{width:"450px",marginLeft:"18%",border:"2px solid #ced4da"}}
+                               value={user_role}
+                               onChange={handleChangeInput}
+                            >
+                                <option value="hire">Hire A Service Provider</option>
+                                <option value="work">Work As A Service Provider</option>
+                            </select>
+                    
+                </div>
+                     <br></br> <br></br>
+                     <label className="t-form-label3">*Select your need from the dropdown.</label> 
+                     <br></br> <br></br>
                   
-                     <button type="submit" className="btn-register" style={{width:"140px",fontWeight:"bold",borderRadius:"12px"}} >Login</button>
+                     <button type="submit" className="btn-login" style={{width:"140px",fontWeight:"bold",borderRadius:"12px"}} >Login</button>
                         </form>
                 
                     </div>
