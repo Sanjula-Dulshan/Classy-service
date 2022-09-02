@@ -4,7 +4,7 @@ import Method from "../models/payMethodModel.js";
 
 
 
-// Add new note
+// Add new Bank details
 payRouter.post("/",(req,res)=>{
     const uid = req.body.uid;
     const accName = req.body.accName;
