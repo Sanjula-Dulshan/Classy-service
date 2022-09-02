@@ -11,6 +11,7 @@ import {dispatchLogin,fetchUser, dispatchGetUser} from './redux/actions/authActi
 import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import Register from "./components/Register";
+import Login from "./components/Login";
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/" exact component={AllServices} />
         <Route path="/addService" component={CreateService} />
         <Route path="/register"  component={Register} />
+        <Route path="/login"  component={Login} />
       </Router>
     </div>
   );
