@@ -1,5 +1,7 @@
 import React from "react";
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 export default function ViewService() {
   const [title, setTitle] = useState("");
@@ -8,6 +10,7 @@ export default function ViewService() {
   const [location, setLocation] = useState("");
   const [fee, setFee] = useState("");
   const [phone, setPhone] = useState("");
+  const history = useHistory();
 
   const [_id, set_id] = useState("");
 
@@ -21,10 +24,23 @@ export default function ViewService() {
     setPhone(localStorage.getItem("phone"));
   }, []);
 
+  const [profile, setProfile] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8070/services/" + _id)
+      .then((res) => {
+        setProfile(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log(profile);
+
   return (
     <div>
       <div className="mt-5 ">
-        <a href="#">
+        <a href="" onClick={() => history.push("/")}>
           <i
             class="fas fa-arrow-circle-left"
             style={{ fontSize: "22px", marginLeft: "15%", color: "#FEA82F" }}
@@ -71,38 +87,41 @@ export default function ViewService() {
           <br></br>
           <br></br>
           <div className="extra content ">
-            <div
-              className="card mb-3 container pb-3 shadow-lg p-3 mb-5 bg-white rounded"
-              style={{ width: "45%", height: "25%" }}
-            >
-              <div className="row g-0">
-                <div className="col-md-2 mt-2">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
-                    className="rounded-circle shadow-4"
-                    style={{ height: "80%", width: "80%" }}
-                    alt="Avatar"
-                  />
-                </div>
-                <div className="col-md-4">
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      <b>Card title</b>
-                    </h5>
+            {profile.map((data, index) => (
+              <div
+                key={index}
+                className="card mb-3 container pb-3 shadow-lg p-3 mb-5 bg-white rounded"
+                style={{ width: "45%", height: "25%" }}
+              >
+                <div className="row g-0">
+                  <div className="col-md-2 mt-2">
+                    <img
+                      src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
+                      className="rounded-circle shadow-4"
+                      style={{ height: "80%", width: "80%" }}
+                      alt="Avatar"
+                    />
                   </div>
-                  <div
-                    class="ui button"
-                    style={{
-                      backgroundColor: "#FEA82F",
-                      color: "black",
-                      marginLeft: "8%",
-                    }}
-                  >
-                    View Profile
+                  <div className="col-md-4">
+                    <div className="card-body">
+                      <h5 className="card-title">
+                        <b>{data._id}</b>
+                      </h5>
+                    </div>
+                    <div
+                      class="ui button"
+                      style={{
+                        backgroundColor: "#FEA82F",
+                        color: "black",
+                        marginLeft: "8%",
+                      }}
+                    >
+                      View Profile
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </form>
       </div>
