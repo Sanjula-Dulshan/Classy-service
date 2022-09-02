@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./styles/createService.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
   userEmail: "sdulshan10@gmail.com",
@@ -24,6 +24,7 @@ export default function CreateService() {
   const [service, setService] = useState(initialState);
 
   const param = useParams();
+  const navigate = useNavigate();
 
   const [onEdit, setOnEdit] = useState(false);
 
@@ -114,7 +115,9 @@ export default function CreateService() {
       if (onEdit) {
         await axios
           .put(`/services/${service._id}`, { ...service, image })
-          .then(() => {});
+          .then(() => {
+            navigate(`/userServices`);
+          });
       } else {
         console.log("image", image);
         await axios
@@ -132,6 +135,9 @@ export default function CreateService() {
       alert(err.response.data.msg);
     }
   };
+  const handleCancel = () => {
+    navigate(`/userServices`);
+  };
 
   const styleUpload = {
     display: image ? "block" : "none",
@@ -140,7 +146,12 @@ export default function CreateService() {
     <div className="card-row">
       <div className="card-column">
         <div className="bg-card">
-          <label className="title">CREATE SERVICE</label>
+          {onEdit ? (
+            <label className="title">EDIT SERVICE</label>
+          ) : (
+            <label className="title">CREATE SERVICE</label>
+          )}
+
           <div className="create_service">
             <div className="upload">
               <input
@@ -161,7 +172,7 @@ export default function CreateService() {
               )}
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="row mt-4">
                 <div className="col">
                   <label htmlFor="title" className="form-label">
@@ -343,10 +354,20 @@ export default function CreateService() {
 
               <div className="row ">
                 <div className="col flex_box">
-                  <button type="submit" className="btn btn-cancel">
+                  <button
+                    type="submit"
+                    className="btn btn-cancel"
+                    onClick={handleCancel}
+                  >
                     Cancel
                   </button>
-                  <button type="submit" className="btn btn-create">
+                  <button
+                    type="submit"
+                    className="btn btn-create"
+                    onClick={(e) => {
+                      handleSubmit(e);
+                    }}
+                  >
                     {onEdit ? "Update" : "Publish"}
                   </button>
                 </div>

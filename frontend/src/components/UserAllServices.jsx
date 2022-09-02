@@ -1,13 +1,28 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Loading from "./utils/loading/Loading";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UserAllServices() {
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
 
-  const deleteService = async (id, public_id) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("/services")
+
+      .then((res) => {
+        setServices(res.data);
+        console.log("res.data", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleDelete = async (id, public_id) => {
     console.log("deleteService", id, public_id);
     try {
       setLoading(true);
@@ -24,18 +39,13 @@ export default function UserAllServices() {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get("/services")
+  const handleEdit = (id) => {
+    navigate(`/editService/${id}`);
+  };
 
-      .then((res) => {
-        setServices(res.data);
-        console.log("res.data", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  function truncate(str, n) {
+    return str?.length > n ? str.substring(0, n - 1) + "..." : str;
+  }
 
   if (loading)
     return (
@@ -56,7 +66,7 @@ export default function UserAllServices() {
             <div className="header mt-2 mb-4">
               <b>{data.title}</b>
             </div>
-            <div className="mb-2">{data.description}</div>
+            <div className="mb-2">{truncate(data?.description, 75)}</div>
             <i className=" ">
               <span className="fw-bold ">Fee: </span>Rs.
               {data.fee}
@@ -69,10 +79,9 @@ export default function UserAllServices() {
                   <div
                     className="ui button"
                     style={{ backgroundColor: "#FEA82F", color: "black" }}
+                    onClick={() => handleEdit(data._id)}
                   >
-                    <Link id="btn_view" to={`/editService/${data._id}`}>
-                      Edit
-                    </Link>
+                    Edit
                   </div>
                 </td>
                 <td>
@@ -83,9 +92,7 @@ export default function UserAllServices() {
                       backgroundColor: "red",
                       color: "white",
                     }}
-                    onClick={() =>
-                      deleteService(data._id, data.image.public_id)
-                    }
+                    onClick={() => handleDelete(data._id, data.image.public_id)}
                   >
                     Delete
                   </div>
