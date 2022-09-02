@@ -39,7 +39,9 @@ export default function Profile() {
     {success && showSuccessMsg(success)}
     {loading && <h3>Loading.....</h3>}
     </div>
+    <img className='profimage' src='https://res.cloudinary.com/dl99x/image/upload/v1662162175/Sample_User_Icon_urnlt1.png'></img>
        <h2 className='profhead'>Edit Profile.</h2>
+   
     <div className="profile_page">
     <div className="col-left">
         <div className="avatar">
@@ -47,14 +49,21 @@ export default function Profile() {
         <img src={avatar ? avatar : user.avatar} alt=""/>
         <span>
              <i className="fas fa-camera"></i>
-            <p>Change Picture</p>
+            <p>Change </p>
              <input type="file" name="file" id="file_up" 
               />
          </span>
         </div>
-
-        <div className="col-md-13 mb-3 font">
-         <label htmlFor="name">Name</label>
+         <div className='profhead2'>  <p >Change Picture</p>
+         </div>
+         <br></br>
+        <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
+         <label htmlFor="name">
+         <label style={{color:"red"}}>*</label>
+         Name : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         </label> 
          <input type="text"
           className="form-control"
          name="name" id="name" defaultValue={user.name}
@@ -62,61 +71,65 @@ export default function Profile() {
            />
     </div>
 
-    <div className="col-md-13 mb-3 font">
-                    <label htmlFor="email">Email</label>
+    <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
+                    <label htmlFor="email">
+                    <label style={{color:"red"}}>*</label>
+                    Email :
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input type="email"
                      className="form-control"
                     name="email" id="email" defaultValue={user.email}
                     placeholder="Your email address" disabled />
                 </div>
 
-                <div className="col-md-13 mb-3 font">
-                    <label htmlFor="about">About</label>
+                <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
+                    <label htmlFor="about">
+                    <label style={{color:"red"}}>*</label>
+                     Mobile Number:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
                     <input type="text"
                     className="form-control"
-                    name="about" id="about"
-                    placeholder="Details"defaultValue={user.about}  
+                    name="mobile" id="mobile"
+                    placeholder="Mobile Number"defaultValue={user.mobile}  
                     />
                 </div>
-
-
-
-
-                <div className="col-md-13 mb-3 font">
-                    <label htmlFor="password">New Password</label>
+                <button className='delbtn' 
+                >Delete Account</button>
+                <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
+                    <label htmlFor="password">Create New Password :
+                    &nbsp;&nbsp;&nbsp;</label>
                     <input type="password"
                      className="form-control"
                     name="password" id="password"
                     placeholder="Your password" value={password} 
                     />
                 </div>
-
-                <div className="col-md-13 mb-3 font">
-                    <label htmlFor="cf_password">Confirm New Password</label>
+                
+                <br></br>
+                <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
+                    <label htmlFor="cf_password">Confirm Password :
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input type="password"
                     className="form-control"
                     name="cf_password" id="cf_password"
                     placeholder="Confirm password" value={cf_password}  
                     />
                 </div>
-
-
-              <br/>
+            
                 <div>
-                    <em style={{color: "crimson"}}> 
+                    <em style={{color: "red",fontFamily:"sans-serif",fontStyle:"italic"}}> 
                     All fields with * are required.
                     </em>
                 </div>
-                <br/>
-               <center> <button disabled={loading} 
-                >Update</button> </center>
-
-<br/>  <br/>
+               
+               <center> <button className='savebtn' disabled={loading} 
+                >Save & Update</button> </center>
+              <br/>  <br/>
             </div>
-
-
-    </div>
-    </div>
-    
+         </div><br></br>
+       </div>   
   )
 }
