@@ -67,6 +67,47 @@ const servicesCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  updateService: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+        userEmail,
+        title,
+        description,
+        category,
+        location,
+        fee,
+        phone,
+        needBuyerAddress,
+        needDate,
+        isCOD,
+        isOnlinePayment,
+        image,
+      } = req.body;
+
+      if (!image) return res.status(400).json({ msg: "No image uploaded" });
+      await Services.findOneAndUpdate(
+        { _id: id },
+        {
+          userEmail,
+          title,
+          description,
+          category,
+          location,
+          fee,
+          phone,
+          needBuyerAddress,
+          needDate,
+          isCOD,
+          isOnlinePayment,
+          image,
+        }
+      );
+      res.status(200).json({ msg: "Service updated" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default servicesCtrl;
