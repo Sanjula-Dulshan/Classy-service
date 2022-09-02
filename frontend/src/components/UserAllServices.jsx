@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Loading from "./utils/loading/Loading";
+import { Link } from "react-router-dom";
 
 export default function UserAllServices() {
   const [services, setServices] = useState();
@@ -69,7 +70,9 @@ export default function UserAllServices() {
                     className="ui button"
                     style={{ backgroundColor: "#FEA82F", color: "black" }}
                   >
-                    Edit
+                    <Link id="btn_view" to={`/editService/${data._id}`}>
+                      Edit
+                    </Link>
                   </div>
                 </td>
                 <td>

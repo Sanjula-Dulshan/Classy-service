@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./styles/createService.css";
+import { useParams } from "react-router-dom";
 
 const initialState = {
   userEmail: "sdulshan10@gmail.com",
@@ -22,7 +23,28 @@ export default function CreateService() {
   const [image, setImage] = useState(false);
   const [service, setService] = useState(initialState);
 
+  const param = useParams();
+
   const [onEdit, setOnEdit] = useState(false);
+
+  useEffect(() => {
+    if (param.id) {
+      setOnEdit(true);
+      axios.get("/services").then((res) => {
+        res.data.forEach((service) => {
+          if (service._id === param.id) {
+            setService(service);
+            setImage(service.image);
+            console.log("service", service);
+          }
+        });
+      });
+    } else {
+      setOnEdit(false);
+      setService(initialState);
+      setImage(false);
+    }
+  }, []);
 
   //image upload handler
   const handleUpload = async (e) => {
@@ -88,17 +110,24 @@ export default function CreateService() {
       if (!image) return alert("No Image Upload");
       if (!(service.isCOD || service.isOnlinePayment))
         return alert("Please select a payment method");
-      await axios
-        .post("/services", { ...service, image })
-        .then(() => {
-          alert("Service created");
-          setService(initialState);
-          setImage(false);
-          window.location.reload(false);
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
+
+      if (onEdit) {
+        await axios
+          .put(`/services/${service._id}`, { ...service, image })
+          .then(() => {});
+      } else {
+        console.log("image", image);
+        await axios
+          .post("/services", { ...service, image })
+          .then(() => {
+            alert("Service created");
+            setService(initialState);
+            setImage(false);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      }
     } catch (err) {
       alert(err.response.data.msg);
     }
@@ -144,6 +173,7 @@ export default function CreateService() {
                     name="title"
                     id="title"
                     required
+                    value={service.title}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -161,6 +191,7 @@ export default function CreateService() {
                     id="description"
                     required
                     rows="5"
+                    value={service.description}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -173,6 +204,7 @@ export default function CreateService() {
                   <select
                     name="category"
                     className="form-control"
+                    value={service.category}
                     onChange={handleChangeInput}
                   >
                     <option value="">Select a category</option>
@@ -190,6 +222,7 @@ export default function CreateService() {
                     className="form-control"
                     id="location"
                     required
+                    value={service.location}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -211,6 +244,7 @@ export default function CreateService() {
                     pattern="07[1,2,5,6,7,8][0-9]{7}"
                     maxLength="10"
                     placeholder="07xxxxxxxx"
+                    value={service.phone}
                   />
                 </div>
                 <div className="col">
@@ -223,6 +257,7 @@ export default function CreateService() {
                     className="form-control"
                     id="fee"
                     required
+                    value={service.fee}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -237,6 +272,7 @@ export default function CreateService() {
                         className="form-check-input"
                         name="needBuyerAddress"
                         id="exampleCheck1"
+                        checked={service.needBuyerAddress}
                         onChange={handleChangeInput}
                       />
                       <label
@@ -252,6 +288,7 @@ export default function CreateService() {
                         className="form-check-input"
                         name="needDate"
                         id="exampleCheck1"
+                        checked={service.needDate}
                         onChange={handleChangeInput}
                       />
                       <label
@@ -280,6 +317,7 @@ export default function CreateService() {
                       className="form-check-input"
                       name="isCOD"
                       id="exampleCheck1"
+                      checked={service.isCOD}
                       onChange={handleChangeInput}
                     />
                     <label className="form-check-label" htmlFor="exampleCheck1">
@@ -293,6 +331,7 @@ export default function CreateService() {
                       className="form-check-input"
                       name="isOnlinePayment"
                       id="exampleCheck1"
+                      checked={service.isOnlinePayment}
                       onChange={handleChangeInput}
                     />
                     <label className="form-check-label" htmlFor="exampleCheck1">
