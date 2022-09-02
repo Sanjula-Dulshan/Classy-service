@@ -12,6 +12,7 @@ import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import ActivationEmail from './components/ActivationEmail';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/" exact component={AllServices} />
         <Route path="/addService" component={CreateService} />
         <Route path="/register" exact component={Register} />
+        <Route path="/user/activate/:activation_token" exact component={ActivationEmail}/>
         <Route path="/login" exact component={Login} />
       </Router>
     </div>
