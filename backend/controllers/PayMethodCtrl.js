@@ -13,8 +13,8 @@ const PatMethodCtrl = {
     createBank: async (req, res) => {
         try {
             const { bankName, uid, accName, accNumber, branchName } = req.body;
-            const bank = await BankData.findOne({ bankName })
-            if (bank) return res.status(400).json({ msg: "This bank already exists." })
+            const user = await BankData.findOne({ uid })
+            if (user) return res.status(400).json({ msg: "This bank already exists." })
 
             const newBank = new BankData({
                 bankName, uid, accName, accNumber, branchName
@@ -40,9 +40,9 @@ const PatMethodCtrl = {
 
     updateBank: async (req, res) => {
         try {
-            const { bankName, bankCode, accountName, accountNumber, accountType } = req.body;
+            const { bankName, uid, accName, accNumber, branchName  } = req.body;
             await BankData.findOneAndUpdate({ _id: req.params.id }, {
-                bankName, bankCode, accountName, accountNumber, accountType
+                bankName, uid, accName, accNumber, branchName 
             })
 
             res.json({ msg: "Bank updated successfully!" })
