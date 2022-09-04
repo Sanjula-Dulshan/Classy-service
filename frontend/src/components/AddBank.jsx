@@ -23,89 +23,31 @@ export default function CreateService() {
   const [accNumber, setAccNumber] = useState();
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
+  const [isAgree, setIsAgree] = useState(false);
 
 
-
-  //image upload handler
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    try {
-      console.log("e.target", e.target.files[0]);
-      const file = e.target.files[0];
-
-      if (!file) return alert("File not exist.");
-
-      if (file.size > 5 * 1024 * 1024)
-        // 5mb
-        return alert("Maximum file size: 5MB");
-
-      if (file.type !== "image/jpeg" && file.type !== "image/png")
-        return alert("Please upload only jpeg/png");
-
-      let formData = new FormData();
-      console.log("formData", formData);
-      formData.append("file", file);
-      console.log("formData.append", formData);
-
-      setLoading(true);
-      const res = await axios.post("/image/upload", formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-      setLoading(false);
-      setImage(res.data);
-      console.log("res", res);
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
-
-  //delete image on cloudinary
-  const handleDestroy = async () => {
-    try {
-      setLoading(true);
-      await axios.post("/image/destroy", { public_id: image.public_id });
-      setLoading(false);
-      setImage(false);
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
-
-  const handleChangeInput = (e) => {
-    if (e.target.type === "checkbox") {
-      const { name, checked } = e.target;
-      setService({ ...service, [name]: checked });
-    } else {
-      const { name, value } = e.target;
-      setService({ ...service, [name]: value });
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("service", service);
-    try {
-      if (!image) return alert("No Image Upload");
-      if (!(service.isCOD || service.isOnlinePayment))
-        return alert("Please select a payment method");
-      await axios
-        .post("/services", { ...service, image })
-        .then(() => {
-          alert("Service created.");
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
-    } catch (err) {
-      alert(err.response.data.msg);
+    setLoading(true);
+    const newBank = {
+      uid,
+      accName,
+      accNumber,
+      bankName,
+      branchName,
     }
+    try {
+      await axios.post("/bank/add", newBank);
+      window.location.replace("/bank");
+    } catch (err) {
+      alert(err);
+    }
+    setLoading(false);
+    
   };
 
-  const styleUpload = {
-    display: image ? "block" : "none",
-  };
+  
   return (
     <div className="card-row">
       <div className="card-column">
@@ -125,7 +67,7 @@ export default function CreateService() {
                     name="acc_name"
                     id="acc_name"
                     required
-                    onChange={handleChangeInput}
+                    onChange={setAccName}
                   />
                 </div>
               
@@ -141,7 +83,7 @@ export default function CreateService() {
                     name="acc_number"
                     id="acc_number"
                     required
-                    onChange={handleChangeInput}
+                    onChange={setAccNumber}
                   />
                 </div>
               </div>
@@ -155,7 +97,7 @@ export default function CreateService() {
                   <select
                     name="bank"
                     className="form-control"
-                    onChange={handleChangeInput}
+                    onChange={setBankName}
                   >
                     <option value="">Select a category</option>
                     <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
@@ -179,7 +121,7 @@ export default function CreateService() {
                     className="form-control"
                     id="branch"
                     required
-                    onChange={handleChangeInput}
+                    onChange={setBranchName}
                   />
                 </div>
               </div>
@@ -195,7 +137,7 @@ export default function CreateService() {
                         className="form-check-input"
                         name="needBuyerAddress"
                         id="exampleCheck1"
-                        onChange={handleChangeInput}
+                        onChange={setIsAgree}
                       />
                       <label
                         className="form-check-label"
