@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./allServices.css";
 
-export default function () {
+export default function AllServices() {
   const [services, setServices] = useState([]);
   useEffect(() => {
     axios
@@ -24,7 +24,10 @@ export default function () {
   };
 
   return (
-    <div class="ui cards mt-4 container" style={{ marginLeft: "10%" }}>
+    <div
+      class="ui cards mt-4 container"
+      style={{ marginLeft: "10%", marginBottom: "30px" }}
+    >
       {services.map((data, index) => (
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">
@@ -38,6 +41,7 @@ export default function () {
               class="left floated ui image"
               style={{ height: "60px", width: "70px" }}
               src={data.image.url}
+              alt=""
             />
 
             <div class="header">
