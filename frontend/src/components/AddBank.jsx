@@ -114,7 +114,7 @@ export default function CreateService() {
               <div className="row mt-4">
                 <div className="col">
                   <label htmlFor="title" className="form-label">
-                    Title
+                    Account Name
                   </label>
                   <input
                     type="text"
@@ -127,26 +127,27 @@ export default function CreateService() {
                 </div>
               </div>
 
-              <div className="row mt-3">
+              <div className="row mt-4">
                 <div className="col">
-                  <label htmlFor="description" className="form-label">
-                    Description
+                  <label htmlFor="title" className="form-label">
+                    Account Number
                   </label>
-                  <textarea
-                    type="text"
-                    name="description"
+                  <input
+                    type="number"
                     className="form-control"
-                    id="description"
+                    name="title"
+                    id="title"
                     required
-                    rows="5"
                     onChange={handleChangeInput}
                   />
                 </div>
               </div>
+
+              
               <div className="row mt-3">
                 <div className="col">
                   <label htmlFor="categories" className="form-label">
-                    Categories:
+                    Bank
                   </label>
                   <select
                     name="category"
@@ -160,7 +161,7 @@ export default function CreateService() {
                 </div>
                 <div className="col">
                   <label htmlFor="location" className="form-label">
-                    Location
+                    Branch
                   </label>
                   <input
                     type="text"
@@ -173,63 +174,7 @@ export default function CreateService() {
                 </div>
               </div>
 
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="fee" className="form-label">
-                    Fee
-                  </label>
-                  <input
-                    type="number"
-                    name="fee"
-                    className="form-control"
-                    id="fee"
-                    required
-                    onChange={handleChangeInput}
-                  />
-                </div>
-
-                <div className="col">
-                  <label
-                    htmlFor="location"
-                    className="form-label"
-                    style={{ visibility: "hidden" }}
-                  >
-                    Location
-                  </label>
-                  <input type="text" style={{ visibility: "hidden" }} />
-                </div>
-              </div>
-
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="fee" className="form-label">
-                    Mobile No:
-                  </label>
-
-                  <input
-                    type="tel"
-                    name="phone"
-                    className="form-control"
-                    id="phone"
-                    required
-                    onChange={handleChangeInput}
-                    pattern="07[1,2,5,6,7,8][0-9]{7}"
-                    maxLength="10"
-                    placeholder="07xxxxxxxx"
-                  />
-                </div>
-
-                <div className="col">
-                  <label
-                    htmlFor="location"
-                    className="form-label"
-                    style={{ visibility: "hidden" }}
-                  >
-                    Location
-                  </label>
-                  <input type="text" style={{ visibility: "hidden" }} />
-                </div>
-              </div>
+             
 
               <div className="row mt-5">
                 <div className="col">
@@ -246,64 +191,15 @@ export default function CreateService() {
                         className="form-check-label"
                         htmlFor="exampleCheck1"
                       >
-                        I need buyer’s address to provide the service
+                        I accept terms and conditions
                       </label>
                     </div>
-                    <div>
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        name="needDate"
-                        id="exampleCheck1"
-                        onChange={handleChangeInput}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleCheck1"
-                      >
-                        I need the date and time to deliver my service
-                      </label>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
 
-              <div className="row mt-5">
-                <div className="col">
-                  <label
-                    htmlFor="description"
-                    className="form-label fw-bolder "
-                  >
-                    I accept payment by:
-                  </label>
-
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name="isCOD"
-                      id="exampleCheck1"
-                      onChange={handleChangeInput}
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                      Cash On Deliver
-                    </label>
-                  </div>
-
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name="isOnlinePayment"
-                      id="exampleCheck1"
-                      onChange={handleChangeInput}
-                    />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                      Online Payments
-                    </label>
-                  </div>
-                </div>
-              </div>
+              
 
               <div className="row ">
                 <div className="col flex_box">
