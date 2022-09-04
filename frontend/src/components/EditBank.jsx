@@ -8,6 +8,7 @@ import PropagateLoader from 'react-spinners/PropagateLoader';
 
 export default function EditBank() {
   const [loading, setLoading] = useState(false);
+  const [id , setId] = useState();
   const [uid, setUid] = useState("1234");
   const [accName, setAccName] = useState();
   const [accNumber, setAccNumber] = useState();
@@ -17,18 +18,19 @@ export default function EditBank() {
 
   useEffect(() => {
     const getBank = async () => {
-      const res = await axios.get("http://localhost:8070/bank/" + uid);
+      const res = await axios.get("http://localhost:8070/bank/user/" + uid);
       setAccName(res.data.accName);
       setAccNumber(res.data.accNumber);
       setBankName(res.data.bankName);
       setBranchName(res.data.branchName);
+      setId(res.data._id);
     };
     getBank();
+
   }, [uid]);
 
-  
 
-  
+ 
 
 
 
@@ -49,7 +51,7 @@ export default function EditBank() {
 
       console.log(newBank);
       try {
-        await axios.post("http://localhost:8070/bank/", newBank);
+        await axios.put("http://localhost:8070/bank/"+id, newBank);
         window.location.replace("/");
       } catch (err) {
         alert(err);
@@ -58,6 +60,27 @@ export default function EditBank() {
     }
     
   };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    //confirm delete
+    if (window.confirm("Are you sure you want to delete this bank account?")) {
+
+      try {
+        await axios.delete("http://localhost:8070/bank/"+id);
+        alert("Bank account deleted successfully");
+        window.location.replace("/");
+      } catch (err) {
+        alert(err);
+      }
+    }
+    setLoading(false);
+  }
+    
+
+
 
   
   return (
@@ -85,6 +108,7 @@ export default function EditBank() {
                     name="acc_name"
                     id="acc_name"
                     required
+                    value={accName}
                     onChange={(e) => setAccName(e.target.value)}
                   />
                 </div>
@@ -100,7 +124,9 @@ export default function EditBank() {
                     className="form-control"
                     name="acc_number"
                     id="acc_number"
+
                     required
+                    value={accNumber}
                     onChange={(e) => setAccNumber(e.target.value)}
                   />
                 </div>
@@ -115,6 +141,9 @@ export default function EditBank() {
                   <select
                     name="bank"
                     className="form-control"
+                    id="bank"
+                    required
+                    value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
                   >
                     <option value="">Select a category</option>
@@ -139,6 +168,7 @@ export default function EditBank() {
                     className="form-control"
                     id="branch"
                     required
+                    value={branchName}
                     onChange={(e) => setBranchName(e.target.value)}
                   />
                 </div>
@@ -173,7 +203,7 @@ export default function EditBank() {
                   <button type="submit" className="btn btn-cancel">
                     Cancel
                   </button>
-                  <button style={{"position":"relative"}} className="btn btn-del">
+                  <button onClick={handleDelete} className="btn btn-del">
                     Delete
                   </button>
                   <button type="submit" className="btn btn-create">
