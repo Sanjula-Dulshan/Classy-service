@@ -15,6 +15,7 @@ import {
 // import "semantic-ui-css/semantic.min.css";
 import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
+import ViewService from "./components/ViewService";
 
 import Wishlist from "./components/Wishlist";
 
@@ -62,6 +63,7 @@ function App() {
 
   return (
     <div>
+
       <BrowserRouter>
         <Sidebar />
         <Routes>
@@ -99,6 +101,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Footer />
+
     </div>
   );
 }
