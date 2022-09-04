@@ -1,6 +1,6 @@
 import "./CSS/userFunction.css";
 import React, {useState} from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import {showErrMsg, showSuccessMsg} from './utils/notification/Notification'
 import {dispatchLogin} from '../redux/actions/authAction'
@@ -18,8 +18,8 @@ const initialState = {
 function Login() {
     const [user, setUser] = useState(initialState)
     
-    const dispatch = useDispatch()
-    const history = useHistory()
+    const dispatch = useDispatch();
+    //const navigate = useNavigate();
 
     const {email, password,user_role, err, success} = user
 
@@ -39,7 +39,7 @@ function Login() {
             localStorage.setItem('firstLogin', true)
          
             dispatch(dispatchLogin())
-            history.push("/profile")
+            //navigate("/profile")
 
         } catch (err) {
             err.response.data.msg && 
@@ -85,7 +85,7 @@ function Login() {
                                 <label className="t-form-label-login">
                                 <label className="t-form-label2">*</label>
                                     Email Address</label>
-                                <input type="email"  style={{width:"450px"}} className="t-form-reg" id="email"
+                                <input className="inp-fields" type="email"  style={{width:"450px"}} id="email"
                                     placeholder="Enter Valid Email"
                                     value={email}
                                     name="email"
@@ -93,12 +93,11 @@ function Login() {
                                     required
                                 />
                        </div>
-    
                    <div className="mb-3">
                                 <label className="t-form-label-login">
                                 <label className="t-form-label2">*</label>
                                  Password</label>
-                                <input type="password"  style={{width:"450px"}} className="t-form-reg" id="password"
+                                <input className="inp-fields" type="password"  style={{width:"450px"}}  id="password"
                                     placeholder="Enter Password"
                                     value={password}
                                     name="password"
@@ -106,7 +105,7 @@ function Login() {
                                     required
                                 />
                        </div>
-
+                    
                        <div className="mb-3">
                             <label className="t-form-label-login">What Do You Want?</label>
                             
@@ -123,7 +122,7 @@ function Login() {
                      <br></br> 
                      <div style={{display:"flex"}}>
                      <label className="t-form-label3">*Select your need from the dropdown.</label> 
-                      
+            
                      <div className="pwd" style={{display:"flex"}}>
                         <Link to="#" >Forgot Password?</Link>
                      </div>

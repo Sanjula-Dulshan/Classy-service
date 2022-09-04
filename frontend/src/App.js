@@ -14,6 +14,8 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import ActivationEmail from './components/ActivationEmail';
 import Profile from "./components/Profile";
+//import Pwd from "./components/Pwd";
+
 
 function App() {
 
@@ -58,6 +60,8 @@ function App() {
         <Route path="/user/activate/:activation_token" exact component={ActivationEmail}/>
         <Route path="/login" exact component={Login} />
         <Route path="/profile" exact component={ isLogged ? Profile :NotFound}/>
+        {/* <Route path="/pwd" exact component={Pwd} /> */}
+        
       </Router>
      
     </div>

@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {isLength, isMatch} from './utils/validation/Validation'
 import {showSuccessMsg, showErrMsg} from './utils/notification/Notification'
 import "./CSS/profile.css";
+import PasswordChecklist from "react-password-checklist"
 
 
 const initialState = {
@@ -66,7 +67,7 @@ export default function Profile() {
          </label> 
          <input type="text"
           className="form-control"
-         name="name" id="name" defaultValue={user.name}
+          id="name" defaultValue={user.name}
           placeholder="Your name" 
            />
     </div>
@@ -80,19 +81,19 @@ export default function Profile() {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input type="email"
                      className="form-control"
-                    name="email" id="email" defaultValue={user.email}
+                    id="email" defaultValue={user.email}
                     placeholder="Your email address" disabled />
                 </div>
 
                 <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
-                    <label htmlFor="about">
+                    <label htmlFor="mobile">
                     <label style={{color:"red"}}>*</label>
                      Mobile Number:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <input type="text"
                     className="form-control"
-                    name="mobile" id="mobile"
+                     id="mobile"
                     placeholder="Mobile Number"defaultValue={user.mobile}  
                     />
                 </div>
@@ -103,18 +104,32 @@ export default function Profile() {
                     &nbsp;&nbsp;&nbsp;</label>
                     <input type="password"
                      className="form-control"
-                    name="password" id="password"
+                     id="password"
                     placeholder="Your password" value={password} 
+                    
                     />
                 </div>
+                <div className="pwd-checklist-profile">
+                   <PasswordChecklist 
+				     rules={["minLength","number","capital"]}
+				     minLength={8}
+				     value={password}
+                     messages={{
+                        minLength: "At least 8 characters.",
+                        number: "Minimum One Numeric Value.",
+                        capital: "Minimum One Uppercase Letter."    
+                    }}
+			/>
+               <br></br>
+            </div>
                 
-                <br></br>
+               
                 <div className="col-md-13 mb-3 font" style={{display:"flex"}}>
                     <label htmlFor="cf_password">Confirm Password :
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <input type="password"
                     className="form-control"
-                    name="cf_password" id="cf_password"
+                    id="cf_password"
                     placeholder="Confirm password" value={cf_password}  
                     />
                 </div>
