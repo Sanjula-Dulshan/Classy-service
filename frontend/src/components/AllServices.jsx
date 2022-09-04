@@ -24,7 +24,7 @@ export default function () {
   };
 
   return (
-    <div class="ui cards mt-4 container" style={{ marginLeft: "10%" }}>
+    <div class="ui cards mt-5 container " style={{ marginRight: "50%" }}>
       {services.map((data, index) => (
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">

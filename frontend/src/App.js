@@ -10,13 +10,16 @@ import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import Register from "./components/Register";
 
+import Sidebar from "./components/Sidebar";
+
 function App() {
   return (
     <div>
       <Router>
+        <Sidebar />
         <Route path="/" exact component={AllServices} />
         <Route path="/addService" component={CreateService} />
-        <Route path="/register"  component={Register} />
+        <Route path="/register" component={Register} />
       </Router>
     </div>
   );
