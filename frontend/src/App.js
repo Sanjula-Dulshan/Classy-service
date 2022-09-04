@@ -17,6 +17,7 @@ import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
+import AddBank from "./components/AddBank";
 
 import Footer from "./components/footer/Footer";
 
@@ -76,9 +77,12 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
+   
+          <Route path="/addBank"  exact elemen={AddBank} />
         </Routes>
       </BrowserRouter>
       <Footer />
+
     </div>
   );
 }
