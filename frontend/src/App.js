@@ -30,7 +30,6 @@ import Profile from "./components/Profile";
 
 import Sidebar from "./components/Sidebar";
 
-
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
@@ -63,8 +62,8 @@ function App() {
 
   return (
     <div>
-
       <BrowserRouter>
+        <Sidebar />
         <Routes>
           <Route path="/" exact element={<AllServices />} />
           <Route
@@ -90,8 +89,13 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
+          <Route
+            path="/wishlist"
+            exact
+            element={isLogged ? <Wishlist /> : <NotFound />}
+          />
 
-          <Route path="/addBank" exact elemen={AddBank} />
+          <Route path="/addBank" exact element={<AddBank />} />
         </Routes>
       </BrowserRouter>
       <Footer />
