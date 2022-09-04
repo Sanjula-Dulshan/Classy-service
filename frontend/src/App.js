@@ -11,6 +11,7 @@ import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" exact element={<Register />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }
