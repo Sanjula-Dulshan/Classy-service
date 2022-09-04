@@ -11,4 +11,4 @@ const tokenReducer = (state = token, action) => {
     }
 }
 
-export default tokenReducer
+export default tokenReducer;

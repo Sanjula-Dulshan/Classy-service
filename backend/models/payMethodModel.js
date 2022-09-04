@@ -5,22 +5,22 @@ const payMethodSchema = new Schema({
     
     uid : {
         type : String,
-        required : true
+       required : true
     },
 
     accName : {
         type : String,
-        required : true
+       required : true
     },
 
     accNumber : {
         type : String,
-        required : true
+       required : true
     },
 
     bankName : {
         type : String,
-        required : true
+       required : true
     },
 
     branchName : {

@@ -33,7 +33,6 @@ const uploadCtrl = {
           file.tempFilePath,
           { folder: "Classy" },
           async (err, result) => {
-            console.log("result", result);
             if (err) {
               throw err;
             }

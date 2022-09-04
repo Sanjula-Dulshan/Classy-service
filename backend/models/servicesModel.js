@@ -3,12 +3,19 @@ const Schema = mongoose.Schema;
 
 const servicesSchema = new Schema(
   {
+    userEmail: {
+      type: String,
+      trim: true,
+      required: true,
+    },
     title: {
       type: String,
+      trim: true,
       required: true,
     },
     description: {
       type: String,
+      trim: true,
       required: true,
     },
     category: {
@@ -17,6 +24,7 @@ const servicesSchema = new Schema(
     },
     location: {
       type: String,
+      trim: true,
       required: true,
     },
     phone: {
@@ -28,7 +36,7 @@ const servicesSchema = new Schema(
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
     needBuyerAddress: {
