@@ -50,6 +50,7 @@ const servicesCtrl = {
     }
   },
   getUserServices: async (req, res) => {
+    console.log("getUserServices", req.params);
     try {
       const { userEmail } = req.params;
       const services = await Services.find({ userEmail });

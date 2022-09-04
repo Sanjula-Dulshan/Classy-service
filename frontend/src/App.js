@@ -59,9 +59,17 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" exact element={<AllServices />} />
-          <Route path="/addService" exact element={<CreateService />} />
+          <Route
+            path="/addService"
+            exact
+            element={isLogged ? <CreateService /> : <NotFound />}
+          />
           <Route path="/editService/:id" exact element={<CreateService />} />
-          <Route path="/userServices" exact element={<UserAllServices />} />
+          <Route
+            path="/userServices"
+            exact
+            element={isLogged ? <UserAllServices /> : <NotFound />}
+          />
           <Route path="/register" exact element={<Register />} />
           <Route
             path="/user/activate/:activation_token"

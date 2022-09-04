@@ -3,9 +3,10 @@ import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./styles/createService.css";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const initialState = {
-  userEmail: "sdulshan10@gmail.com",
+  userEmail: "",
   title: "",
   description: "",
   category: "",
@@ -19,6 +20,10 @@ const initialState = {
   image: "",
 };
 export default function CreateService() {
+  const auth = useSelector((state) => state.auth);
+  const { email } = auth.user;
+  initialState.userEmail = email;
+
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(false);
   const [service, setService] = useState(initialState);
