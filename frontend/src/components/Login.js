@@ -1,6 +1,6 @@
 import "./CSS/userFunction.css";
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import {showErrMsg, showSuccessMsg} from './utils/notification/Notification'
 import {dispatchLogin} from '../redux/actions/authAction'
@@ -19,7 +19,7 @@ function Login() {
     const [user, setUser] = useState(initialState)
     
     const dispatch = useDispatch();
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const {email, password,user_role, err, success} = user
 
@@ -39,7 +39,7 @@ function Login() {
             localStorage.setItem('firstLogin', true)
          
             dispatch(dispatchLogin())
-            //navigate("/profile")
+            navigate("/profile")
 
         } catch (err) {
             err.response.data.msg && 
