@@ -8,10 +8,10 @@ export const dispatchLogin = () => {
 }
 
 export const fetchUser = async (token) => {
-    const res = await axios.get('http://localhost:8070/user/infor', {
+    const res = await axios.get('user/infor', {
         headers: {Authorization: token}
     })
-    return res
+    return res;
 }
 
 export const dispatchGetUser = (res) => {
