@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
 
 export default function ViewService() {
   const [title, setTitle] = useState("");
@@ -10,7 +9,6 @@ export default function ViewService() {
   const [location, setLocation] = useState("");
   const [fee, setFee] = useState("");
   const [phone, setPhone] = useState("");
-  const history = useHistory();
 
   const [_id, set_id] = useState("");
 
@@ -40,7 +38,7 @@ export default function ViewService() {
   return (
     <div>
       <div className="mt-5 ">
-        <a href="" onClick={() => history.push("/")}>
+        <a href="">
           <i
             class="fas fa-arrow-circle-left"
             style={{ fontSize: "22px", marginLeft: "15%", color: "#FEA82F" }}
