@@ -19,13 +19,9 @@ import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import AddBank from "./components/AddBank";
 
-import Footer from "./components/footer/Footer";
-
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
-
-
 
 function App() {
   const dispatch = useDispatch();
@@ -85,12 +81,10 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
-   
-          <Route path="/addBank"  exact elemen={AddBank} />
+
+          <Route path="/addBank" exact element={<AddBank />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
-
     </div>
   );
 }
