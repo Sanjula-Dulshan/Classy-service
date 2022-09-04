@@ -1,5 +1,4 @@
 {
-
     "name": "frontend",
     "version": "0.1.0",
     "private": true,
@@ -33,11 +32,6 @@
         "semantic-ui-react": "^0.82.5",
         "web-vitals": "^2.1.4",
         "react-icons": "^4.4.0"
-    
-   
-   
-    
-    
     },
     "scripts": {
         "start": "react-scripts start",
@@ -64,5 +58,4 @@
         ]
     },
     "proxy": "http://localhost:8070"
-
 }
