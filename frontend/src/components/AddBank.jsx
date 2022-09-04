@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
+import LoadingOverlay from 'react-loading-overlay';
+import PropagateLoader from 'react-spinners/PropagateLoader';
 
 const initialState = {
   title: "",
@@ -29,23 +31,28 @@ export default function CreateService() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const newBank = {
-      uid,
-      accName,
-      accNumber,
-      bankName,
-      branchName,
-    }
+    if (!isAgree) {
+      alert("Please agree to the terms and conditions");
+      return;
+    }else{
+      setLoading(true);
+      const newBank = {
+        uid,
+        accName,
+        accNumber,
+        bankName,
+        branchName,
+      }
 
-    console.log(newBank);
-    try {
-      await axios.post("http://localhost:8070/bank/", newBank);
-      window.location.replace("/bank");
-    } catch (err) {
-      alert(err);
+      console.log(newBank);
+      try {
+        await axios.post("http://localhost:8070/bank/", newBank);
+        window.location.replace("/bank");
+      } catch (err) {
+        alert(err);
+      }
+      setLoading(false);
     }
-    setLoading(false);
     
   };
 
@@ -53,9 +60,15 @@ export default function CreateService() {
   return (
     <div className="card-row">
       <div className="card-column">
+        <LoadingOverlay
+              active={loading}
+              spinner={<PropagateLoader />}
+          >
         <div className="bg-card">
           <label className="title">ADD BANK DETAILS</label>
           <div className="add_bank">
+
+            
            
             <form onSubmit={handleSubmit}>
               
@@ -166,8 +179,10 @@ export default function CreateService() {
                 </div>
               </div>
             </form>
+            
           </div>
         </div>
+        </LoadingOverlay>
       </div>
     </div>
   );
