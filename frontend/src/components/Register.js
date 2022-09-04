@@ -3,7 +3,8 @@ import React, {useState} from 'react'
 import { Link} from 'react-router-dom'
 import axios from 'axios'
 import {showErrMsg, showSuccessMsg} from './utils/notification/Notification'
-import {isEmpty, isEmail, isLength, isMatch} from './utils/validation/Validation.js';
+import {isEmpty, isEmail, isLength, isMatch} from './utils/validation/Validation.js'
+import PasswordChecklist from "react-password-checklist"
 
 
 
@@ -96,7 +97,7 @@ const handleSubmit = async e => {
                             <label className="t-form-label" > 
                             <label className="t-form-label2">*</label>
                             Name</label>
-                            <input type="text"  style={{width:"450px"}} className="t-form-reg" id="name"
+                            <input type="text"  style={{width:"450px"}} className="inp-fields" id="name"
                                 placeholder="Enter Name"
                                 value={name}
                                 name="name"
@@ -109,7 +110,7 @@ const handleSubmit = async e => {
                             <label className="t-form-label">
                             <label className="t-form-label2">*</label>
                                 Email Address</label>
-                            <input type="email"  style={{width:"450px"}} className="t-form-reg" id="email"
+                            <input type="email"  style={{width:"450px"}} className="inp-fields" id="email"
                                 placeholder="Enter Email"
                                 value={email}
                                 name="email"
@@ -122,7 +123,7 @@ const handleSubmit = async e => {
                             <label className="t-form-label">
                             <label className="t-form-label2">*</label>
                                 NIC Number</label>
-                            <input type="text"  style={{width:"450px"}} className="t-form-reg" id="nic"
+                            <input type="text"  style={{width:"450px"}} className="inp-fields" id="nic"
                                 placeholder="Enter NIC Number"
                                 value={nic}
                                 name="nic"
@@ -135,7 +136,7 @@ const handleSubmit = async e => {
                             <label className="t-form-label">
                             <label className="t-form-label2">*</label>
                             Mobile Number</label>
-                            <input type="text"  style={{width:"450px"}} className="t-form-reg" id="mobile"
+                            <input type="text"  style={{width:"450px"}} className="inp-fields" id="mobile"
                                 placeholder="Enter Mobile Number"
                                 value={mobile}
                                 name="mobile"
@@ -148,20 +149,38 @@ const handleSubmit = async e => {
                             <label className="t-form-label">
                             <label className="t-form-label2">*</label>
                                 Enter Password</label>
-                            <input type="password"  style={{width:"450px"}} className="t-form-reg" id="password"
-                                placeholder="Enter Password(At least 8 characters)"
+                            <input type="password"  style={{width:"450px"}} className="inp-fields" id="password"
+                                placeholder="Enter Password"
                                 value={password}
                                 name="password"
                                 onChange={handleChangeInput}
                                 required
                             />
                    </div>
+                   <div className="pwd-checklist">
+                   <PasswordChecklist 
+				     rules={["minLength","number","capital"]}
+				     minLength={8}
+				     value={password}
+                     messages={{
+                        minLength: "At least 8 characters.",
+                        number: "Minimum One Numeric Value.",
+                        capital: "Minimum One Uppercase Letter."    
+                    }}
+			/>
+               <br></br>
+                <p>Your password must contain at least one numeric value and
+                <br></br>one uppercase letter with minimum 8 characters.
+                </p>
+            </div>
+
+         
 
               <div className="mb-3">
                             <label className="t-form-label">
                             <label className="t-form-label2">*</label>
                                 Confirm Password</label>
-                            <input type="password"  style={{width:"450px"}} className="t-form-reg" id="cf_password"
+                            <input type="password"  style={{width:"450px"}} className="inp-fields" id="cf_password"
                                placeholder="Confirm Password"
                                 value={cf_password}
                                 name="cf_password"

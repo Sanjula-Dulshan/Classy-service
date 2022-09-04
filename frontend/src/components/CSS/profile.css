@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.pwd-checklist-profile{
+    margin-left: 45%;
+    margin-top: -1%;
+}
 .profimage{
     margin-top: 0%;
     width: 50px;

@@ -1,17 +1,41 @@
-body {
-  margin: 0px;
+body{
+    margin: 0px;
 }
 
-.topic-container {
-  display: grid;
-  height: 100vh;
-  grid-template-columns: 45% auto;
+.topic-container{
+    display: grid;
+    height:100vh;
+    grid-template-columns: 45% auto;
 }
 
-.t-from-container {
-  align-content: center;
-  margin-left: 30%;
-  margin-top: 40px;
+.inp-fields{
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #0F0934;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.5s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-left: 18%;
+}
+
+.pwd-checklist{
+    margin-left: 19%;
+    margin-top: -1%;
+}
+
+.t-from-container{
+    align-content : center;
+    margin-left: 30%;
+    margin-top: 40px;
 }
 
 .t-form-label {
