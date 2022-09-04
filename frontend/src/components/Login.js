@@ -1,33 +1,33 @@
-import "./CSS/userFunction.css";
-import React, {useState} from 'react'
-import { Link,useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import {showErrMsg, showSuccessMsg} from './utils/notification/Notification'
-import {dispatchLogin} from '../redux/actions/authAction'
-import {useDispatch} from 'react-redux'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { showErrMsg, showSuccessMsg } from "./utils/notification/Notification";
+import { dispatchLogin } from "../redux/actions/authAction";
+import { useDispatch } from "react-redux";
 
 
 const initialState = {
-    email: '',
-    password: '',
-    user_role:'',
-    err: '',
-    success: ''
-}
+  email: "",
+  password: "",
+  user_role: "",
+  err: "",
+  success: "",
+};
 
 function Login() {
-    const [user, setUser] = useState(initialState)
-    
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    const {email, password,user_role, err, success} = user
+  const [user, setUser] = useState(initialState);
 
-    const handleChangeInput = e => {
-        const {name, value} = e.target
-        setUser({...user, [name]:value, err: '', success: ''})
-    }
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { email, password, user_role, err, success } = user;
+
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value, err: "", success: "" });
+  };
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -46,8 +46,8 @@ function Login() {
             setUser({...user, err: err.response.data.msg, success: ''})
         }
     }
-    return (
-        <div className="topic-container">
+  return (
+     <div className="topic-container">
         <div style={{backgroundColor:"#FEA82F"}}>
     
             <div  className="t-title-container">

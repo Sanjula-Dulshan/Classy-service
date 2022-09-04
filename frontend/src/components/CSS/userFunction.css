@@ -39,12 +39,12 @@ body{
 }
 
 .t-form-label {
-    margin-top: 0.3rem;
-    font-size: 1.3rem;
-    margin-left: 18%;
-    font-weight:bold;
-    font-family:'Roboto', sans-serif;
-    color: #000000;
+  margin-top: 0.3rem;
+  font-size: 1.3rem;
+  margin-left: 18%;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  color: #000000;
 }
 
 .t-form-label-login {
@@ -57,53 +57,56 @@ body{
 }
 
 .t-form-label2 {
+
     margin-top: 0.3rem;
     font-size: 1.3rem;
     font-weight: 400;
     font-family:'sans-serif';
     color: #ff0000;
+
 }
 
 .t-form-label3 {
-    margin-top: 0.3rem;
-    font-size: 1rem;
-    margin-left: 18%;
-    font-weight: 300;
-    font-family:'sans-serif';
-    color: #ff0000;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  margin-left: 18%;
+  font-weight: 300;
+  font-family: "sans-serif";
+  color: #ff0000;
 }
+
 
 .t-title-container{
     align-content : center;
     margin-left: 15%;
     margin-top: 15%;
    
+
 }
 
-
-.sideLable{
-    color:#2D0202;
-    font-size:6rem ;
-    font-weight:300;
-    font-family:'Roboto', sans-serif;
+.sideLable {
+  color: #2d0202;
+  font-size: 6rem;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
 }
 
-.sideLable1{
-    color:#F24E1E;
-    font-size:6rem ;
-    font-weight:300;
-    font-family:'Roboto', sans-serif;
+.sideLable1 {
+  color: #f24e1e;
+  font-size: 6rem;
+  font-weight: 300;
+  font-family: "Roboto", sans-serif;
 }
 
-.Hfontreg{
-    font-size:2.5rem ;
-    font-weight:200;
-    font-family:'Franklin Gothic Medium';
-    color:#FEA82F;
-    font-Weight:"bold";
-    margin-left: 15%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+.Hfontreg {
+  font-size: 2.5rem;
+  font-weight: 200;
+  font-family: "Franklin Gothic Medium";
+  color: #fea82f;
+  font-weight: "bold";
+  margin-left: 15%;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .Hfontreg2{
@@ -129,17 +132,18 @@ body{
 }
 
 .btn-register {
-    color: #fff;
-    font-size: large;
-    background-color: #FEA82F;
-    border-color: #FEA82F;
-    border-radius: 16px;
-    width:140px;
-    margin-left: 30%;
-    margin-bottom: 10%;
-    padding-bottom: 10px;
-    height: 5vh;
+  color: #fff;
+  font-size: large;
+  background-color: #fea82f;
+  border-color: #fea82f;
+  border-radius: 16px;
+  width: 140px;
+  margin-left: 30%;
+  margin-bottom: 10%;
+  padding-bottom: 10px;
+  height: 5vh;
 }
+
 
 .btn-login {
     color: #fff;
@@ -172,34 +176,35 @@ body{
     font-weight:150;
     font-family:'Roboto', sans-serif;
     margin-bottom: 4%;
+
 }
 
-.subLable2{
-    color:#352111; 
-    font-size:2rem ;
-    font-weight:100;
-    font-family:'Roboto', sans-serif;
+.subLable2 {
+  color: #352111;
+  font-size: 2rem;
+  font-weight: 100;
+  font-family: "Roboto", sans-serif;
 }
 
-.sublable-container{
-    width: 490px;
-    margin-left: 15%;
-    margin-top: 8px;
+.sublable-container {
+  width: 490px;
+  margin-left: 15%;
+  margin-top: 8px;
 }
 
-.sublable-container2{
-    width: 490px;
-    margin-left: 15%;
-    margin-top: 35px;
+.sublable-container2 {
+  width: 490px;
+  margin-left: 15%;
+  margin-top: 35px;
 }
 
-.side-btn{
-    background-color: #423E3B;
-    font-size:2rem ;
-    color:#fff;
-    border-radius: 8px;
-    padding: 5px 10px 5px;
-    margin-left: 15%;
+.side-btn {
+  background-color: #423e3b;
+  font-size: 2rem;
+  color: #fff;
+  border-radius: 8px;
+  padding: 5px 10px 5px;
+  margin-left: 15%;
 }
 
 .side-btn1{
@@ -221,6 +226,4 @@ body{
 }
 
 
-  
-
-  
+ 

@@ -54,7 +54,10 @@ export default function UserAllServices() {
       </div>
     );
   return (
-    <div className="ui cards mt-4 container" style={{ marginLeft: "10%" }}>
+    <div
+      className="ui cards mt-4 container"
+      style={{ marginLeft: "10%", marginBottom: "30px" }}
+    >
       {services?.map((data, index) => (
         <div
           className="card"
