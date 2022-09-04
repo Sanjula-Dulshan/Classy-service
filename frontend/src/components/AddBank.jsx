@@ -18,7 +18,7 @@ const initialState = {
 };
 export default function CreateService() {
   const [loading, setLoading] = useState(false);
-  const [uid, setUid] = useState("");
+  const [uid, setUid] = useState("1234");
   const [accName, setAccName] = useState();
   const [accNumber, setAccNumber] = useState();
   const [bankName, setBankName] = useState();
@@ -37,8 +37,10 @@ export default function CreateService() {
       bankName,
       branchName,
     }
+
+    console.log(newBank);
     try {
-      await axios.post("/bank/add", newBank);
+      await axios.post("http://localhost:8070/bank/", newBank);
       window.location.replace("/bank");
     } catch (err) {
       alert(err);
@@ -67,7 +69,7 @@ export default function CreateService() {
                     name="acc_name"
                     id="acc_name"
                     required
-                    onChange={setAccName}
+                    onChange={(e) => setAccName(e.target.value)}
                   />
                 </div>
               
@@ -83,7 +85,7 @@ export default function CreateService() {
                     name="acc_number"
                     id="acc_number"
                     required
-                    onChange={setAccNumber}
+                    onChange={(e) => setAccNumber(e.target.value)}
                   />
                 </div>
               </div>
@@ -97,7 +99,7 @@ export default function CreateService() {
                   <select
                     name="bank"
                     className="form-control"
-                    onChange={setBankName}
+                    onChange={(e) => setBankName(e.target.value)}
                   >
                     <option value="">Select a category</option>
                     <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
@@ -121,7 +123,7 @@ export default function CreateService() {
                     className="form-control"
                     id="branch"
                     required
-                    onChange={setBranchName}
+                    onChange={(e) => setBranchName(e.target.value)}
                   />
                 </div>
               </div>
@@ -137,7 +139,7 @@ export default function CreateService() {
                         className="form-check-input"
                         name="needBuyerAddress"
                         id="exampleCheck1"
-                        onChange={setIsAgree}
+                        onChange={(e) => setIsAgree(e.target.checked)}
                       />
                       <label
                         className="form-check-label"
