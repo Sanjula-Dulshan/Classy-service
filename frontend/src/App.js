@@ -5,9 +5,13 @@ import "/node_modules/bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
 import axios from "axios";
-import  NotFound from "./components/utils/NotFound/NotFound";
-import {useDispatch, useSelector} from 'react-redux'
-import {dispatchLogin,fetchUser, dispatchGetUser} from './redux/actions/authAction'
+import NotFound from "./components/utils/NotFound/NotFound";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  dispatchLogin,
+  fetchUser,
+  dispatchGetUser,
+} from "./redux/actions/authAction";
 // import "semantic-ui-css/semantic.min.css";
 import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
@@ -17,46 +21,41 @@ import Register from "./components/Register";
 import Footer from "./components/footer/Footer";
 
 import Login from "./components/Login";
-import ActivationEmail from './components/ActivationEmail';
+import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 
-
 function App() {
-
-  const dispatch = useDispatch()
-  const token = useSelector(state => state.token)
-  const auth = useSelector(state => state.auth)
-  const {isLogged} = auth
-
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
+  const auth = useSelector((state) => state.auth);
+  const { isLogged } = auth;
 
   useEffect(() => {
-    const firstLogin = localStorage.getItem('firstLogin')
-    if(firstLogin){
+    const firstLogin = localStorage.getItem("firstLogin");
+    if (firstLogin) {
       const getToken = async () => {
-        const res = await axios.post('/user/refresh_token', null)
-        dispatch({type: 'GET_TOKEN', payload: res.data.access_token})
-      }
-      getToken()
+        const res = await axios.post("/user/refresh_token", null);
+        dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
+      };
+      getToken();
     }
-  },[auth.isLogged, dispatch])
-
+  }, [auth.isLogged, dispatch]);
 
   useEffect(() => {
-    if(token){
+    if (token) {
       const getUser = () => {
-        dispatch(dispatchLogin())
+        dispatch(dispatchLogin());
 
-        return fetchUser(token).then(res => {
-          dispatch(dispatchGetUser(res))
-        })
-      }
-      getUser()
+        return fetchUser(token).then((res) => {
+          dispatch(dispatchGetUser(res));
+        });
+      };
+      getUser();
     }
-  },[token, dispatch])
+  }, [token, dispatch]);
 
   return (
     <div>
-
       <BrowserRouter>
         <Routes>
           <Route path="/" exact element={<AllServices />} />
@@ -64,13 +63,20 @@ function App() {
           <Route path="/editService/:id" exact element={<CreateService />} />
           <Route path="/userServices" exact element={<UserAllServices />} />
           <Route path="/register" exact element={<Register />} />
-            <Route path="/user/activate/:activation_token" exact component={ActivationEmail}/>
-        <Route path="/login" exact component={Login} />
-        <Route path="/profile" exact component={ isLogged ? Profile :NotFound}/>
+          <Route
+            path="/user/activate/:activation_token"
+            exact
+            element={<ActivationEmail />}
+          />
+          <Route path="/login" exact element={<Login />} />
+          <Route
+            path="/profile"
+            exact
+            element={isLogged ? <Profile /> : <NotFound />}
+          />
         </Routes>
       </BrowserRouter>
       <Footer />
-
     </div>
   );
 }
