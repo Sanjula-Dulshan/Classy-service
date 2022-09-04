@@ -28,7 +28,7 @@ import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 
-
+import Sidebar from "./components/Sidebar";
 
 
 function App() {
@@ -90,13 +90,11 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
-   
-          <Route path="/addBank"  exact elemen={AddBank} />
+
+          <Route path="/addBank" exact elemen={AddBank} />
         </Routes>
       </BrowserRouter>
       <Footer />
-
-
     </div>
   );
 }
