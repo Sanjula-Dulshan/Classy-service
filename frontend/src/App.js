@@ -18,6 +18,7 @@ import AllServices from "./components/AllServices";
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import AddBank from "./components/AddBank";
+import EditBank from "./components/EditBank";
 
 import Footer from "./components/footer/Footer";
 
@@ -78,7 +79,8 @@ function App() {
             element={isLogged ? <Profile /> : <NotFound />}
           />
    
-          <Route path="/addBank"  exact elemen={AddBank} />
+          <Route path="/addBank"  exact element={<AddBank/>} />
+          <Route path="/editBank"  exact element={<EditBank/>} />
         </Routes>
       </BrowserRouter>
       <Footer />

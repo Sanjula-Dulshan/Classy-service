@@ -18,7 +18,7 @@ const initialState = {
   isOnlinePayment: false,
   image: "",
 };
-export default function AddBank() {
+export default function EditBank() {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("1234");
   const [accName, setAccName] = useState();
@@ -65,7 +65,7 @@ export default function AddBank() {
               spinner={<PropagateLoader />}
           >
         <div className="bg-card">
-          <label className="title">ADD BANK DETAILS</label>
+          <label className="title">EDIT BANK DETAILS</label>
           <div className="add_bank">
 
             
@@ -169,6 +169,9 @@ export default function AddBank() {
                 <div className="col flex_box">
                   <button type="submit" className="btn btn-cancel">
                     Cancel
+                  </button>
+                  <button style={{"position":"relative"}} className="btn btn-del">
+                    Delete
                   </button>
                   <button type="submit" className="btn btn-create">
                     Save
