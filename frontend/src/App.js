@@ -13,9 +13,13 @@ import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
+
+import Footer from "./components/footer/Footer";
+
 import Login from "./components/Login";
 import ActivationEmail from './components/ActivationEmail';
 import Profile from "./components/Profile";
+
 
 function App() {
 
@@ -53,16 +57,19 @@ function App() {
   return (
     <div>
 
-      <Router>
-        <Route path="/" exact component={AllServices} />
-        <Route path="/addService" component={CreateService} />
-        <Route path="/editService/:id" exact element={<CreateService />} />
-        <Route path="/userServices" exact element={<UserAllServices />} />
-        <Route path="/register" exact component={Register} />
-        <Route path="/user/activate/:activation_token" exact component={ActivationEmail}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<AllServices />} />
+          <Route path="/addService" exact element={<CreateService />} />
+          <Route path="/editService/:id" exact element={<CreateService />} />
+          <Route path="/userServices" exact element={<UserAllServices />} />
+          <Route path="/register" exact element={<Register />} />
+            <Route path="/user/activate/:activation_token" exact component={ActivationEmail}/>
         <Route path="/login" exact component={Login} />
         <Route path="/profile" exact component={ isLogged ? Profile :NotFound}/>
-      </Router>
+        </Routes>
+      </BrowserRouter>
+      <Footer />
 
     </div>
   );

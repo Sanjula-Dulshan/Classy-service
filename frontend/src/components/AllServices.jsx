@@ -24,7 +24,10 @@ export default function AllServices() {
   };
 
   return (
-    <div class="ui cards mt-4 container" style={{ marginLeft: "10%" }}>
+    <div
+      class="ui cards mt-4 container"
+      style={{ marginLeft: "10%", marginBottom: "30px" }}
+    >
       {services.map((data, index) => (
         <div class="card" key={index} style={{ backgroundColor: "#FBFDF3" }}>
           <div class="content">
