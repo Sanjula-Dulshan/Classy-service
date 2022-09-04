@@ -23,8 +23,6 @@ import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import AddBank from "./components/AddBank";
 
-import Footer from "./components/footer/Footer";
-
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
@@ -63,7 +61,6 @@ function App() {
 
   return (
     <div>
-
       <BrowserRouter>
         <Sidebar />
         <Routes>
@@ -91,6 +88,7 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
+
           <Route
             path="/wishlist"
             exact
@@ -100,8 +98,6 @@ function App() {
           <Route path="/addBank" exact element={<AddBank />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
-
     </div>
   );
 }
