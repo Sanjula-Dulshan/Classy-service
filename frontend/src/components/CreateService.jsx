@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
-import "./createService.css";
+import "./styles/createService.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 const initialState = {
+  userEmail: "sdulshan10@gmail.com",
   title: "",
   description: "",
   category: "",
@@ -21,7 +23,29 @@ export default function CreateService() {
   const [image, setImage] = useState(false);
   const [service, setService] = useState(initialState);
 
+  const param = useParams();
+  const navigate = useNavigate();
+
   const [onEdit, setOnEdit] = useState(false);
+
+  useEffect(() => {
+    if (param.id) {
+      setOnEdit(true);
+      axios.get("/services").then((res) => {
+        res.data.forEach((service) => {
+          if (service._id === param.id) {
+            setService(service);
+            setImage(service.image);
+            console.log("service", service);
+          }
+        });
+      });
+    } else {
+      setOnEdit(false);
+      setService(initialState);
+      setImage(false);
+    }
+  }, []);
 
   //image upload handler
   const handleUpload = async (e) => {
@@ -87,17 +111,32 @@ export default function CreateService() {
       if (!image) return alert("No Image Upload");
       if (!(service.isCOD || service.isOnlinePayment))
         return alert("Please select a payment method");
-      await axios
-        .post("/services", { ...service, image })
-        .then(() => {
-          alert("Service created.");
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
+
+      if (onEdit) {
+        await axios
+          .put(`/services/${service._id}`, { ...service, image })
+          .then(() => {
+            navigate(`/userServices`);
+          });
+      } else {
+        console.log("image", image);
+        await axios
+          .post("/services", { ...service, image })
+          .then(() => {
+            alert("Service created");
+            setService(initialState);
+            setImage(false);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      }
     } catch (err) {
       alert(err.response.data.msg);
     }
+  };
+  const handleCancel = () => {
+    navigate(`/userServices`);
   };
 
   const styleUpload = {
@@ -107,7 +146,12 @@ export default function CreateService() {
     <div className="card-row">
       <div className="card-column">
         <div className="bg-card">
-          <label className="title">CREATE SERVICE</label>
+          {onEdit ? (
+            <label className="title">EDIT SERVICE</label>
+          ) : (
+            <label className="title">CREATE SERVICE</label>
+          )}
+
           <div className="create_service">
             <div className="upload">
               <input
@@ -128,7 +172,7 @@ export default function CreateService() {
               )}
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="row mt-4">
                 <div className="col">
                   <label htmlFor="title" className="form-label">
@@ -140,6 +184,7 @@ export default function CreateService() {
                     name="title"
                     id="title"
                     required
+                    value={service.title}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -157,6 +202,7 @@ export default function CreateService() {
                     id="description"
                     required
                     rows="5"
+                    value={service.description}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -169,6 +215,7 @@ export default function CreateService() {
                   <select
                     name="category"
                     className="form-control"
+                    value={service.category}
                     onChange={handleChangeInput}
                   >
                     <option value="">Select a category</option>
@@ -186,6 +233,7 @@ export default function CreateService() {
                     className="form-control"
                     id="location"
                     required
+                    value={service.location}
                     onChange={handleChangeInput}
                   />
                 </div>
@@ -193,34 +241,7 @@ export default function CreateService() {
 
               <div className="row mt-4">
                 <div className="col">
-                  <label htmlFor="fee" className="form-label">
-                    Fee
-                  </label>
-                  <input
-                    type="number"
-                    name="fee"
-                    className="form-control"
-                    id="fee"
-                    required
-                    onChange={handleChangeInput}
-                  />
-                </div>
-
-                <div className="col">
-                  <label
-                    htmlFor="location"
-                    className="form-label"
-                    style={{ visibility: "hidden" }}
-                  >
-                    Location
-                  </label>
-                  <input type="text" style={{ visibility: "hidden" }} />
-                </div>
-              </div>
-
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="fee" className="form-label">
+                  <label htmlFor="phone" className="form-label">
                     Mobile No:
                   </label>
 
@@ -234,18 +255,22 @@ export default function CreateService() {
                     pattern="07[1,2,5,6,7,8][0-9]{7}"
                     maxLength="10"
                     placeholder="07xxxxxxxx"
+                    value={service.phone}
                   />
                 </div>
-
                 <div className="col">
-                  <label
-                    htmlFor="location"
-                    className="form-label"
-                    style={{ visibility: "hidden" }}
-                  >
-                    Location
+                  <label htmlFor="fee" className="form-label">
+                    Fee (Rs.)
                   </label>
-                  <input type="text" style={{ visibility: "hidden" }} />
+                  <input
+                    type="number"
+                    name="fee"
+                    className="form-control"
+                    id="fee"
+                    required
+                    value={service.fee}
+                    onChange={handleChangeInput}
+                  />
                 </div>
               </div>
 
@@ -258,6 +283,7 @@ export default function CreateService() {
                         className="form-check-input"
                         name="needBuyerAddress"
                         id="exampleCheck1"
+                        checked={service.needBuyerAddress}
                         onChange={handleChangeInput}
                       />
                       <label
@@ -273,6 +299,7 @@ export default function CreateService() {
                         className="form-check-input"
                         name="needDate"
                         id="exampleCheck1"
+                        checked={service.needDate}
                         onChange={handleChangeInput}
                       />
                       <label
@@ -286,7 +313,7 @@ export default function CreateService() {
                 </div>
               </div>
 
-              <div className="row mt-5">
+              <div className="row mt-4">
                 <div className="col">
                   <label
                     htmlFor="description"
@@ -301,6 +328,7 @@ export default function CreateService() {
                       className="form-check-input"
                       name="isCOD"
                       id="exampleCheck1"
+                      checked={service.isCOD}
                       onChange={handleChangeInput}
                     />
                     <label className="form-check-label" htmlFor="exampleCheck1">
@@ -314,6 +342,7 @@ export default function CreateService() {
                       className="form-check-input"
                       name="isOnlinePayment"
                       id="exampleCheck1"
+                      checked={service.isOnlinePayment}
                       onChange={handleChangeInput}
                     />
                     <label className="form-check-label" htmlFor="exampleCheck1">
@@ -325,10 +354,20 @@ export default function CreateService() {
 
               <div className="row ">
                 <div className="col flex_box">
-                  <button type="submit" className="btn btn-cancel">
+                  <button
+                    type="submit"
+                    className="btn btn-cancel"
+                    onClick={handleCancel}
+                  >
                     Cancel
                   </button>
-                  <button type="submit" className="btn btn-create">
+                  <button
+                    type="submit"
+                    className="btn btn-create"
+                    onClick={(e) => {
+                      handleSubmit(e);
+                    }}
+                  >
                     {onEdit ? "Update" : "Publish"}
                   </button>
                 </div>

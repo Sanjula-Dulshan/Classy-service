@@ -12,6 +12,8 @@ import uploadRouter from "./routes/uploadRouter.js";
 import wishListRouter from "./routes/wishListRouter.js";
 import userRouter from "./routes/userRouter.js";
 
+import payRouter from "./routes/payMethodRouter.js";
+
 const app = express();
 const PORT = process.env.PORT;
 const MONGODB_URL = process.env.MONGODB_URL;
@@ -26,6 +28,7 @@ app.use("/services", servicesRouter);
 app.use("/image", uploadRouter);
 app.use("/wishlist", wishListRouter);
 app.use("/user", userRouter);
+app.use("/bank", payRouter);
 
 // Connect to MongoDB
 mongoose
