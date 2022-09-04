@@ -15,6 +15,9 @@ import {
 // import "semantic-ui-css/semantic.min.css";
 import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
+
+import Wishlist from "./components/Wishlist";
+
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import AddBank from "./components/AddBank";
@@ -26,6 +29,7 @@ import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 
 import Sidebar from "./components/Sidebar";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +63,7 @@ function App() {
 
   return (
     <div>
+
       <BrowserRouter>
         <Routes>
           <Route path="/" exact element={<AllServices />} />
