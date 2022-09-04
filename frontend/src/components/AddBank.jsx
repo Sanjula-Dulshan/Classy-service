@@ -47,7 +47,7 @@ export default function CreateService() {
       console.log(newBank);
       try {
         await axios.post("http://localhost:8070/bank/", newBank);
-        window.location.replace("/bank");
+        window.location.replace("/");
       } catch (err) {
         alert(err);
       }
@@ -165,9 +165,6 @@ export default function CreateService() {
                   </div>
                 </div>
               </div>
-
-              
-
               <div className="row ">
                 <div className="col flex_box">
                   <button type="submit" className="btn btn-cancel">
