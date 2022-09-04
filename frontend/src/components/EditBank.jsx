@@ -1,23 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 
-const initialState = {
-  title: "",
-  description: "",
-  category: "",
-  location: "",
-  fee: "",
-  phone: "",
-  needBuyerAddress: false,
-  needDate: false,
-  isCOD: false,
-  isOnlinePayment: false,
-  image: "",
-};
+
 export default function EditBank() {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("1234");
@@ -26,6 +14,21 @@ export default function EditBank() {
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
   const [isAgree, setIsAgree] = useState(false);
+
+  useEffect(() => {
+    const getBank = async () => {
+      const res = await axios.get("http://localhost:8070/bank/" + uid);
+      setAccName(res.data.accName);
+      setAccNumber(res.data.accNumber);
+      setBankName(res.data.bankName);
+      setBranchName(res.data.branchName);
+    };
+    getBank();
+  }, [uid]);
+
+  
+
+  
 
 
 
