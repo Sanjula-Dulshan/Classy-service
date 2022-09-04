@@ -15,6 +15,8 @@ export default function EditBank() {
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
   const [isAgree, setIsAgree] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [editText, setEditText] = useState("Edit");
 
   useEffect(() => {
     const getBank = async () => {
@@ -30,6 +32,16 @@ export default function EditBank() {
   }, [uid]);
 
 
+  const handleEnable = (e) => {
+    e.preventDefault();
+    setDisabled(!disabled);
+    if (disabled) {
+      setEditText("Cancel");
+    } else {
+      setEditText("Edit");
+    }
+
+  };
  
 
 
@@ -41,20 +53,25 @@ export default function EditBank() {
       return;
     }else{
       setLoading(true);
-      const newBank = {
-        uid,
-        accName,
-        accNumber,
-        bankName,
-        branchName,
-      }
 
-      console.log(newBank);
-      try {
-        await axios.put("http://localhost:8070/bank/"+id, newBank);
-        window.location.replace("/");
-      } catch (err) {
-        alert(err);
+      //confirm if the user wants to update the bank details
+      if (window.confirm("Are you sure you want to update your bank details?")) {
+        
+        const newBank = {
+          uid,
+          accName,
+          accNumber,
+          bankName,
+          branchName,
+        }
+
+        console.log(newBank);
+        try {
+          await axios.put("http://localhost:8070/bank/"+id, newBank);
+          window.location.replace("/");
+        } catch (err) {
+          alert(err);
+        }
       }
       setLoading(false);
     }
@@ -97,7 +114,7 @@ export default function EditBank() {
             
            
             <form onSubmit={handleSubmit}>
-              
+                            
                 <div className="">
                   <label htmlFor="title" className="form-label">
                     Account Name
@@ -109,6 +126,7 @@ export default function EditBank() {
                     id="acc_name"
                     required
                     value={accName}
+                    disabled={disabled}
                     onChange={(e) => setAccName(e.target.value)}
                   />
                 </div>
@@ -124,7 +142,7 @@ export default function EditBank() {
                     className="form-control"
                     name="acc_number"
                     id="acc_number"
-
+                    disabled={disabled}
                     required
                     value={accNumber}
                     onChange={(e) => setAccNumber(e.target.value)}
@@ -143,6 +161,7 @@ export default function EditBank() {
                     className="form-control"
                     id="bank"
                     required
+                    disabled={disabled}
                     value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
                   >
@@ -168,6 +187,7 @@ export default function EditBank() {
                     className="form-control"
                     id="branch"
                     required
+                    disabled={disabled}
                     value={branchName}
                     onChange={(e) => setBranchName(e.target.value)}
                   />
@@ -200,13 +220,13 @@ export default function EditBank() {
               </div>
               <div className="row ">
                 <div className="col flex_box">
-                  <button type="submit" className="btn btn-cancel">
-                    Cancel
+                  <button onClick={handleEnable} className="btn btn-cancel">
+                    Edit
                   </button>
                   <button onClick={handleDelete} className="btn btn-del">
                     Delete
                   </button>
-                  <button type="submit" className="btn btn-create">
+                  <button disabled={disabled} type="submit" className="btn btn-create">
                     Save
                   </button>
                 </div>
