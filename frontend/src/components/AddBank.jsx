@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
-import "./createService.css";
+import "./AddBank.css";
 
 const initialState = {
   title: "",
@@ -18,10 +18,13 @@ const initialState = {
 };
 export default function CreateService() {
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(false);
-  const [service, setService] = useState(initialState);
+  const [uid, setUid] = useState("");
+  const [accName, setAccName] = useState();
+  const [accNumber, setAccNumber] = useState();
+  const [bankName, setBankName] = useState();
+  const [branchName, setBranchName] = useState();
 
-  const [onEdit, setOnEdit] = useState(false);
+
 
   //image upload handler
   const handleUpload = async (e) => {
@@ -108,24 +111,24 @@ export default function CreateService() {
       <div className="card-column">
         <div className="bg-card">
           <label className="title">ADD BANK DETAILS</label>
-          <div className="create_service">
+          <div className="add_bank">
            
             <form onSubmit={handleSubmit}>
-              <div className="row mt-4">
-                <div className="col">
+              
+                <div className="">
                   <label htmlFor="title" className="form-label">
                     Account Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    name="title"
-                    id="title"
+                    name="acc_name"
+                    id="acc_name"
                     required
                     onChange={handleChangeInput}
                   />
                 </div>
-              </div>
+              
 
               <div className="row mt-4">
                 <div className="col">
@@ -135,8 +138,8 @@ export default function CreateService() {
                   <input
                     type="number"
                     className="form-control"
-                    name="title"
-                    id="title"
+                    name="acc_number"
+                    id="acc_number"
                     required
                     onChange={handleChangeInput}
                   />
@@ -150,13 +153,20 @@ export default function CreateService() {
                     Bank
                   </label>
                   <select
-                    name="category"
+                    name="bank"
                     className="form-control"
                     onChange={handleChangeInput}
                   >
                     <option value="">Select a category</option>
-                    <option value="IT">IT</option>
-                    <option value="Repair">Repair</option>
+                    <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
+                    <option value="Sampath Bank Plc">Sampath Bank Plc</option>
+                    <option value="National Savings Bank">National Savings Bank</option>
+                    <option value="People’s Bank">People’s Bank</option>
+                    <option value="Hatton National Bank">Hatton National Bank</option>
+                    <option value="Seylan Bank Plc">Seylan Bank Plc</option>
+                    <option value="National Development Bank Plc">National Development Bank Plc</option>
+                    <option value="Nations Trust Bank Plc">Nations Trust Bank Plc</option>
+                    <option value="DFCC Bank">DFCC Bank</option>
                   </select>
                 </div>
                 <div className="col">
@@ -165,9 +175,9 @@ export default function CreateService() {
                   </label>
                   <input
                     type="text"
-                    name="location"
+                    name="branch" 
                     className="form-control"
-                    id="location"
+                    id="branch"
                     required
                     onChange={handleChangeInput}
                   />
@@ -207,7 +217,7 @@ export default function CreateService() {
                     Cancel
                   </button>
                   <button type="submit" className="btn btn-create">
-                    {onEdit ? "Update" : "Publish"}
+                    Save
                   </button>
                 </div>
               </div>
