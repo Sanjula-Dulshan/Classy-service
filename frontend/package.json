@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.10.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -11,11 +13,12 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "bootstrap-icons": "^1.9.1",
+    "react-confirm-alert": "^3.0.6",
     "dompurify": "^2.4.0",
-    "mdb-react-ui-kit": "^4.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
+    "react-fontawesome": "^1.7.1",
     "react-loading-overlay": "^1.0.1",
     "react-notifications-component": "^4.0.1",
     "react-password-checklist": "^1.4.1",
@@ -27,7 +30,8 @@
     "redux": "^4.2.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.82.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-icons": "^4.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
