@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { ReactNotifications } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 import "/node_modules/bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -64,6 +65,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Sidebar />
+        <ReactNotifications />
         <Routes>
           <Route path="/" exact element={<AllServices />} />
           <Route

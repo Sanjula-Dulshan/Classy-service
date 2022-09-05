@@ -4,6 +4,9 @@ import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
+import { confirmAlert } from 'react-confirm-alert';
+import { Store } from 'react-notifications-component'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
 export default function AddBank() {
