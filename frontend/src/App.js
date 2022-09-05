@@ -22,6 +22,7 @@ import Wishlist from "./components/Wishlist";
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import AddBank from "./components/AddBank";
+import EditBank from "./components/EditBank";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
@@ -89,13 +90,16 @@ function App() {
             element={isLogged ? <Profile /> : <NotFound />}
           />
 
+
           <Route
             path="/wishlist"
             exact
             element={isLogged ? <Wishlist /> : <NotFound />}
           />
 
-          <Route path="/addBank" exact element={<AddBank />} />
+          <Route path="/addBank"  exact element={<AddBank/>} />
+          <Route path="/editBank"  exact element={<EditBank/>} />
+
         </Routes>
       </BrowserRouter>
     </div>
