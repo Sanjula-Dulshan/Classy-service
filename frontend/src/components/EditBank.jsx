@@ -20,7 +20,7 @@ export default function EditBank() {
 
   useEffect(() => {
     const getBank = async () => {
-      const res = await axios.get("http://localhost:8070/bank/user/" + uid);
+      const res = await axios.get("/bank/user/" + uid);
       setAccName(res.data.accName);
       setAccNumber(res.data.accNumber);
       setBankName(res.data.bankName);
@@ -67,7 +67,7 @@ export default function EditBank() {
 
         console.log(newBank);
         try {
-          await axios.put("http://localhost:8070/bank/"+id, newBank);
+          await axios.put("/bank/"+id, newBank);
           window.location.replace("/");
         } catch (err) {
           alert(err);
@@ -86,7 +86,7 @@ export default function EditBank() {
     if (window.confirm("Are you sure you want to delete this bank account?")) {
 
       try {
-        await axios.delete("http://localhost:8070/bank/"+id);
+        await axios.delete("/bank/"+id);
         alert("Bank account deleted successfully");
         window.location.replace("/");
       } catch (err) {
