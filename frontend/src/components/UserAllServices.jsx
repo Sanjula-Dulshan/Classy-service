@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css";
 import ConfirmBox from "react-dialog-confirm";
-import "../../node_modules/react-dialog-confirm/build/index.css"; // required
+import "./styles/confirm.css";
 
 export default function UserAllServices() {
   const auth = useSelector((state) => state.auth);
@@ -15,7 +15,7 @@ export default function UserAllServices() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [id, setId] = useState();
   const [publicId, setPublicId] = useState();
 
@@ -78,7 +78,7 @@ export default function UserAllServices() {
       <div style={{ position: "absolute", zIndex: "4" }}>
         <ConfirmBox // Note : in this example all props are required
           options={{
-            icon: "https://img.icons8.com/emoji/48/000000/warning-emoji.png",
+            icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
             text: "Are you sure you want to delete this service ?",
             confirm: "yes",
             cancel: "no",
