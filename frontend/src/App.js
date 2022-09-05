@@ -66,7 +66,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Header />
-        <Sidebar />
+
         <Routes>
           <Route
             path="/"
