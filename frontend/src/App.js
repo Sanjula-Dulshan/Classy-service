@@ -15,18 +15,20 @@ import {
 // import "semantic-ui-css/semantic.min.css";
 import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
+import ViewService from "./components/ViewService";
+
+import Wishlist from "./components/Wishlist";
+
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
 
-import Footer from "./components/footer/Footer";
-
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 
-
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,11 +63,20 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Sidebar />
         <Routes>
           <Route path="/" exact element={<AllServices />} />
-          <Route path="/addService" exact element={<CreateService />} />
+          <Route
+            path="/addService"
+            exact
+            element={isLogged ? <CreateService /> : <NotFound />}
+          />
           <Route path="/editService/:id" exact element={<CreateService />} />
-          <Route path="/userServices" exact element={<UserAllServices />} />
+          <Route
+            path="/userServices"
+            exact
+            element={isLogged ? <UserAllServices /> : <NotFound />}
+          />
           <Route path="/register" exact element={<Register />} />
           <Route
             path="/user/activate/:activation_token"
@@ -78,13 +89,19 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
-   
+
+
+          <Route
+            path="/wishlist"
+            exact
+            element={isLogged ? <Wishlist /> : <NotFound />}
+          />
+
           <Route path="/addBank"  exact element={<AddBank/>} />
           <Route path="/editBank"  exact element={<EditBank/>} />
+
         </Routes>
       </BrowserRouter>
-      <Footer />
-
     </div>
   );
 }

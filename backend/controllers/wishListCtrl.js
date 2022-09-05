@@ -27,6 +27,16 @@ const wishListCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  deleteWishList: async (req, res) => {
+    console.log("deleteWishList");
+    try {
+      await WishList.findByIdAndDelete(req.params.id);
+
+      res.status(200).json({ msg: "WishList deleted" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default wishListCtrl;
