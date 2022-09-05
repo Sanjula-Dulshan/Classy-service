@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BarLoader from "react-spinners/BarLoader";
+import Sidebar from "./Sidebar";
 
 export default function ViewService() {
   const [title, setTitle] = useState("");
@@ -46,6 +47,7 @@ export default function ViewService() {
 
   return (
     <div>
+      <Sidebar />
       {loading ? (
         <div className="load">
           <BarLoader color={"#FEA82F"} loading={loading} size={30} />

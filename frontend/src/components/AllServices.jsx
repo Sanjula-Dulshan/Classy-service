@@ -3,6 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./allServices.css";
 import RiseLoader from "react-spinners/RiseLoader";
+import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 
 export default function AllServices() {
   const [services, setServices] = useState([]);
@@ -46,6 +49,7 @@ export default function AllServices() {
 
   return (
     <div>
+      <Sidebar />
       {loading ? (
         <div className="load">
           <RiseLoader color={"#FEA82F"} loading={loading} size={30} />
@@ -64,7 +68,10 @@ export default function AllServices() {
               <div class="content">
                 <div className="heart">
                   <a href="#" onClick={() => wishlistHandler(data)}>
-                    <i class="heart icon right floated" />
+                    <i
+                      class="heart icon right floated"
+                      data-tip="Add to Wishlist"
+                    />
                   </a>
                 </div>
 
@@ -85,17 +92,20 @@ export default function AllServices() {
                 <div class="ui two buttons" style={{ marginLeft: "10%" }}>
                   <tr>
                     <td>
-                      <div
+                      <Link
                         class="ui button"
+                        to={"/addBank"}
+                        data-tip="Click to Buy service"
                         style={{ backgroundColor: "#FEA82F", color: "black" }}
                       >
                         Buy
-                      </div>
+                      </Link>
                     </td>
                     <td>
-                      <a
+                      <Link
                         class="ui button"
-                        href="/viewService"
+                        to={"/viewService"}
+                        data-tip="Click to view Service Details"
                         style={{
                           marginLeft: "50px",
                           backgroundColor: "#423E3B",
@@ -104,13 +114,14 @@ export default function AllServices() {
                         onClick={() => setData(data)}
                       >
                         View
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 </div>
               </div>
             </div>
           ))}
+          <ReactTooltip />
         </div>
       )}
     </div>
