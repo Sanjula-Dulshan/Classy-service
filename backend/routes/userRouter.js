@@ -14,4 +14,6 @@ router.post('/refresh_token', userCtrl.getAccessToken)
 
 router.get('/infor',auth, userCtrl.getUserInfor)
 
+router.get('/logout', userCtrl.logout)
+
 export default router;
