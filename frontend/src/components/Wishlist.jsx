@@ -6,10 +6,19 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
+import ConfirmBox from "react-dialog-confirm";
 import Sidebar from "./Sidebar";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState();
+
+  const confirm = (id) => {
+    setIsOpen(true);
+    setId(id);
+  };
+
   useEffect(() => {
     axios
       .get("/wishlist/")
@@ -20,41 +29,46 @@ export default function Wishlist() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  });
+
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  };
 
   const onDelete = (_id) => {
-    axios.delete(`/wishlist/${_id}`);
-    window.location
-      .reload()
+    axios
+      .delete(`/wishlist/${_id}`)
 
       .then((res) => {
         console.log(res);
+        setIsOpen(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-  const confirm = (_id) => {
-    confirmAlert({
-      title: "Are you sure?",
-      message: "You won't be able to revert this!",
-
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => onDelete(_id),
-        },
-        {
-          label: "No",
-        },
-      ],
-    });
   };
 
   return (
     <div>
       <Sidebar />
       <div className="mt-4 container">
+        <div style={{ position: "absolute", zIndex: "4" }}>
+          <ConfirmBox // Note : in this example all props are required
+            options={{
+              icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
+              text: "Are you sure you want to delete this service ?",
+              confirm: "yes",
+              cancel: "no",
+              btn: true,
+            }}
+            isOpen={isOpen}
+            onClose={handleClose}
+            onConfirm={() => {
+              onDelete(id);
+            }}
+            onCancel={handleClose}
+          />
+        </div>
         <div style={{ textAlign: "center" }}>
           <i class="heart icon "></i>
         </div>
