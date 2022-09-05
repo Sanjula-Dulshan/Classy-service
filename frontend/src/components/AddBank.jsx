@@ -5,19 +5,7 @@ import "./AddBank.css";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 
-const initialState = {
-  title: "",
-  description: "",
-  category: "",
-  location: "",
-  fee: "",
-  phone: "",
-  needBuyerAddress: false,
-  needDate: false,
-  isCOD: false,
-  isOnlinePayment: false,
-  image: "",
-};
+
 export default function AddBank() {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("1234");
@@ -46,7 +34,7 @@ export default function AddBank() {
 
       console.log(newBank);
       try {
-        await axios.post("http://localhost:8070/bank/", newBank);
+        await axios.post("/bank/", newBank);
         window.location.replace("/");
       } catch (err) {
         alert(err);
