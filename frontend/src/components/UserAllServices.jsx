@@ -74,7 +74,7 @@ export default function UserAllServices() {
       </div>
     );
   return (
-    <div>
+    <div style={{ marginLeft: "10%" }}>
       <div style={{ position: "absolute", zIndex: "4" }}>
         <ConfirmBox // Note : in this example all props are required
           options={{
