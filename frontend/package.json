@@ -58,5 +58,8 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://localhost:8070"
+    "proxy": "http://localhost:8070",
+    "devDependencies": {
+        "react-dialog-confirm": "^1.1.0"
+    }
 }
