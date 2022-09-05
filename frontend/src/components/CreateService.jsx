@@ -4,6 +4,7 @@ import Loading from "./utils/loading/Loading";
 import "./styles/createService.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SideBar from "./Sidebar";
 
 const initialState = {
   userEmail: "",
@@ -149,6 +150,9 @@ export default function CreateService() {
   };
   return (
     <div>
+      <div>
+        <SideBar />
+      </div>
       <div className="card-row">
         <div className="card-column">
           <div className="bg-car">
@@ -178,7 +182,7 @@ export default function CreateService() {
                 )}
               </div>
 
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="row mt-4">
                   <div className="col">
                     <label htmlFor="title" className="form-label">
@@ -377,19 +381,13 @@ export default function CreateService() {
                 <div className="row ">
                   <div className="col flex_box">
                     <button
-                      type="submit"
+                      type="button"
                       className="btn btn-cancel"
                       onClick={handleCancel}
                     >
                       Cancel
                     </button>
-                    <button
-                      type="submit"
-                      className="btn btn-create"
-                      onClick={(e) => {
-                        handleSubmit(e);
-                      }}
-                    >
+                    <button type="submit" className="btn btn-create">
                       {onEdit ? "Update" : "Publish"}
                     </button>
                   </div>
