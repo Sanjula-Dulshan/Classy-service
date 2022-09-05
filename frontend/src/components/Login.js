@@ -36,10 +36,18 @@ function Login() {
             
             setUser({...user, err: '', success: res.data.msg})
 
-            localStorage.setItem('firstLogin', true)
+            localStorage.setItem('firstLogin', true);
+
          
             dispatch(dispatchLogin())
-            navigate("/profile")
+            if( document.getElementById('user_role').value=='hire'){
+                localStorage.setItem('usertype',0);
+                navigate("/");
+              }else{
+                navigate("/userServices");
+                localStorage.setItem('usertype',1);
+              }
+           
 
         } catch (err) {
             err.response.data.msg && 
@@ -48,7 +56,7 @@ function Login() {
     }
   return (
      <div className="topic-container">
-        <div style={{backgroundColor:"#FEA82F"}}>
+        <div style={{backgroundColor:"#E09021"}}>
     
             <div  className="t-title-container">
                 <label className="sideLable1" >Classy</label><br></br>

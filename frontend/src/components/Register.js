@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import { Link} from 'react-router-dom'
 import axios from 'axios'
 import {showErrMsg, showSuccessMsg} from './utils/notification/Notification'
-import {isEmpty, isEmail, isLength, isMatch} from './utils/validation/Validation.js'
+import {isEmpty, isEmail, isLength} from './utils/validation/Validation.js'
 import PasswordChecklist from "react-password-checklist"
 
 
@@ -40,12 +40,9 @@ const handleSubmit = async e => {
   return setUser({...user, err: "Invalid email type.", success: ''})
 
   if(isLength(password))
-  return setUser({...user, err: "Password must be at least 8 characters.", success: ''})
+  return setUser({...user, err: "Password must have at least 8 characters.", success: ''})
 
-  if(!isMatch(password, cf_password))
-  return setUser({...user, err: "Passwords did not match.", success: ''})
-
-
+ 
   try {
     const res = await axios.post('/user/register', {
       name, email, nic, mobile, password
@@ -62,7 +59,7 @@ const handleSubmit = async e => {
 
   return (
     <div className="topic-container">
-    <div style={{backgroundColor:"#FEA82F"}}>
+    <div style={{backgroundColor:"#E09021"}}>
 
         <div  className="t-title-container">
             <label className="sideLable1" >Classy</label><br></br>
@@ -157,6 +154,7 @@ const handleSubmit = async e => {
                                 required
                             />
                    </div>
+
                    <div className="pwd-checklist">
                    <PasswordChecklist 
 				     rules={["minLength","number","capital"]}
@@ -173,7 +171,6 @@ const handleSubmit = async e => {
                 <br></br>one uppercase letter with minimum 8 characters.
                 </p>
             </div>
-
          
 
               <div className="mb-3">
