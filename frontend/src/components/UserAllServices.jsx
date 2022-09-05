@@ -15,7 +15,7 @@ export default function UserAllServices() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
   const [publicId, setPublicId] = useState();
 
