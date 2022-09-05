@@ -3,14 +3,48 @@ import React, { useEffect, useState } from "react";
 import Loading from "./utils/loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css";
+import ConfirmBox from "react-dialog-confirm";
+import "../../node_modules/react-dialog-confirm/build/index.css"; // required
 
 export default function UserAllServices() {
   const auth = useSelector((state) => state.auth);
 
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState();
+  const [publicId, setPublicId] = useState();
+
+  const confirm = (id, public_id) => {
+    setIsOpen(true);
+    setId(id);
+    setPublicId(public_id);
+  };
+
+  const handleDelete = async (id, public_id) => {
+    console.log("deleteService", id, public_id);
+    try {
+      setLoading(true);
+      const destroyImg = axios.post("/image/destroy", { public_id });
+      const deleteService = axios.delete(`/services/${id}`);
+
+      await destroyImg;
+      await deleteService;
+
+      setLoading(false);
+      setIsOpen(false);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     const { email } = auth.user;
@@ -24,23 +58,6 @@ export default function UserAllServices() {
         console.log(err);
       });
   });
-
-  const handleDelete = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
-    try {
-      setLoading(true);
-      const destroyImg = axios.post("/image/destroy", { public_id });
-      const deleteService = axios.delete(`/services/${id}`);
-
-      await destroyImg;
-      await deleteService;
-
-      setLoading(false);
-      window.location.reload(false);
-    } catch (err) {
-      alert(err.response.data.msg);
-    }
-  };
 
   const handleEdit = (id) => {
     navigate(`/editService/${id}`);
@@ -58,9 +75,26 @@ export default function UserAllServices() {
     );
   return (
     <div>
+      <div style={{ position: "absolute", zIndex: "4" }}>
+        <ConfirmBox // Note : in this example all props are required
+          options={{
+            icon: "https://img.icons8.com/emoji/48/000000/warning-emoji.png",
+            text: "Are you sure you want to delete this service ?",
+            confirm: "yes",
+            cancel: "no",
+            btn: true,
+          }}
+          isOpen={isOpen}
+          onClose={handleClose}
+          onConfirm={() => {
+            handleDelete(id, publicId);
+          }}
+          onCancel={handleClose}
+        />
+      </div>
       <div
         className="ui cards mt-4 container"
-        style={{ marginLeft: "10%", marginBottom: "30px" }}
+        style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
       >
         {services?.map((data, index) => (
           <div
@@ -98,9 +132,7 @@ export default function UserAllServices() {
                         backgroundColor: "red",
                         color: "white",
                       }}
-                      onClick={() =>
-                        handleDelete(data._id, data.image.public_id)
-                      }
+                      onClick={() => confirm(data._id, data.image.public_id)}
                     >
                       Delete
                     </div>

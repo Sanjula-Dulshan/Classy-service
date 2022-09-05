@@ -13,8 +13,8 @@
   justify-content: right;
 }
 .upload {
-  max-width: 350px;
-  height: 420px;
+  max-width: 280px;
+  height: 330px;
   width: 100%;
   border: 1px solid #ddd;
   padding: 15px;
@@ -39,7 +39,7 @@
   left: 0;
   background: #d9d9d9;
   color: #fea82f;
-  font-size: 17rem;
+  font-size: 14rem;
   text-align: center;
 
   cursor: pointer;
