@@ -16,7 +16,16 @@ a:active {
   margin: 0 auto;
 }
 
-.container {
+.all_services {
   display: flex;
   justify-content: right;
+}
+
+.load {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
 }

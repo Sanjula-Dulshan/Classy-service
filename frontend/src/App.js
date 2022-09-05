@@ -63,11 +63,14 @@ function App() {
 
   return (
     <div>
-
       <BrowserRouter>
         <Sidebar />
         <Routes>
-          <Route path="/" exact element={<AllServices />} />
+          <Route
+            path="/"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
           <Route
             path="/addService"
             exact
@@ -96,12 +99,15 @@ function App() {
             exact
             element={isLogged ? <Wishlist /> : <NotFound />}
           />
+          <Route
+            path="/viewService"
+            exact
+            element={isLogged ? <ViewService /> : <NotFound />}
+          />
 
           <Route path="/addBank" exact element={<AddBank />} />
         </Routes>
       </BrowserRouter>
-      <Footer />
-
     </div>
   );
 }

@@ -115,7 +115,7 @@ export default function Wishlist() {
                   </p>
 
                   <p className="card-text">
-                    <small className="text-muted">{data.phone}</small>
+                    <i class="bi bi-telephone ">{data.phone}</i>
                   </p>
                 </div>
               </div>
