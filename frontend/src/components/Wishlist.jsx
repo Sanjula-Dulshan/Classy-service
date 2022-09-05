@@ -12,7 +12,7 @@ export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:8070/wishlist/")
+      .get("/wishlist/")
       .then((res) => {
         setWishlist(res.data);
         console.log(res.data);
@@ -23,7 +23,7 @@ export default function Wishlist() {
   }, []);
 
   const onDelete = (_id) => {
-    axios.delete(`http://localhost:8070/wishlist/${_id}`);
+    axios.delete(`/wishlist/${_id}`);
     window.location
       .reload()
 

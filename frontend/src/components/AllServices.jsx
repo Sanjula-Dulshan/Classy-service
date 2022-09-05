@@ -17,7 +17,7 @@ export default function AllServices() {
     }, 2000);
 
     axios
-      .get("http://localhost:8070/services/")
+      .get("/services/")
 
       .then((res) => {
         setServices(res.data);
@@ -28,7 +28,7 @@ export default function AllServices() {
   }, []);
 
   const wishlistHandler = (data) => {
-    axios.post("http://localhost:8070/wishlist/", data).then((res) => {
+    axios.post("/wishlist/", data).then((res) => {
       console.log(res);
     });
   };
