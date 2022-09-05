@@ -9,7 +9,7 @@ export default function Sidebar() {
           id="sidebarMenu"
           className="collapse d-lg-block sidebar collapse bg-white "
         >
-          <div className="position-sticky ">
+          <div className="position-sticky">
             <nav class="navbar navbar-light bg-light">
               <form class="form-inline">
                 <input
@@ -17,6 +17,7 @@ export default function Sidebar() {
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
+                  style={{ marginLeft: "8%" }}
                 />
               </form>
               <hr></hr>

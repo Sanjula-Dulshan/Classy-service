@@ -22,7 +22,7 @@ import Wishlist from "./components/Wishlist";
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
 
-import Header from './components/header/Header';
+import Header from "./components/header/Header";
 
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
@@ -32,9 +32,7 @@ import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 import Sidebar from "./components/Sidebar";
 
-
 function App() {
-  
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
@@ -66,13 +64,15 @@ function App() {
 
   return (
     <div>
-    
       <BrowserRouter>
-
-        <Header/>
+        <Header />
         <Sidebar />
         <Routes>
-          <Route path="/" exact element={<AllServices />} />
+          <Route
+            path="/"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
           <Route
             path="/addService"
             exact
@@ -94,9 +94,8 @@ function App() {
           <Route
             path="/profile"
             exact
-            element={isLogged ? <Profile /> : <NotFound />}/>
-
-
+            element={isLogged ? <Profile /> : <NotFound />}
+          />
 
           <Route
             path="/wishlist"
@@ -109,9 +108,8 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
 
-          <Route path="/addBank"  exact element={<AddBank/>} />
-          <Route path="/editBank"  exact element={<EditBank/>} />
-
+          <Route path="/addBank" exact element={<AddBank />} />
+          <Route path="/editBank" exact element={<EditBank />} />
         </Routes>
       </BrowserRouter>
     </div>
