@@ -48,39 +48,6 @@ export default function EditBank() {
  
 
 
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!isAgree) {
-  //     alert("Please agree to the terms and conditions");
-  //     return;
-  //   }else{
-  //     setLoading(true);
-
-  //     //confirm if the user wants to update the bank details
-  //     if (window.confirm("Are you sure you want to update your bank details?")) {
-        
-  //       const newBank = {
-  //         uid,
-  //         accName,
-  //         accNumber,
-  //         bankName,
-  //         branchName,
-  //       }
-
-  //       console.log(newBank);
-  //       try {
-  //         await axios.put("/bank/"+id, newBank);
-  //         window.location.replace("/");
-  //       } catch (err) {
-  //         alert(err);
-  //       }
-  //     }
-  //     setLoading(false);
-  //   }
-    
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAgree) {
@@ -172,6 +139,11 @@ export default function EditBank() {
         
                   width:400
                 }); 
+                //wait for 1.5 seconds and redirect to the home page
+                setTimeout(() => {
+                  window.location.href = "/";
+                }, 1500);
+
                 
             }).catch((err)=>{
               alert(err.message);
