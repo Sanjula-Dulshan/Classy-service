@@ -13,8 +13,8 @@
   justify-content: right;
 }
 .upload {
-  max-width: 350px;
-  height: 420px;
+  max-width: 280px;
+  height: 330px;
   width: 100%;
   border: 1px solid #ddd;
   padding: 15px;
@@ -39,7 +39,7 @@
   left: 0;
   background: #d9d9d9;
   color: #fea82f;
-  font-size: 17rem;
+  font-size: 14rem;
   text-align: center;
 
   cursor: pointer;
@@ -108,6 +108,27 @@
   border: none;
   align-items: flex-start;
 }
+
+.add_bank form .btn-del {
+  width: 200px;
+  height: 40px;
+  background: #ff0000;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  border: none;
+  align-items:flex-end;
+  margin-left: 25%;
+}
+
+.add_bank form .btn-del:hover {
+  background: #8d0e07;
+  color: 000000;
+  border: none;
+  align-items: flex-end;
+}
+
 .add_bank form .btn-create:hover {
   background: #e98800;
   color: 000000;

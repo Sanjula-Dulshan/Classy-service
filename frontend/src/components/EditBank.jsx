@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
@@ -6,14 +6,43 @@ import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 
 
-export default function AddBank() {
+export default function EditBank() {
   const [loading, setLoading] = useState(false);
+  const [id , setId] = useState();
   const [uid, setUid] = useState("1234");
   const [accName, setAccName] = useState();
   const [accNumber, setAccNumber] = useState();
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
   const [isAgree, setIsAgree] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [editText, setEditText] = useState("Edit");
+
+  useEffect(() => {
+    const getBank = async () => {
+      const res = await axios.get("/bank/user/" + uid);
+      setAccName(res.data.accName);
+      setAccNumber(res.data.accNumber);
+      setBankName(res.data.bankName);
+      setBranchName(res.data.branchName);
+      setId(res.data._id);
+    };
+    getBank();
+
+  }, [uid]);
+
+
+  const handleEnable = (e) => {
+    e.preventDefault();
+    setDisabled(!disabled);
+    if (disabled) {
+      setEditText("Cancel");
+    } else {
+      setEditText("Edit");
+    }
+
+  };
+ 
 
 
 
@@ -24,25 +53,51 @@ export default function AddBank() {
       return;
     }else{
       setLoading(true);
-      const newBank = {
-        uid,
-        accName,
-        accNumber,
-        bankName,
-        branchName,
-      }
 
-      console.log(newBank);
-      try {
-        await axios.post("/bank/", newBank);
-        window.location.replace("/");
-      } catch (err) {
-        alert(err);
+      //confirm if the user wants to update the bank details
+      if (window.confirm("Are you sure you want to update your bank details?")) {
+        
+        const newBank = {
+          uid,
+          accName,
+          accNumber,
+          bankName,
+          branchName,
+        }
+
+        console.log(newBank);
+        try {
+          await axios.put("/bank/"+id, newBank);
+          window.location.replace("/");
+        } catch (err) {
+          alert(err);
+        }
       }
       setLoading(false);
     }
     
   };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    //confirm delete
+    if (window.confirm("Are you sure you want to delete this bank account?")) {
+
+      try {
+        await axios.delete("/bank/"+id);
+        alert("Bank account deleted successfully");
+        window.location.replace("/");
+      } catch (err) {
+        alert(err);
+      }
+    }
+    setLoading(false);
+  }
+    
+
+
 
   
   return (
@@ -53,13 +108,13 @@ export default function AddBank() {
               spinner={<PropagateLoader />}
           >
         <div className="bg-card">
-          <label className="title">ADD BANK DETAILS</label>
+          <label className="title">EDIT BANK DETAILS</label>
           <div className="add_bank">
 
             
            
             <form onSubmit={handleSubmit}>
-              
+                            
                 <div className="">
                   <label htmlFor="title" className="form-label">
                     Account Name
@@ -70,6 +125,8 @@ export default function AddBank() {
                     name="acc_name"
                     id="acc_name"
                     required
+                    value={accName}
+                    disabled={disabled}
                     onChange={(e) => setAccName(e.target.value)}
                   />
                 </div>
@@ -85,7 +142,9 @@ export default function AddBank() {
                     className="form-control"
                     name="acc_number"
                     id="acc_number"
+                    disabled={disabled}
                     required
+                    value={accNumber}
                     onChange={(e) => setAccNumber(e.target.value)}
                   />
                 </div>
@@ -100,6 +159,10 @@ export default function AddBank() {
                   <select
                     name="bank"
                     className="form-control"
+                    id="bank"
+                    required
+                    disabled={disabled}
+                    value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
                   >
                     <option value="">Select a category</option>
@@ -124,6 +187,8 @@ export default function AddBank() {
                     className="form-control"
                     id="branch"
                     required
+                    disabled={disabled}
+                    value={branchName}
                     onChange={(e) => setBranchName(e.target.value)}
                   />
                 </div>
@@ -155,10 +220,13 @@ export default function AddBank() {
               </div>
               <div className="row ">
                 <div className="col flex_box">
-                  <button type="submit" className="btn btn-cancel">
-                    Cancel
+                  <button onClick={handleEnable} className="btn btn-cancel">
+                    Edit
                   </button>
-                  <button type="submit" className="btn btn-create">
+                  <button onClick={handleDelete} className="btn btn-del">
+                    Delete
+                  </button>
+                  <button disabled={disabled} type="submit" className="btn btn-create">
                     Save
                   </button>
                 </div>

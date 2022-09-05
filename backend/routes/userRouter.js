@@ -15,4 +15,6 @@ router.get("/infor", auth, userCtrl.getUserInfor);
 
 router.get("/user/:userEmail", userCtrl.getUserByEmail);
 
+router.get("/logout", userCtrl.logout);
+
 export default router;

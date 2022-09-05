@@ -21,14 +21,15 @@ import Wishlist from "./components/Wishlist";
 
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
-import AddBank from "./components/AddBank";
 
-import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header";
+
+import AddBank from "./components/AddBank";
+import EditBank from "./components/EditBank";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
-
 import Sidebar from "./components/Sidebar";
 
 function App() {
@@ -64,6 +65,8 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Header />
+        <Sidebar />
         <Routes>
           <Route
             path="/"
@@ -93,6 +96,7 @@ function App() {
             exact
             element={isLogged ? <Profile /> : <NotFound />}
           />
+
           <Route
             path="/wishlist"
             exact
@@ -105,6 +109,7 @@ function App() {
           />
 
           <Route path="/addBank" exact element={<AddBank />} />
+          <Route path="/editBank" exact element={<EditBank />} />
         </Routes>
       </BrowserRouter>
     </div>

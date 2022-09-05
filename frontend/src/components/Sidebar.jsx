@@ -3,8 +3,8 @@ import "./sideBar.css";
 
 export default function Sidebar() {
   return (
-    <div>
-      <div>
+    <div className="container">
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         <nav
           id="sidebarMenu"
           className="collapse d-lg-block sidebar collapse bg-white "
