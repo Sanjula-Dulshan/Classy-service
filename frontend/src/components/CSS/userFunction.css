@@ -6,6 +6,7 @@ body{
     display: grid;
     height:100vh;
     grid-template-columns: 45% auto;
+    margin-top: -1%;
 }
 
 
@@ -13,7 +14,7 @@ body{
     display: block;
     width: 100%;
     padding: 0.375rem 0.75rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.5;
     color: #0F0934;
@@ -149,14 +150,14 @@ body{
 .btn-login {
     color: #fff;
     font-size: 2rem;
-    background-color: #423E3B;
-    border-color: #423E3B;
+    background-color: #fea82f;
+    border-color: #fea82f;
     border-radius: 10px;
     width:160px;
-    height: 6vh;
+    height: 7vh;
     margin-left: 19%;
     margin-bottom: 10%;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
    
     
 }
@@ -209,8 +210,8 @@ body{
 }
 
 .side-btn1{
-    background-color: #0DA61C;
-    border-color: #0DA61C;
+    background-color: #423E3B;
+    border-color: #423E3B;
     font-size:2rem ;
     color:#fff;
     border-radius: 8px;
