@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Loading from "./utils/loading/Loading";
+import RiseLoader from "react-spinners/RiseLoader";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css";
 import ConfirmBox from "react-dialog-confirm";
 import "./styles/confirm.css";
@@ -61,6 +60,13 @@ export default function UserAllServices() {
       });
   });
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   const handleEdit = (id) => {
     navigate(`/editService/${id}`);
   };
@@ -69,85 +75,87 @@ export default function UserAllServices() {
     return str?.length > n ? str.substring(0, n - 1) + "..." : str;
   }
 
-  if (loading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
   return (
     <div>
       <Sidebar />
-      <div style={{ marginLeft: "100px" }}>
-        <div style={{ position: "absolute", zIndex: "4" }}>
-          <ConfirmBox // Note : in this example all props are required
-            options={{
-              icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
-              text: "Are you sure you want to delete this service ?",
-              confirm: "yes",
-              cancel: "no",
-              btn: true,
-            }}
-            isOpen={isOpen}
-            onClose={handleClose}
-            onConfirm={() => {
-              handleDelete(id, publicId);
-            }}
-            onCancel={handleClose}
-          />
+      {loading ? (
+        <div className="load">
+          <RiseLoader color={"#FEA82F"} loading={loading} size={30} />
         </div>
-        <div
-          className="ui cards mt-4 container"
-          style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
-        >
-          {services?.map((data, index) => (
-            <div
-              className="card"
-              key={index}
-              style={{ backgroundColor: "#FBFDF3" }}
-            >
-              <div className="content">
-                <div className="header mt-2 mb-4">
-                  <b>{data.title}</b>
+      ) : (
+        <div style={{ marginLeft: "100px" }}>
+          <div style={{ position: "absolute", zIndex: "4" }}>
+            <ConfirmBox // Note : in this example all props are required
+              options={{
+                icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
+                text: "Are you sure you want to delete this service ?",
+                confirm: "yes",
+                cancel: "no",
+                btn: true,
+              }}
+              isOpen={isOpen}
+              onClose={handleClose}
+              onConfirm={() => {
+                handleDelete(id, publicId);
+              }}
+              onCancel={handleClose}
+            />
+          </div>
+          <div
+            className="ui cards mt-4 container"
+            style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
+          >
+            {services?.map((data, index) => (
+              <div
+                className="card"
+                key={index}
+                style={{ backgroundColor: "#FBFDF3" }}
+              >
+                <div className="content">
+                  <div className="header mt-2 mb-4">
+                    <b>{data.title}</b>
+                  </div>
+                  <div className="mb-2">{truncate(data?.description, 75)}</div>
+                  <i className=" ">
+                    <span className="fw-bold ">Fee: </span>Rs.
+                    {data.fee}
+                  </i>
                 </div>
-                <div className="mb-2">{truncate(data?.description, 75)}</div>
-                <i className=" ">
-                  <span className="fw-bold ">Fee: </span>Rs.
-                  {data.fee}
-                </i>
-              </div>
-              <div className="extra content">
-                <div className="ui two buttons" style={{ marginLeft: "10%" }}>
-                  <tr>
-                    <td>
-                      <div
-                        className="ui button"
-                        style={{ backgroundColor: "#FEA82F", color: "black" }}
-                        onClick={() => handleEdit(data._id)}
-                      >
-                        Edit
-                      </div>
-                    </td>
-                    <td>
-                      <div
-                        className="ui button "
-                        style={{
-                          marginLeft: "50px",
-                          backgroundColor: "red",
-                          color: "white",
-                        }}
-                        onClick={() => confirm(data._id, data.image.public_id)}
-                      >
-                        Delete
-                      </div>
-                    </td>
-                  </tr>
+                <div className="extra content">
+                  <div className="ui two buttons" style={{ marginLeft: "10%" }}>
+                    <tr>
+                      <td>
+                        <div
+                          className="ui button"
+                          style={{ backgroundColor: "#FEA82F", color: "black" }}
+                          onClick={() => handleEdit(data._id)}
+                        >
+                          Edit
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          className="ui button "
+                          style={{
+                            marginLeft: "50px",
+                            backgroundColor: "red",
+                            color: "white",
+                          }}
+                          onClick={() =>
+                            confirm(data._id, data.image.public_id)
+                          }
+                        >
+                          Delete
+                        </div>
+                      </td>
+                    </tr>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
