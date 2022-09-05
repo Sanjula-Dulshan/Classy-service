@@ -103,6 +103,11 @@ function App() {
             exact
             element={isLogged ? <Wishlist /> : <NotFound />}
           />
+          <Route
+            path="/viewService"
+            exact
+            element={isLogged ? <ViewService /> : <NotFound />}
+          />
 
           <Route path="/addBank"  exact element={<AddBank/>} />
           <Route path="/editBank"  exact element={<EditBank/>} />

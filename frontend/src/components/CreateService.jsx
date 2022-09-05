@@ -151,7 +151,7 @@ export default function CreateService() {
     <div>
       <div className="card-row">
         <div className="card-column">
-          <div className="bg-card">
+          <div className="bg-car">
             {onEdit ? (
               <label className="title">EDIT SERVICE</label>
             ) : (
@@ -183,6 +183,7 @@ export default function CreateService() {
                   <div className="col">
                     <label htmlFor="title" className="form-label">
                       Title
+                      <label className="t-form-label2">*</label>
                     </label>
                     <input
                       type="text"
@@ -190,6 +191,7 @@ export default function CreateService() {
                       name="title"
                       id="title"
                       required
+                      spellcheck="true"
                       value={service.title}
                       onChange={handleChangeInput}
                     />
@@ -200,6 +202,7 @@ export default function CreateService() {
                   <div className="col">
                     <label htmlFor="description" className="form-label">
                       Description
+                      <label className="t-form-label2">*</label>
                     </label>
                     <textarea
                       type="text"
@@ -207,6 +210,7 @@ export default function CreateService() {
                       className="form-control"
                       id="description"
                       required
+                      spellcheck="true"
                       rows="5"
                       value={service.description}
                       onChange={handleChangeInput}
@@ -217,6 +221,7 @@ export default function CreateService() {
                   <div className="col">
                     <label htmlFor="categories" className="form-label">
                       Categories:
+                      <label className="t-form-label2">*</label>
                     </label>
                     <select
                       name="category"
@@ -232,6 +237,7 @@ export default function CreateService() {
                   <div className="col">
                     <label htmlFor="location" className="form-label">
                       Location
+                      <label className="t-form-label2">*</label>
                     </label>
                     <input
                       type="text"
@@ -239,6 +245,7 @@ export default function CreateService() {
                       className="form-control"
                       id="location"
                       required
+                      spellcheck="true"
                       value={service.location}
                       onChange={handleChangeInput}
                     />
@@ -249,6 +256,7 @@ export default function CreateService() {
                   <div className="col">
                     <label htmlFor="phone" className="form-label">
                       Mobile No:
+                      <label className="t-form-label2">*</label>
                     </label>
 
                     <input
@@ -267,6 +275,7 @@ export default function CreateService() {
                   <div className="col">
                     <label htmlFor="fee" className="form-label">
                       Fee (Rs.)
+                      <label className="t-form-label2">*</label>
                     </label>
                     <input
                       type="number"
@@ -326,6 +335,7 @@ export default function CreateService() {
                       className="form-label fw-bolder "
                     >
                       I accept payment by:
+                      <label className="t-form-label2">*</label>
                     </label>
 
                     <div className="form-check">
