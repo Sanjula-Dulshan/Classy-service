@@ -4,6 +4,9 @@ import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
+import { confirmAlert } from 'react-confirm-alert';
+import { Store } from 'react-notifications-component'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
 export default function EditBank() {
@@ -45,56 +48,133 @@ export default function EditBank() {
  
 
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAgree) {
       alert("Please agree to the terms and conditions");
       return;
     }else{
-      setLoading(true);
+      
+      confirmAlert({
+        title: 'Warning!',
+        message: 'Are sure you want to delete this account?',
+        buttons: [
+          {
+            label: 'Yes',
+            onClick: () => {
+              setLoading(true);
+              const newBank = {
+                        uid,
+                        accName,
+                        accNumber,
+                        bankName,
+                        branchName,
+                      }
 
-      //confirm if the user wants to update the bank details
-      if (window.confirm("Are you sure you want to update your bank details?")) {
-        
-        const newBank = {
-          uid,
-          accName,
-          accNumber,
-          bankName,
-          branchName,
-        }
 
-        console.log(newBank);
-        try {
-          await axios.put("/bank/"+id, newBank);
-          window.location.replace("/");
-        } catch (err) {
-          alert(err);
-        }
-      }
-      setLoading(false);
+              axios.put("/bank/"+id,newBank ).then((res)=>{
+                  setLoading(false);
+                  setDisabled(!disabled);
+                  Store.addNotification({
+                    title: "Bank Details Updated Successfully",
+                    message: "Your payment details have been updated successfully",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    type: "warning",
+                    insert: "top",
+                    container: "top-right",
+                    
+                    dismiss: {
+                      duration: 1500,
+                      onScreen: true,
+                      showIcon: true
+                    },
+          
+                    width:400
+                  }); 
+                  
+              }).catch((err)=>{
+                alert(err.message);
+              })
+            }
+          },
+          {
+            label: 'No',
+  
+          }
+        ]
+      });
+      
     }
-    
   };
+
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    //confirm delete
-    if (window.confirm("Are you sure you want to delete this bank account?")) {
+    confirmAlert({
+      title: 'Warning!',
+      message: 'Are sure you want to delete this account?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            setLoading(true);
+            axios.delete("/bank/"+id).then((res)=>{
+                setLoading(false);
+                Store.addNotification({
+                  title: "Bank Details Deleted Successfully",
+                  message: "Your bank data has been deleted successfully",
+                  animationIn: ["animate__animated", "animate__fadeIn"],
+                  animationOut: ["animate__animated", "animate__fadeOut"],
+                  type: "danger",
+                  insert: "top",
+                  container: "top-right",
+                  
+                  dismiss: {
+                    duration: 1500,
+                    onScreen: true,
+                    showIcon: true
+                  },
+        
+                  width:400
+                }); 
+                //wait for 1.5 seconds and redirect to the home page
+                setTimeout(() => {
+                  window.location.href = "/";
+                }, 1500);
 
-      try {
-        await axios.delete("/bank/"+id);
-        alert("Bank account deleted successfully");
-        window.location.replace("/");
-      } catch (err) {
-        alert(err);
-      }
-    }
-    setLoading(false);
+                
+            }).catch((err)=>{
+              alert(err.message);
+            })
+          }
+        },
+        {
+          label: 'No',
+
+        }
+      ]
+    });
   }
+
+  // const handleDelete = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   //confirm delete
+  //   if (window.confirm("Are you sure you want to delete this bank account?")) {
+
+  //     try {
+  //       await axios.delete("/bank/"+id);
+  //       alert("Bank account deleted successfully");
+  //       window.location.replace("/");
+  //     } catch (err) {
+  //       alert(err);
+  //     }
+  //   }
+  //   setLoading(false);
+  // }
     
 
 

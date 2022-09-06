@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { ReactNotifications } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 import "/node_modules/bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -26,6 +27,7 @@ import Header from "./components/header/Header";
 
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
+import SelectPayMethod from "./components/SelectPayMethod";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
@@ -65,7 +67,12 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+
+        <Sidebar />
+        <ReactNotifications />
+
         <Header />
+
 
         <Routes>
           <Route
@@ -108,8 +115,11 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
 
-          <Route path="/addBank" exact element={<AddBank />} />
-          <Route path="/editBank" exact element={<EditBank />} />
+          <Route path="/addBank"  exact element={<AddBank/>} />
+          <Route path="/editBank"  exact element={<EditBank/>} />
+          <Route path="/selectPayMethod"  exact element={<SelectPayMethod/>} />
+
+
         </Routes>
       </BrowserRouter>
     </div>

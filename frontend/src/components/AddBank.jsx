@@ -4,6 +4,9 @@ import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
+import { confirmAlert } from 'react-confirm-alert';
+import { Store } from 'react-notifications-component'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
 export default function AddBank() {
@@ -35,7 +38,26 @@ export default function AddBank() {
       console.log(newBank);
       try {
         await axios.post("/bank/", newBank);
-        window.location.replace("/");
+        Store.addNotification({
+          title: "Bank Details Saved Successfully",
+          message: "Your will recive your payments to this account",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          
+          dismiss: {
+            duration: 1500,
+            onScreen: true,
+            showIcon: true
+          },
+
+          width:400
+        }); 
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
       } catch (err) {
         alert(err);
       }
