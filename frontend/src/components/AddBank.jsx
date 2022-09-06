@@ -66,6 +66,11 @@ export default function AddBank() {
     
   };
 
+  const cancel = (e) => {
+    e.preventDefault();
+    window.location.href = "/";
+  };
+
   
   return (
     <div className="card-row">
@@ -177,9 +182,11 @@ export default function AddBank() {
               </div>
               <div className="row ">
                 <div className="col flex_box">
-                  <button type="submit" className="btn btn-cancel">
-                    Cancel
-                  </button>
+                  
+                    <button onClick={cancel} className="btn btn-cancel">
+                      Cancel
+                    </button>
+              
                   <button type="submit" className="btn btn-create">
                     Save
                   </button>
