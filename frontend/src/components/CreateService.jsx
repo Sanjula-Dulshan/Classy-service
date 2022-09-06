@@ -6,6 +6,8 @@ import "./styles/createService.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SideBar from "./Sidebar";
+import { Store } from "react-notifications-component";
+import ReactTooltip from "react-tooltip";
 
 const initialState = {
   userEmail: "",
@@ -128,6 +130,23 @@ export default function CreateService() {
         await axios
           .put(`/services/${service._id}`, { ...service, image })
           .then(() => {
+            Store.addNotification({
+              title: "Service Updated Successfully",
+
+              animationIn: ["animate__animated", "animate__fadeIn"],
+              animationOut: ["animate__animated", "animate__fadeOut"],
+              type: "success",
+              insert: "top",
+              container: "top-right",
+
+              dismiss: {
+                duration: 2500,
+                onScreen: true,
+                showIcon: true,
+              },
+
+              width: 400,
+            });
             navigate(`/userServices`);
           });
       } else {
@@ -135,7 +154,23 @@ export default function CreateService() {
         await axios
           .post("/services", { ...service, image })
           .then(() => {
-            alert("Service created");
+            Store.addNotification({
+              title: "Service Created Successfully",
+
+              animationIn: ["animate__animated", "animate__fadeIn"],
+              animationOut: ["animate__animated", "animate__fadeOut"],
+              type: "success",
+              insert: "top",
+              container: "top-right",
+
+              dismiss: {
+                duration: 2500,
+                onScreen: true,
+                showIcon: true,
+              },
+
+              width: 400,
+            });
             setService(initialState);
             setImage(false);
           })
@@ -144,7 +179,7 @@ export default function CreateService() {
           });
       }
     } catch (err) {
-      alert(err.response.data.msg);
+      alert(err);
     }
   };
   const handleCancel = () => {
@@ -300,6 +335,8 @@ export default function CreateService() {
                         className="form-control"
                         id="fee"
                         required
+                        min={500}
+                        data-tip="Minimum fee is Rs.500"
                         value={service.fee}
                         onChange={handleChangeInput}
                       />
@@ -409,6 +446,7 @@ export default function CreateService() {
               </div>
             </div>
           </div>
+          <ReactTooltip delayShow={100} delayHide={100} />
         </div>
       )}
     </div>

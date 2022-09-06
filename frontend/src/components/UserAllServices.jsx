@@ -8,6 +8,7 @@ import ConfirmBox from "react-dialog-confirm";
 import "./styles/confirm.css";
 import "./allServices.css";
 import Sidebar from "./Sidebar";
+import { Store } from "react-notifications-component";
 
 export default function UserAllServices() {
   const auth = useSelector((state) => state.auth);
@@ -35,9 +36,25 @@ export default function UserAllServices() {
 
       await destroyImg;
       await deleteService;
-
       setLoading(false);
       setIsOpen(false);
+      Store.addNotification({
+        title: "Service Deleted Successfully",
+
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+
+        dismiss: {
+          duration: 2500,
+          onScreen: true,
+          showIcon: true,
+        },
+
+        width: 400,
+      });
     } catch (err) {
       alert(err.response.data.msg);
     }
