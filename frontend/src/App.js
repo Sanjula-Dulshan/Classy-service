@@ -9,7 +9,6 @@ import "./App.css";
 import axios from "axios";
 import NotFound from "./components/utils/NotFound/NotFound";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactNotifications } from "react-notifications-component";
 
 import {
   dispatchLogin,
@@ -65,8 +64,6 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-
-        <Sidebar />
         <ReactNotifications />
 
         <Header />
@@ -114,11 +111,9 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
 
-          <Route path="/addBank"  exact element={<AddBank/>} />
-          <Route path="/editBank"  exact element={<EditBank/>} />
-          <Route path="/selectPayMethod"  exact element={<SelectPayMethod/>} />
-
-
+          <Route path="/addBank" exact element={<AddBank />} />
+          <Route path="/editBank" exact element={<EditBank />} />
+          <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
         </Routes>
       </BrowserRouter>
     </div>

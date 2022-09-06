@@ -6,6 +6,7 @@ import RiseLoader from "react-spinners/RiseLoader";
 import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import { Store } from "react-notifications-component";
 
 export default function AllServices() {
   const [services, setServices] = useState([]);
@@ -29,6 +30,22 @@ export default function AllServices() {
 
   const wishlistHandler = (data) => {
     axios.post("/wishlist/", data).then((res) => {
+      Store.addNotification({
+        title: "Service Added to Wishlist",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        type: "success",
+        insert: "top",
+        container: "top-right",
+
+        dismiss: {
+          duration: 2500,
+          onScreen: true,
+          showIcon: true,
+        },
+
+        width: 400,
+      });
       console.log(res);
     });
   };
