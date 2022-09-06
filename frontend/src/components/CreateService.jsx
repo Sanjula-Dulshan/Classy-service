@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SideBar from "./Sidebar";
 import { Store } from "react-notifications-component";
-import ReactTooltip from "react-tooltip";
 
 const initialState = {
   userEmail: "",
@@ -336,7 +335,9 @@ export default function CreateService() {
                         id="fee"
                         required
                         min={500}
-                        data-tip="Minimum fee is Rs.500"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="minimum fee is Rs.500"
                         value={service.fee}
                         onChange={handleChangeInput}
                       />
@@ -446,7 +447,6 @@ export default function CreateService() {
               </div>
             </div>
           </div>
-          <ReactTooltip delayShow={100} delayHide={100} />
         </div>
       )}
     </div>
