@@ -10,7 +10,6 @@ import axios from "axios";
 import NotFound from "./components/utils/NotFound/NotFound";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import {
   dispatchLogin,
   fetchUser,
@@ -69,11 +68,6 @@ function App() {
 
         <Header />
 
-<<<<<<< HEAD
-=======
-        <ReactNotifications />
-
->>>>>>> 9f3eb21b8ec9df4deb2a073e808be8f24e95b907
         <Routes>
           <Route
             path="/"
