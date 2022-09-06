@@ -22,6 +22,9 @@ import Wishlist from "./components/Wishlist";
 
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
+
+import Header from "./components/header/Header";
+
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
 import SelectPayMethod from "./components/SelectPayMethod";
@@ -29,7 +32,6 @@ import SelectPayMethod from "./components/SelectPayMethod";
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
-
 import Sidebar from "./components/Sidebar";
 
 function App() {
@@ -65,10 +67,19 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+
         <Sidebar />
         <ReactNotifications />
+
+        <Header />
+
+
         <Routes>
-          <Route path="/" exact element={<AllServices />} />
+          <Route
+            path="/"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
           <Route
             path="/addService"
             exact
@@ -93,16 +104,21 @@ function App() {
             element={isLogged ? <Profile /> : <NotFound />}
           />
 
-
           <Route
             path="/wishlist"
             exact
             element={isLogged ? <Wishlist /> : <NotFound />}
           />
+          <Route
+            path="/viewService"
+            exact
+            element={isLogged ? <ViewService /> : <NotFound />}
+          />
 
           <Route path="/addBank"  exact element={<AddBank/>} />
           <Route path="/editBank"  exact element={<EditBank/>} />
           <Route path="/selectPayMethod"  exact element={<SelectPayMethod/>} />
+
 
         </Routes>
       </BrowserRouter>

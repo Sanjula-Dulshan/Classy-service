@@ -19,7 +19,9 @@ export const dispatchGetUser = (res) => {
         type: ACTIONS.GET_USER,
         payload: {
             user: res.data,
-            isAdmin: res.data.role === 1 ? true : false
+            isAdmin: res.data.role === 1 ? true : false,
+            isWorker:localStorage.getItem('usertype')==1 ?true:false,
+            iscustomer:localStorage.getItem('usertype')==0 ?true:false
         }
     }
 }
