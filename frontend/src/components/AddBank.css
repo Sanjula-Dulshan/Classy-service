@@ -109,6 +109,58 @@
   align-items: flex-start;
 }
 
+.btn-payon {
+  width: 350px;
+  height: 60px;
+  background: #fea82f;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: large;
+  border: none;
+  align-items: flex-start;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+
+.btn-payoff {
+  width: 350px;
+  height: 60px;
+  background: #423e3b;
+  color: #ffffff;
+  font-size: large;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  border: none;
+  align-items: flex-start;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+
+.method-container{
+  padding-left: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  margin-top: 50px;
+
+}
+
+.method-container2{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: -125px;
+  margin-left: 20%;
+  padding-bottom: 20%;
+  padding-left: 10%;
+}
+
 .add_bank form .btn-del {
   width: 200px;
   height: 40px;
