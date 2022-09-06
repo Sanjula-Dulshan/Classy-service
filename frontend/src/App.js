@@ -4,35 +4,33 @@ import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import "/node_modules/bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "react-notifications-component/dist/theme.css";
 import "./App.css";
 import axios from "axios";
 import NotFound from "./components/utils/NotFound/NotFound";
 import { useDispatch, useSelector } from "react-redux";
+import { ReactNotifications } from "react-notifications-component";
+
 import {
   dispatchLogin,
   fetchUser,
   dispatchGetUser,
 } from "./redux/actions/authAction";
-// import "semantic-ui-css/semantic.min.css";
 import CreateService from "./components/CreateService";
 import AllServices from "./components/AllServices";
 import ViewService from "./components/ViewService";
-
 import Wishlist from "./components/Wishlist";
-
 import UserAllServices from "./components/UserAllServices";
 import Register from "./components/Register";
-
 import Header from "./components/header/Header";
-
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
+
 import SelectPayMethod from "./components/SelectPayMethod";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
-import Sidebar from "./components/Sidebar";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +71,7 @@ function App() {
 
         <Header />
 
+        <ReactNotifications />
 
         <Routes>
           <Route
