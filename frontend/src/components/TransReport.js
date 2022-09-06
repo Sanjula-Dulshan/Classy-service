@@ -12,7 +12,7 @@ const generatePDF = () => {
   // const spec = specialization;
   // const Type = schemeType;
   // const TMark = marks;
-  alert("SSSSSSSSSSSSS");
+
 
 
 
@@ -34,7 +34,7 @@ const generatePDF = () => {
 
 
 
-  alert("Saving 1")
+
   // startY is basically margin-top
   var img = new Image()
   img.src = 'https://res.cloudinary.com/sliit-yasantha/image/upload/v1662474761/bg-marking_gkgvjz_qzygux.png'
@@ -75,7 +75,7 @@ const generatePDF = () => {
 
 
   // we define the name of our PDF file.
-  alert("Saving")
+
   doc.save(`report_.pdf`);
 
 };
