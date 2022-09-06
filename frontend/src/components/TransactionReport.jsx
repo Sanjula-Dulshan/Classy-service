@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 import "./AddBank.css";
+import generatePDF from "./TransReport";
 
 
 
@@ -33,7 +34,7 @@ export default function TransactionReport() {
                         <label> Select Year & Month:  </label>
                         <input type="month" id="start" name="trip-start"></input>
 
-                            <button className="btn-report" >Download PDF <img src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-cash-30_mwwzdi.png" /></button>
+                            <button onClick={()=>generatePDF()} className="btn-report" >Download PDF <img src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-cash-30_mwwzdi.png" /></button>
                         </div>
   
                     </div>
@@ -49,9 +50,9 @@ export default function TransactionReport() {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">ID</th>
-                <th scope="col">Type</th>
-                <th scope="col">User ID</th>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">Reciver</th>
+                <th scope="col">Payment Method</th>
                 <th scope="col">
                   Amount
                 </th>
