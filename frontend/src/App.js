@@ -68,7 +68,6 @@ function App() {
         <ReactNotifications />
 
         <Header />
-
         <Routes>
           <Route
             path="/"
