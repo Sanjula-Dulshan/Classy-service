@@ -47,7 +47,7 @@ export default function Header() {
     <li><Link className='header-al' to="/"> Home</Link></li>
     <li><Link className='header-al' to="#"> About</Link></li>
     <li><Link className='header-al' to="#"> Contact Us</Link></li> 
-    <li>{iscustomer?<Link className='header-al' to="#"> My Wishlist</Link>:""}</li>  
+    <li>{iscustomer?<Link className='header-al' to="/wishlist"> My Wishlist</Link>:""}</li>  
     <li>{isWorker?<Link className='header-al' to="/userServices"> My Services</Link>:""}</li> 
     <li>{isWorker?<Link className='header-al' to="/addService"> Create Services</Link>:""}</li>
      </ul></div>

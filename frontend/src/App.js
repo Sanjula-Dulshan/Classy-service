@@ -70,7 +70,7 @@ function App() {
       <BrowserRouter>
 
         <Header/>
-        <Sidebar />
+        
         <Routes>
           <Route path="/" exact element={<AllServices />} />
           <Route
