@@ -68,12 +68,6 @@ function App() {
         <ReactNotifications />
 
         <Header />
-
-<<<<<<< HEAD
-        <Header/>
-        
-=======
->>>>>>> 6924a504b864c380c5df0943b5ab55f0cb591df1
         <Routes>
           <Route
             path="/"
