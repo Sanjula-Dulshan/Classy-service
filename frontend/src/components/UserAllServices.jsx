@@ -101,7 +101,7 @@ export default function UserAllServices() {
         </div>
       ) : (
         <div style={{ marginLeft: "100px" }}>
-          <div style={{ position: "absolute", zIndex: "4" }}>
+          <div style={{ position: "absolute", zIndex: "704" }}>
             <ConfirmBox // Note : in this example all props are required
               options={{
                 icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
