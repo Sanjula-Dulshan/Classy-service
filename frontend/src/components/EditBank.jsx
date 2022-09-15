@@ -57,7 +57,7 @@ export default function EditBank() {
       
       confirmAlert({
         title: 'Warning!',
-        message: 'Are sure you want to delete this account?',
+        message: 'Are sure you want to update this account?',
         buttons: [
           {
             label: 'Yes',

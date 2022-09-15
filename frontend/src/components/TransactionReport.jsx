@@ -17,8 +17,8 @@ export default function TransactionReport() {
     
   
   return (
-    <div className="card-row">
-      <div className="card-column">
+    <div className="card-row2">
+      <div className="card-column2">
 
         <div >
           <label className="title">Transaction History</label>
