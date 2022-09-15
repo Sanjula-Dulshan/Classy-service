@@ -1,4 +1,4 @@
-import Checkout from "../models/checkoutModel";
+import Checkout from "../models/checkoutModel.js";
 
 const checkoutCtrl = {
     getCheckouts: async (req, res) => {
