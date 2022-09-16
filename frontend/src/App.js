@@ -109,14 +109,14 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
 
-
-          <Route path="/addBank"  exact element={<AddBank/>} />
-          <Route path="/editBank"  exact element={<EditBank/>} />
-          <Route path="/selectPayMethod"  exact element={<SelectPayMethod/>} />
-          <Route path="/transactionReport"  exact element={<TransactionReport/>} />
-
-
-
+          <Route path="/addBank" exact element={<AddBank />} />
+          <Route path="/editBank" exact element={<EditBank />} />
+          <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
+          <Routes
+            path="/transactionReport"
+            exact
+            element={<TransactionReport />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
