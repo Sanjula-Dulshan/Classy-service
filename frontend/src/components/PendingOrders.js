@@ -15,48 +15,77 @@ export default function PendingOrders() {
 
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [accept, setAccept] = useState(false);
+  const [reject, setReject] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
-  const [publicId, setPublicId] = useState();
+  const [status, setStatus] = useState();
 
-  const confirm = (id, public_id) => {
+  const confirm = (id, status) => {
     setIsOpen(true);
     setId(id);
-    setPublicId(public_id);
+    setStatus(status);
+
+    if (status === "accept") setAccept(true);
+    if (status === "reject") setReject(true);
+    console.log("status", status);
   };
 
-  const handleDelete = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
-    try {
-      setLoading(true);
-      const destroyImg = axios.post("/image/destroy", { public_id });
-      const deleteService = axios.delete(`/services/${id}`);
+  const handleBtn = async (id, status) => {
+    if (accept) {
+      try {
+        setLoading(true);
+        await axios.patch(`/services/${id}`, { status });
+        setLoading(false);
+        setIsOpen(false);
+        Store.addNotification({
+          title: "Service Accepted Successfully",
 
-      await destroyImg;
-      await deleteService;
-      setLoading(false);
-      setIsOpen(false);
-      Store.addNotification({
-        title: "Service Deleted Successfully",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          type: "success",
+          insert: "top",
+          container: "top-right",
 
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        type: "danger",
-        insert: "top",
-        container: "top-right",
+          dismiss: {
+            duration: 2500,
+            onScreen: true,
+            showIcon: true,
+          },
 
-        dismiss: {
-          duration: 2500,
-          onScreen: true,
-          showIcon: true,
-        },
+          width: 400,
+        });
+      } catch (err) {
+        alert(err.response.data.msg);
+      }
+    }
+    if (reject) {
+      try {
+        setLoading(true);
+        await axios.patch(`/services/${id}`, { status });
+        setLoading(false);
+        setIsOpen(false);
+        Store.addNotification({
+          title: "Service Rejected ",
 
-        width: 400,
-      });
-    } catch (err) {
-      alert(err.response.data.msg);
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+
+          dismiss: {
+            duration: 2500,
+            onScreen: true,
+            showIcon: true,
+          },
+
+          width: 400,
+        });
+      } catch (err) {
+        alert(err.response.data.msg);
+      }
     }
   };
 
@@ -85,10 +114,6 @@ export default function PendingOrders() {
     }, 2000);
   }, []);
 
-  const handleEdit = (id) => {
-    navigate(`/editService/${id}`);
-  };
-
   return (
     <div>
       <Sidebar />
@@ -109,9 +134,7 @@ export default function PendingOrders() {
               }}
               isOpen={isOpen}
               onClose={handleClose}
-              onConfirm={() => {
-                handleDelete(id, publicId);
-              }}
+              onConfirm={() => handleBtn(id, status)}
               onCancel={handleClose}
             />
           </div>
@@ -145,7 +168,7 @@ export default function PendingOrders() {
                         <div
                           className="ui button"
                           style={{ backgroundColor: "#FEA82F", color: "black" }}
-                          onClick={() => handleEdit(data._id)}
+                          onClick={() => confirm(data._id, "Accept")}
                         >
                           Accept
                         </div>
@@ -158,11 +181,9 @@ export default function PendingOrders() {
                             backgroundColor: "red",
                             color: "white",
                           }}
-                          onClick={() =>
-                            confirm(data._id, data.image.public_id)
-                          }
+                          onClick={() => confirm(data._id, "Reject")}
                         >
-                          Delete
+                          Reject
                         </div>
                       </td>
                     </tr>
