@@ -112,7 +112,7 @@ function App() {
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
           <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
-          <Routes
+          <Route
             path="/transactionReport"
             exact
             element={<TransactionReport />}
