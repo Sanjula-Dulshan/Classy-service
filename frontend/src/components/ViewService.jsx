@@ -38,6 +38,7 @@ export default function ViewService() {
     axios
       .get(`user/user/${userEmail}`)
       .then((res) => {
+        console.log(res.data);
         setServiceProvider(res.data);
       })
       .catch((err) => {
@@ -126,15 +127,18 @@ export default function ViewService() {
                             <b>{serviceProvider.name}</b>
                           </h5>
                         </div>
-                        <div
-                          class="ui button"
-                          style={{
-                            backgroundColor: "#FEA82F",
-                            color: "black",
-                            marginLeft: "8%",
-                          }}
-                        >
-                          View Profile
+                        <div>
+                          <Link
+                            class="ui button"
+                            to={"/viewProfile"}
+                            style={{
+                              backgroundColor: "#FEA82F",
+                              color: "black",
+                              marginLeft: "8%",
+                            }}
+                          >
+                            View Profile
+                          </Link>
                         </div>
                       </div>
                     </div>

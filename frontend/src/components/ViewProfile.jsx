@@ -2,12 +2,37 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import Sidebar from "./Sidebar";
 
 export default function ViewProfile() {
+  const [title, setTitle] = useState("");
+  const [phone, setPhone] = useState("");
+  const [_id, set_id] = useState("");
+  const [serviceProvider, setServiceProvider] = useState("");
+
+  let userEmail;
+
+  useEffect(() => {
+    set_id(localStorage.getItem("_id"));
+    setTitle(localStorage.getItem("title"));
+    setPhone(localStorage.getItem("phone"));
+
+    userEmail = localStorage.getItem("userEmail");
+
+    axios
+      .get(`user/user/${userEmail}`)
+      .then((res) => {
+        console.log(res.data);
+        setServiceProvider(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
+      <Sidebar />
       <div className="container ">
         <div className="mt-5 ">
           <Link to="/">
@@ -31,7 +56,7 @@ export default function ViewProfile() {
               <div class="content">
                 <div className="col-md-2 mt-2">
                   <img
-                    src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+                    src={serviceProvider.avatar}
                     className="left floated ui image"
                     style={{ height: "50%", width: "50%" }}
                     alt="Avatar"
@@ -39,7 +64,7 @@ export default function ViewProfile() {
                 </div>
 
                 <div>
-                  <h4>dssddddddddd</h4>
+                  <h4>{title}</h4>
                 </div>
               </div>
 
@@ -52,6 +77,7 @@ export default function ViewProfile() {
                   style={{ fontSize: "18px" }}
                 >
                   {" "}
+                  {phone}
                 </i>
               </div>
 
