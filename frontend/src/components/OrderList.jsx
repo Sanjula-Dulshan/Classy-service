@@ -1,36 +1,32 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { confirmAlert } from "react-confirm-alert";
+
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
-import ConfirmBox from "react-dialog-confirm";
+
 import Sidebar from "./Sidebar";
+import "../components/ratings/rstyle.css";
 
 export default function OrderList() {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/orders/")
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <Sidebar />
       <div className="mt-4 container">
-        {/* <div style={{ position: "absolute", zIndex: "704" }}>
-          <ConfirmBox // Note : in this example all props are required
-            options={{
-              icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
-              text: "Are you sure you want to delete this service ?",
-              confirm: "yes",
-              cancel: "no",
-              btn: true,
-            }}
-            isOpen={isOpen}
-            onClose={handleClose}
-            onConfirm={() => {
-              onDelete(id);
-            }}
-            onCancel={handleClose}
-          />
-        </div> */}
+        <div style={{ position: "absolute", zIndex: "704" }}></div>
         <div style={{ textAlign: "center" }}>
           <i class="cart icon "></i>
         </div>
@@ -39,63 +35,155 @@ export default function OrderList() {
         </h1>
 
         <div className="mt-5" style={{ marginLeft: "15%" }}>
-          <div
-            className="card mb-2 container"
-            style={{ backgroundColor: "#FBFDF3" }}
-          >
-            <div className="row g-0 ">
-              <div className="col-md-2">
-                <img
-                  src=""
-                  className="img mt-2"
-                  style={{ height: "90%", width: "90%" }}
-                />
-              </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">
-                    <b>gtyyyygf</b>
-                  </h5>
-                  <p className="card-text d-flex justify-content-between align-items-center">
-                    <b>Status:</b>
-                    <div className="extra content">
-                      <div
-                        className="ui two buttons"
-                        style={{ marginLeft: "40%" }}
-                      >
-                        <tr>
-                          <td>
-                            <Link
-                              className="ui button"
-                              to={""}
-                              style={{
-                                backgroundColor: "#1E1E1E",
-                                color: "white",
-                              }}
-                            >
-                              LEAVE FEEDBACK
-                            </Link>
-                          </td>
-                          {/* <td>
-                            <button
-                              class="ui button mb-2"
-                              style={{
-                                marginLeft: "50px",
-                                color: "red",
-                              }}
-                              //   onClick={() => confirm(data._id)}
-                            >
-                              <FontAwesomeIcon icon={faTrash} />
-                            </button>
-                          </td> */}
-                        </tr>
+          {console.log("orders", orders)}
+          {orders?.map(
+            (data, index) => (
+              console.log("41", data),
+              (
+                <div
+                  className="card mb-2 container"
+                  key={index}
+                  style={{ backgroundColor: "#FBFDF3" }}
+                >
+                  <div className="row g-0 ">
+                    <div className="col-md-2">
+                      <img
+                        src={data.image.url}
+                        className="img mt-2"
+                        style={{ height: "90%", width: "90%" }}
+                      />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <h4 className="card-title">
+                          <b>{data.serviceTitle}</b>
+                        </h4>
+                        <br></br>
+
+                        {data.orderStatus === "pending" ? (
+                          <h5>
+                            <b>
+                              Status:
+                              <span style={{ backgroundColor: "yellow" }}>
+                                Pending{" "}
+                              </span>
+                            </b>
+                          </h5>
+                        ) : (
+                          <div></div>
+                        )}
+                        {data.orderStatus === "accept" ? (
+                          <h5>
+                            <b>
+                              Status:
+                              <span style={{ backgroundColor: "green" }}>
+                                Accept{" "}
+                              </span>
+                            </b>
+                          </h5>
+                        ) : (
+                          <div></div>
+                        )}
+
+                        {data.orderStatus === "reject" ? (
+                          <h5>
+                            <b>
+                              Status:
+                              <span style={{ backgroundColor: "red" }}>
+                                Reject{" "}
+                              </span>
+                            </b>
+                          </h5>
+                        ) : (
+                          <div></div>
+                        )}
+
+                        <div className="extra content">
+                          <div
+                            className="ui two buttons"
+                            style={{ marginLeft: "40%" }}
+                          >
+                            <tr>
+                              <td>
+                                <button
+                                  class="ui button mb-2"
+                                  style={{
+                                    marginLeft: "50px",
+                                    backgroundColor: "#1E1E1E",
+                                    color: "white",
+                                  }}
+                                  //   onClick={() => confirm(data._id)}
+                                >
+                                  LEAVE FEEDBACK
+                                </button>
+                              </td>
+                            </tr>
+                          </div>
+                        </div>
+
+                        {/* <section>
+                          <div class="rt-container">
+                            <div class="col-rt-12">
+                              <form>
+                                <fieldset>
+                                  <span class="star-cb-group">
+                                    <input
+                                      type="radio"
+                                      id="rating-5"
+                                      name="rating"
+                                      value="5"
+                                    />
+                                    <label for="rating-5">5</label>
+                                    <input
+                                      type="radio"
+                                      id="rating-4"
+                                      name="rating"
+                                      value="4"
+                                      checked="checked"
+                                    />
+                                    <label for="rating-4">4</label>
+                                    <input
+                                      type="radio"
+                                      id="rating-3"
+                                      name="rating"
+                                      value="3"
+                                    />
+                                    <label for="rating-3">3</label>
+                                    <input
+                                      type="radio"
+                                      id="rating-2"
+                                      name="rating"
+                                      value="2"
+                                    />
+                                    <label for="rating-2">2</label>
+                                    <input
+                                      type="radio"
+                                      id="rating-1"
+                                      name="rating"
+                                      value="1"
+                                    />
+                                    <label for="rating-1">1</label>
+                                    <input
+                                      type="radio"
+                                      id="rating-0"
+                                      name="rating"
+                                      value="0"
+                                      class="star-cb-clear"
+                                    />
+                                    <label for="rating-0">0</label>
+                                  </span>
+                                </fieldset>
+                              </form>
+                            </div>
+                          </div>
+                        </section> */}
                       </div>
                     </div>
-                  </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
+              )
+            )
+          )}
         </div>
       </div>
     </div>

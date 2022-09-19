@@ -58,9 +58,13 @@ const checkoutSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: Object,
+      required: true,
+    },
     orderStatus: {
       type: String,
-      default: "Pending",
+      default: "pending",
     },
     serviceProviderEmail: {
       type: String,

@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import fileUpload from "express-fileupload";
-import bodyParser  from  "body-parser";
+import bodyParser from "body-parser";
 
 import servicesRouter from "./routes/servicesRouter.js";
 import uploadRouter from "./routes/uploadRouter.js";
@@ -31,7 +31,7 @@ app.use("/wishlist", wishListRouter);
 app.use("/user", userRouter);
 app.use("/bank", payRouter);
 app.use("/checkout", checkoutRouter);
-
+app.use("/orders", checkoutRouter);
 
 // Connect to MongoDB
 mongoose
