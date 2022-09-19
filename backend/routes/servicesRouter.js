@@ -9,6 +9,6 @@ router
   .delete(serviceCtrl.deleteService)
   .put(serviceCtrl.updateService);
 
-router.route("/pending/:userEmail").get(serviceCtrl.getPendingServices);
+// router.route("/pending/:userEmail").get(serviceCtrl.getPendingServices);
 
 export default router;

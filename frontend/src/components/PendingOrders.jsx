@@ -12,6 +12,7 @@ import { Store } from "react-notifications-component";
 
 export default function PendingOrders() {
   const auth = useSelector((state) => state.auth);
+  const { email } = auth.user;
 
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
@@ -29,41 +30,59 @@ export default function PendingOrders() {
 
     if (status === "accept") setAccept(true);
     if (status === "reject") setReject(true);
-    console.log("status", status);
   };
 
   const handleBtn = async (id, status) => {
     if (accept) {
+      setAccept(false);
+
+      console.log("42");
+      console.log("accept: ", accept);
+      console.log("reject: ", reject);
       try {
         setLoading(true);
-        await axios.patch(`/services/${id}`, { status });
-        setLoading(false);
-        setIsOpen(false);
-        Store.addNotification({
-          title: "Service Accepted Successfully",
+        await axios
+          .patch(`/checkout/${id}`, { status })
+          .then(() => {
+            setIsOpen(false);
+            setLoading(false);
 
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          type: "success",
-          insert: "top",
-          container: "top-right",
+            Store.addNotification({
+              title: "Service Accepted Successfully",
 
-          dismiss: {
-            duration: 2500,
-            onScreen: true,
-            showIcon: true,
-          },
+              animationIn: ["animate__animated", "animate__fadeIn"],
+              animationOut: ["animate__animated", "animate__fadeOut"],
+              type: "success",
+              insert: "top",
+              container: "top-right",
 
-          width: 400,
-        });
+              dismiss: {
+                duration: 2500,
+                onScreen: true,
+                showIcon: true,
+              },
+
+              width: 400,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } catch (err) {
         alert(err.response.data.msg);
+        setLoading(false);
+        setIsOpen(false);
       }
     }
     if (reject) {
+      setReject(false);
+      console.log("82");
+      console.log("accept: ", accept);
+      console.log("reject: ", reject);
+
       try {
         setLoading(true);
-        await axios.patch(`/services/${id}`, { status });
+        await axios.patch(`/checkout/${id}`, { status });
         setLoading(false);
         setIsOpen(false);
         Store.addNotification({
@@ -85,6 +104,8 @@ export default function PendingOrders() {
         });
       } catch (err) {
         alert(err.response.data.msg);
+        setLoading(false);
+        setIsOpen(false);
       }
     }
   };
@@ -94,18 +115,21 @@ export default function PendingOrders() {
   };
 
   useEffect(() => {
-    const { email } = auth.user;
-    axios
-      .get(`/services/${email}`)
+    console.log("email", email);
+    const fetchData = async () => {
+      await axios
+        .get(`/checkout/pending/${email}`)
 
-      .then((res) => {
-        console.log(res.data);
-        setServices(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+        .then((res) => {
+          console.log(res.data);
+          setServices(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+  }, [email, loading]);
 
   useEffect(() => {
     setLoading(true);
@@ -152,23 +176,26 @@ export default function PendingOrders() {
                   <div className="header mt-2 mb-4">
                     <b>{data.title}</b>
                   </div>
+                  <div className="fw-bold fs-4 mb-3 text-capitalize">
+                    {data.serviceTitle}
+                  </div>
                   <span className="fw-bold ">Location: </span>
-                  {data.location}
+                  {data.city}
                   <br />
                   <span className="fw-bold ">Fee: </span>Rs.
-                  {data.fee}
+                  {data.amount}
                   <br />
                   <span className="fw-bold ">Phone </span>
-                  {data.phone}
+                  {data.mobile}
                 </div>
                 <div className="extra content">
-                  <div className="ui two buttons" style={{ marginLeft: "10%" }}>
+                  <div className="ui two buttons">
                     <tr>
                       <td>
                         <div
                           className="ui button"
                           style={{ backgroundColor: "#FEA82F", color: "black" }}
-                          onClick={() => confirm(data._id, "Accept")}
+                          onClick={() => confirm(data._id, "accept")}
                         >
                           Accept
                         </div>
@@ -181,7 +208,7 @@ export default function PendingOrders() {
                             backgroundColor: "red",
                             color: "white",
                           }}
-                          onClick={() => confirm(data._id, "Reject")}
+                          onClick={() => confirm(data._id, "reject")}
                         >
                           Reject
                         </div>

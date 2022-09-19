@@ -18,4 +18,10 @@ checkoutRouter.delete("/:id", CheckoutCtrl.deleteCheckout);
 //Get checkout by uid
 checkoutRouter.get("/user/:uid", CheckoutCtrl.getByUid);
 
+//update Service status
+checkoutRouter.patch("/:id", CheckoutCtrl.updateServiceStatus);
+
+//Get pending services
+checkoutRouter.get("/pending/:userEmail", CheckoutCtrl.getPendingServices);
+
 export default checkoutRouter;

@@ -108,19 +108,6 @@ const servicesCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-
-  getPendingServices: async (req, res) => {
-    try {
-      const { userEmail } = req.params;
-      const services = await Services.find({
-        userEmail,
-        orderStatus: "Pending",
-      });
-      res.status(200).json(services);
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
 };
 
 export default servicesCtrl;
