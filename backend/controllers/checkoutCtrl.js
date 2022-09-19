@@ -28,6 +28,7 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+        image,
       } = req.body;
 
       const newCheckout = new Checkout({
@@ -46,6 +47,7 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+        image,
       });
 
       await newCheckout.save();
@@ -102,8 +104,6 @@ const checkoutCtrl = {
     try {
       const { id } = req.params;
       const { status } = req.body;
-      console.log("id", id);
-      console.log("status", status);
       const data = await Checkout.findOneAndUpdate(
         { _id: id },
         { orderStatus: status }
@@ -120,7 +120,37 @@ const checkoutCtrl = {
 
       const services = await Checkout.find({
         serviceProviderEmail: userEmail,
-        orderStatus: "Pending",
+        orderStatus: "pending",
+      });
+
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  getAcceptedServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+
+      const services = await Checkout.find({
+        serviceProviderEmail: userEmail,
+        orderStatus: "accept",
+      });
+
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  getRejectedServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+
+      const services = await Checkout.find({
+        serviceProviderEmail: userEmail,
+        orderStatus: "reject",
       });
 
       res.status(200).json(services);
