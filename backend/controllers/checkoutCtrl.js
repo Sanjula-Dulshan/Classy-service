@@ -128,6 +128,36 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  getAcceptedServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+
+      const services = await Checkout.find({
+        serviceProviderEmail: userEmail,
+        orderStatus: "accept",
+      });
+
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  getRejectedServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+
+      const services = await Checkout.find({
+        serviceProviderEmail: userEmail,
+        orderStatus: "reject",
+      });
+
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default checkoutCtrl;
