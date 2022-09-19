@@ -6,6 +6,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import "./styles/confirm.css";
 import "./allServices.css";
 import Sidebar from "./Sidebar";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 export default function AcceptedOrders() {
   const auth = useSelector((state) => state.auth);
@@ -13,6 +14,7 @@ export default function AcceptedOrders() {
 
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     console.log("email", email);
@@ -84,6 +86,7 @@ export default function AcceptedOrders() {
                             color: "white",
                             marginLeft: "250%",
                           }}
+                          onClick={() => setModal(true)}
                         >
                           View
                         </div>
@@ -96,6 +99,37 @@ export default function AcceptedOrders() {
           </div>
         </div>
       )}
+      <div
+        class="modal fade"
+        id="viewNote"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        {/* Popup modal */}
+        <Modal
+          centered
+          size="sm"
+          isOpen={modal}
+          toggle={() => setModal(!modal)}
+        >
+          <ModalHeader toggle={() => setModal(!modal)}>
+            <h5>View Note</h5>
+          </ModalHeader>
+          <ModalBody>
+            <form>
+              <div className="form-group">
+                <label>Title: </label>
+                <input className="form-control" type="text" name="first_name" />
+              </div>
+              <div className="form-group">
+                <label>Title: </label>
+                <textarea className="form-control" rows="3" />
+              </div>
+            </form>
+          </ModalBody>
+        </Modal>
+      </div>
     </div>
   );
 }
