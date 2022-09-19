@@ -15,6 +15,10 @@ export default function AcceptedOrders() {
   const [services, setServices] = useState();
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
+  const [name, setName] = useState();
+  const [buyerEmail, setBuyerEmail] = useState();
+  const [mobileNo, setMobileNo] = useState();
+  const [address, setAddress] = useState();
 
   useEffect(() => {
     console.log("email", email);
@@ -39,6 +43,21 @@ export default function AcceptedOrders() {
       setLoading(false);
     }, 2000);
   }, []);
+
+  const handleModal = (service) => {
+    setName(" " + service.firstName + " " + service.lastName);
+    setBuyerEmail(" " + service.email);
+    setMobileNo(" " + service.mobile);
+    setAddress(
+      " " +
+        service.addressLine1 +
+        ", " +
+        service.addressLine2 +
+        ", " +
+        service.city
+    );
+    setModal(!modal);
+  };
 
   return (
     <div>
@@ -86,7 +105,7 @@ export default function AcceptedOrders() {
                             color: "white",
                             marginLeft: "250%",
                           }}
-                          onClick={() => setModal(true)}
+                          onClick={() => handleModal(data)}
                         >
                           View
                         </div>
@@ -114,17 +133,25 @@ export default function AcceptedOrders() {
           toggle={() => setModal(!modal)}
         >
           <ModalHeader toggle={() => setModal(!modal)}>
-            <h5>View Note</h5>
+            <span className="fs-5 fw-bold">Delivery note</span>
           </ModalHeader>
           <ModalBody>
             <form>
               <div className="form-group">
-                <label>Title: </label>
-                <input className="form-control" type="text" name="first_name" />
+                <label className="fw-bold">Name: </label>
+                <span className="text-capitalize">{name}</span>
               </div>
               <div className="form-group">
-                <label>Title: </label>
-                <textarea className="form-control" rows="3" />
+                <label className="fw-bold">Email: </label>
+                <span>{buyerEmail}</span>
+              </div>
+              <div className="form-group">
+                <label className="fw-bold">Mobile No: </label>
+                <span>{mobileNo}</span>
+              </div>
+              <div className="form-group">
+                <label className="fw-bold">Address: </label>
+                <span className="text-capitalize">{address}</span>
               </div>
             </form>
           </ModalBody>
