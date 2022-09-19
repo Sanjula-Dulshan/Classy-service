@@ -142,17 +142,18 @@
 
 /* Responsive columns */
 /* @media screen and (max-width: 600px) {
-  .card-column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-} */
+    .card-column {
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+    }
+  } */
 
 /* Style the counter cards */
-.bg-card {
+.bg-car {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
   margin: 30px 10px;
   background-color: #fbfdf3;
+  margin-right: 15%;
 }
