@@ -31,6 +31,7 @@ import TransactionReport from "./components/TransactionReport";
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
+import PendingOrders from "./components/PendingOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -85,6 +86,13 @@ function App() {
             exact
             element={isLogged ? <UserAllServices /> : <NotFound />}
           />
+          <Route path="/pending" exact element={<PendingOrders />} />
+          <Route
+            path="/userServices"
+            exact
+            element={isLogged ? <UserAllServices /> : <NotFound />}
+          />
+
           <Route path="/register" exact element={<Register />} />
           <Route
             path="/user/activate/:activation_token"
