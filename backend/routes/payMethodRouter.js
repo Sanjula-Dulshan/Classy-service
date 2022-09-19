@@ -16,4 +16,7 @@ payRouter.put("/:id", MethodCtrl.updateBank);
 //Delete method
 payRouter.delete("/:id", MethodCtrl.deleteBank);
 
+//Get method by uid
+payRouter.get("/user/:uid", MethodCtrl.getByUid);
+
 export default payRouter;

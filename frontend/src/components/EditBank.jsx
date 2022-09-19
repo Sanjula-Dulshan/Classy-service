@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
@@ -9,15 +9,43 @@ import { Store } from 'react-notifications-component';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
-export default function AddBank() {
+export default function EditBank() {
   const [loading, setLoading] = useState(false);
+  const [id , setId] = useState();
   const [uid, setUid] = useState("1234");
   const [accName, setAccName] = useState();
   const [accNumber, setAccNumber] = useState();
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
   const [isAgree, setIsAgree] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [editText, setEditText] = useState("Edit");
 
+  useEffect(() => {
+    const getBank = async () => {
+      const res = await axios.get("/bank/user/" + uid);
+      setAccName(res.data.accName);
+      setAccNumber(res.data.accNumber);
+      setBankName(res.data.bankName);
+      setBranchName(res.data.branchName);
+      setId(res.data._id);
+    };
+    getBank();
+
+  }, [uid]);
+
+
+  const handleEnable = (e) => {
+    e.preventDefault();
+    setDisabled(!disabled);
+    if (disabled) {
+      setEditText("Cancel");
+    } else {
+      setEditText("Edit");
+    }
+
+  };
+ 
 
 
   const handleSubmit = async (e) => {
@@ -26,50 +54,130 @@ export default function AddBank() {
       alert("Please agree to the terms and conditions");
       return;
     }else{
-      setLoading(true);
-      const newBank = {
-        uid,
-        accName,
-        accNumber,
-        bankName,
-        branchName,
-      }
+      
+      confirmAlert({
+        title: 'Warning!',
+        message: 'Are sure you want to update this account?',
+        buttons: [
+          {
+            label: 'Yes',
+            onClick: () => {
+              setLoading(true);
+              const newBank = {
+                        uid,
+                        accName,
+                        accNumber,
+                        bankName,
+                        branchName,
+                      }
 
-      console.log(newBank);
-      try {
-        await axios.post("/bank/", newBank);
-        Store.addNotification({
-          title: "Bank Details Saved Successfully",
-          message: "Your will recive your payments to this account",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          type: "success",
-          insert: "top",
-          container: "top-right",
+
+              axios.put("/bank/"+id,newBank ).then((res)=>{
+                  setLoading(false);
+                  setDisabled(!disabled);
+                  Store.addNotification({
+                    title: "Bank Details Updated Successfully",
+                    message: "Your payment details have been updated successfully",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    type: "warning",
+                    insert: "top",
+                    container: "top-right",
+                    
+                    dismiss: {
+                      duration: 1500,
+                      onScreen: true,
+                      showIcon: true
+                    },
           
-          dismiss: {
-            duration: 1500,
-            onScreen: true,
-            showIcon: true
+                    width:400
+                  }); 
+                  
+              }).catch((err)=>{
+                alert(err.message);
+              })
+            }
           },
-
-          width:400
-        }); 
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1500);
-      } catch (err) {
-        alert(err);
-      }
-      setLoading(false);
+          {
+            label: 'No',
+  
+          }
+        ]
+      });
+      
     }
-    
   };
 
-  const cancel = (e) => {
+
+  const handleDelete = async (e) => {
     e.preventDefault();
-    window.location.href = "/";
-  };
+
+    confirmAlert({
+      title: 'Warning!',
+      message: 'Are sure you want to delete this account?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            setLoading(true);
+            axios.delete("/bank/"+id).then((res)=>{
+                setLoading(false);
+                Store.addNotification({
+                  title: "Bank Details Deleted Successfully",
+                  message: "Your bank data has been deleted successfully",
+                  animationIn: ["animate__animated", "animate__fadeIn"],
+                  animationOut: ["animate__animated", "animate__fadeOut"],
+                  type: "danger",
+                  insert: "top",
+                  container: "top-right",
+                  
+                  dismiss: {
+                    duration: 1500,
+                    onScreen: true,
+                    showIcon: true
+                  },
+        
+                  width:400
+                }); 
+                //wait for 1.5 seconds and redirect to the home page
+                setTimeout(() => {
+                  window.location.href = "/";
+                }, 1500);
+
+                
+            }).catch((err)=>{
+              alert(err.message);
+            })
+          }
+        },
+        {
+          label: 'No',
+
+        }
+      ]
+    });
+  }
+
+  // const handleDelete = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   //confirm delete
+  //   if (window.confirm("Are you sure you want to delete this bank account?")) {
+
+  //     try {
+  //       await axios.delete("/bank/"+id);
+  //       alert("Bank account deleted successfully");
+  //       window.location.replace("/");
+  //     } catch (err) {
+  //       alert(err);
+  //     }
+  //   }
+  //   setLoading(false);
+  // }
+    
+
+
 
   
   return (
@@ -80,13 +188,13 @@ export default function AddBank() {
               spinner={<PropagateLoader />}
           >
         <div className="bg-card">
-          <label className="title">ADD BANK DETAILS</label>
+          <label className="title">EDIT BANK DETAILS</label>
           <div className="add_bank">
 
             
            
             <form onSubmit={handleSubmit}>
-              
+                            
                 <div className="">
                   <label htmlFor="title" className="form-label">
                     Account Name
@@ -97,6 +205,8 @@ export default function AddBank() {
                     name="acc_name"
                     id="acc_name"
                     required
+                    value={accName}
+                    disabled={disabled}
                     onChange={(e) => setAccName(e.target.value)}
                   />
                 </div>
@@ -112,7 +222,9 @@ export default function AddBank() {
                     className="form-control"
                     name="acc_number"
                     id="acc_number"
+                    disabled={disabled}
                     required
+                    value={accNumber}
                     onChange={(e) => setAccNumber(e.target.value)}
                   />
                 </div>
@@ -127,6 +239,10 @@ export default function AddBank() {
                   <select
                     name="bank"
                     className="form-control"
+                    id="bank"
+                    required
+                    disabled={disabled}
+                    value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
                   >
                     <option value="">Select a category</option>
@@ -151,6 +267,8 @@ export default function AddBank() {
                     className="form-control"
                     id="branch"
                     required
+                    disabled={disabled}
+                    value={branchName}
                     onChange={(e) => setBranchName(e.target.value)}
                   />
                 </div>
@@ -182,12 +300,13 @@ export default function AddBank() {
               </div>
               <div className="row ">
                 <div className="col flex_box">
-                  
-                    <button onClick={cancel} className="btn btn-cancel">
-                      Cancel
-                    </button>
-              
-                  <button type="submit" className="btn btn-create">
+                  <button onClick={handleEnable} className="btn btn-cancel">
+                    Edit
+                  </button>
+                  <button onClick={handleDelete} className="btn btn-del">
+                    Delete
+                  </button>
+                  <button disabled={disabled} type="submit" className="btn btn-create">
                     Save
                   </button>
                 </div>

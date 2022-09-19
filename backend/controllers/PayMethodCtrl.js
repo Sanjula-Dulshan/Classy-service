@@ -49,7 +49,16 @@ const PatMethodCtrl = {
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
-    }
+    },
+
+    getByUid: async (req, res) => {
+        try {
+            const banks = await BankData.findOne({ uid: req.params.uid });
+            res.json(banks);
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    }    
 }
 
 export default PatMethodCtrl;

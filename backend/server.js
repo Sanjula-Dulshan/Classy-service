@@ -13,6 +13,7 @@ import wishListRouter from "./routes/wishListRouter.js";
 import userRouter from "./routes/userRouter.js";
 
 import payRouter from "./routes/payMethodRouter.js";
+import checkoutRouter from "./routes/checkoutRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -29,6 +30,8 @@ app.use("/image", uploadRouter);
 app.use("/wishlist", wishListRouter);
 app.use("/user", userRouter);
 app.use("/bank", payRouter);
+app.use("/checkout", checkoutRouter);
+
 
 // Connect to MongoDB
 mongoose

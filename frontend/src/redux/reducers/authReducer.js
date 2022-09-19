@@ -16,7 +16,9 @@ const authReducer = (state = initialState, action) => {
         case ACTIONS.GET_USER:
             return {
                  ...state,
-                 user: action.payload.user
+                 user: action.payload.user,
+                 isWorker:action.payload.isWorker,
+                 iscustomer:action.payload.iscustomer
             }
         default:
             return state
