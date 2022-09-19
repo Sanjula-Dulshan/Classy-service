@@ -32,6 +32,8 @@ import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 import PendingOrders from "./components/PendingOrders";
+import RejectedOrders from "./components/RejectedOrders";
+import AcceptedOrders from "./components/AcceptedOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -86,7 +88,21 @@ function App() {
             exact
             element={isLogged ? <UserAllServices /> : <NotFound />}
           />
-          <Route path="/pending" exact element={<PendingOrders />} />
+          <Route
+            path="/pending"
+            exact
+            element={isLogged ? <PendingOrders /> : <NotFound />}
+          />
+          <Route
+            path="/rejected"
+            exact
+            element={isLogged ? <RejectedOrders /> : <NotFound />}
+          />
+          <Route
+            path="/accepted"
+            exact
+            element={isLogged ? <AcceptedOrders /> : <NotFound />}
+          />
           <Route
             path="/userServices"
             exact
