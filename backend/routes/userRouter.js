@@ -13,8 +13,14 @@ router.post("/refresh_token", userCtrl.getAccessToken);
 
 router.get("/infor", auth, userCtrl.getUserInfor);
 
-router.get("/user/:userEmail", userCtrl.getUserByEmail);
+//router.get("/user/:userEmail", userCtrl.getUserByEmail);
 
 router.get("/logout", userCtrl.logout);
+
+router.patch('/update',auth, userCtrl.updateUser);
+
+router.post('/reset', auth, userCtrl.resetPassword);
+
+router.delete('/delete', auth, userCtrl.deleteUser);
 
 export default router;
