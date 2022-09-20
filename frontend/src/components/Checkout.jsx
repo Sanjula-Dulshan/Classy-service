@@ -12,34 +12,43 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("1234");
-  const [accName, setAccName] = useState();
-  const [accNumber, setAccNumber] = useState();
-  const [bankName, setBankName] = useState();
-  const [branchName, setBranchName] = useState();
-  const [isAgree, setIsAgree] = useState(false);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [address1, setAddress1] = useState();
+  const [address2, setAddress2] = useState();
+  const [city, setCity] = useState();
+  const [province, setProvincee] = useState();
+  const[phone,setPhone]=useState();
+  const[date,setDate]=useState();
+  const[time,setTime]=useState();
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isAgree) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }else{
+
       setLoading(true);
-      const newBank = {
+      const newCheckout = {
         uid,
-        accName,
-        accNumber,
-        bankName,
-        branchName,
+        firstName,
+        lastName,
+        email,
+        address1,
+        address2,
+        city,
+        province,
+        phone,
+        date,
+        time
+
       }
 
-      console.log(newBank);
+      console.log(newCheckout);
       try {
-        await axios.post("/bank/", newBank);
+        await axios.post("/bank/", newCheckout);
         Store.addNotification({
-          title: "Bank Details Saved Successfully",
+          title: "Checkout Details Saved Successfully",
           message: "Your will recive your payments to this account",
           animationIn: ["animate__animated", "animate__fadeIn"],
           animationOut: ["animate__animated", "animate__fadeOut"],
@@ -56,13 +65,13 @@ export default function Checkout() {
           width:400
         }); 
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/selectpaymethod";
         }, 1500);
       } catch (err) {
         alert(err);
       }
       setLoading(false);
-    }
+    
     
   };
 
@@ -80,106 +89,182 @@ export default function Checkout() {
               spinner={<PropagateLoader />}
           >
         <div className="bg-card">
-          <label className="title">ADD BANK DETAILS</label>
+          <label className="title">Checkout</label>
           <div className="add_bank">
 
             
            
             <form onSubmit={handleSubmit}>
               
-                <div className="">
-                  <label htmlFor="title" className="form-label">
-                    Account Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="acc_name"
-                    id="acc_name"
-                    required
-                    onChange={(e) => setAccName(e.target.value)}
-                  />
-                </div>
-              
-
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="title" className="form-label">
-                    Account Number
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="acc_number"
-                    id="acc_number"
-                    required
-                    onChange={(e) => setAccNumber(e.target.value)}
-                  />
-                </div>
-              </div>
+                
 
               
               <div className="row mt-3">
                 <div className="col">
                   <label htmlFor="categories" className="form-label">
-                    Bank
+                    First Name
                   </label>
-                  <select
-                    name="bank"
+                  <input
+                    name="fname"
+                    type="text"
                     className="form-control"
-                    onChange={(e) => setBankName(e.target.value)}
+                    onChange={(e) => setFirstName(e.target.value)}
                   >
-                    <option value="">Select a category</option>
-                    <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
-                    <option value="Sampath Bank Plc">Sampath Bank Plc</option>
-                    <option value="National Savings Bank">National Savings Bank</option>
-                    <option value="People’s Bank">People’s Bank</option>
-                    <option value="Hatton National Bank">Hatton National Bank</option>
-                    <option value="Seylan Bank Plc">Seylan Bank Plc</option>
-                    <option value="National Development Bank Plc">National Development Bank Plc</option>
-                    <option value="Nations Trust Bank Plc">Nations Trust Bank Plc</option>
-                    <option value="DFCC Bank">DFCC Bank</option>
-                  </select>
+                    
+                  </input>
                 </div>
                 <div className="col">
                   <label htmlFor="location" className="form-label">
-                    Branch
+                    Last Name
                   </label>
                   <input
                     type="text"
-                    name="branch" 
+                    name="lastName" 
                     className="form-control"
-                    id="branch"
+                    id="lastName"
                     required
-                    onChange={(e) => setBranchName(e.target.value)}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
               </div>
 
-             
+                            
 
-              <div className="row mt-5">
+              <div className="row mt-4">
                 <div className="col">
-                  <div className="form-check">
-                    <div>
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        name="needBuyerAddress"
-                        id="exampleCheck1"
-                        onChange={(e) => setIsAgree(e.target.checked)}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleCheck1"
-                      >
-                        I accept terms and conditions
-                      </label>
-                    </div>
-                    
-                  </div>
+                  <label htmlFor="title" className="form-label">
+                    E-Mail address
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    id="email"
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
               </div>
+
+              <div className="row mt-4">
+                <div className="col">
+                  <label htmlFor="title" className="form-label">
+                    Phone Number
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="phone"
+                    id="phone"
+                    required
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="row mt-3">
+                <div className="col">
+                  <label htmlFor="categories" className="form-label">
+                    Date
+                  </label>
+                  <input
+                    name="fname"
+                    type="date"
+                    className="form-control"
+                    onChange={(e) => setDate(e.target.value)}
+                  >
+                    
+                  </input>
+                </div>
+                <div className="col">
+                  <label htmlFor="location" className="form-label">
+                    Time
+                  </label>
+                  <input
+                    type="time"
+                    name="lastName" 
+                    className="form-control"
+                    id="lastName"
+                    required
+                    onChange={(e) => setTime(e.target.value)}
+                  />
+                </div>
+              </div>
+
+
+              <div className="row mt-4">
+                <div className="col">
+                  <label htmlFor="title" className="form-label">
+                    Address Line 1
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="ad1"
+                    id="ad1"
+                    required
+                    onChange={(e) => setAddress1(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col">
+                  <label htmlFor="title" className="form-label">
+                    Address Line 2
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="ad2"
+                    id="ad2"
+                    required
+                    onChange={(e) => setAddress2(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="row mt-3">
+                <div className="col">
+                  <label htmlFor="categories" className="form-label">
+                    Province
+                  </label>
+                  <select
+                    name="fname"
+                    type="text"
+                    className="form-control"
+                    onChange={(e) => setProvincee
+                      (e.target.value)}
+                  >
+                    <option value="Western">Western</option>
+                    <option value="Southern">Southern</option>
+                    <option value="Central">Central</option>
+                    <option value="Eastern">Eastern</option>
+                    <option value="Northern">Northern</option>
+                    <option value="North Western">North Western</option>
+                    <option value="North Central">North Central</option>
+                    <option value="Uva">Uva</option>
+                    <option value="Sabaragamuwa">Sabaragamuwa</option>
+                                        
+                  </select>
+                </div>
+                <div className="col">
+                  <label htmlFor="location" className="form-label">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName" 
+                    className="form-control"
+                    id="lastName"
+                    required
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                </div>
+              </div>
+             
+
+              
               <div className="row ">
                 <div className="col flex_box">
                   
@@ -188,7 +273,7 @@ export default function Checkout() {
                     </button>
               
                   <button type="submit" className="btn btn-create">
-                    Save
+                    Next
                   </button>
                 </div>
               </div>
