@@ -135,6 +135,7 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   logout: async (req, res) => {
     try {
       res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
@@ -143,6 +144,58 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  updateUser: async (req, res) => {
+    try {
+        const {name, avatar,mobile} = req.body
+        await Users.findOneAndUpdate({_id: req.user.id}, {
+            name, avatar,mobile
+        })
+
+        res.json({msg: "Update Success!"})
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+},
+
+  resetPassword: async (req, res) => {
+    try {
+        const {password} = req.body
+        
+        const passwordHash = await bcrypt.hash(password, 12)
+
+        await Users.findOneAndUpdate({_id: req.user.id}, {
+            password: passwordHash
+        })
+
+        res.json({msg: "Password successfully changed!"})
+    } catch (err) {
+        return res.status(500).json({msg: err.message})
+    }
+},
+    deleteUser: async (req, res) => {
+      try {
+          await Users.findByIdAndDelete({_id: req.user.id})
+          res.json({msg: "Profile Deleted!"})
+      } catch (err) {
+          return res.status(500).json({msg: err.message})
+      }
+    },
+    
+    allusers:async(req,res)=>{
+    Users.find().exec((err,Users)=>{
+        if(err){
+            return res.status(400).json({
+            error:err
+           });
+       }
+          return res.status(200).json({
+            success:true,
+            existingUser:Users
+        });
+    });
+},
+
 };
 
 function validateEmail(email) {
