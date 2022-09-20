@@ -68,15 +68,19 @@ const checkoutCtrl = {
       await Checkout.findOneAndUpdate(
         { _id: req.params.id },
         {
-          uid,
-          name,
-          email,
-          address,
-          city,
-          country,
-          zip,
-          total,
-          cart,
+            uid,
+            firstName,
+            lastName,
+            email,
+            mobile,
+            date,
+            time,
+            addressLine1,
+            addressLine2,
+            province,
+            city,
+            orderStatus,
+            serviceProviderEmail,
         }
       );
 
@@ -88,12 +92,14 @@ const checkoutCtrl = {
 
   getByUid: async (req, res) => {
     try {
-      const checkouts = await Checkout.findOne({ uid: req.params.uid });
+      const checkouts = await Checkout.find({ uid: req.params.uid });
       res.json(checkouts);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
 };
+
+
 
 export default checkoutCtrl;
