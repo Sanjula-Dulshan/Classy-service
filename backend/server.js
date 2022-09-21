@@ -11,6 +11,7 @@ import servicesRouter from "./routes/servicesRouter.js";
 import uploadRouter from "./routes/uploadRouter.js";
 import wishListRouter from "./routes/wishListRouter.js";
 import userRouter from "./routes/userRouter.js";
+import upload from "./routes/upload.js";
 
 import payRouter from "./routes/payMethodRouter.js";
 import checkoutRouter from "./routes/checkoutRouter.js";
@@ -29,6 +30,7 @@ app.use("/services", servicesRouter);
 app.use("/image", uploadRouter);
 app.use("/wishlist", wishListRouter);
 app.use("/user", userRouter);
+app.use("/api",upload);
 app.use("/bank", payRouter);
 app.use("/checkout", checkoutRouter);
 

@@ -32,6 +32,9 @@ import TransactionReport from "./components/TransactionReport";
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
+import PendingOrders from "./components/PendingOrders";
+import RejectedOrders from "./components/RejectedOrders";
+import AcceptedOrders from "./components/AcceptedOrders";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,7 +72,6 @@ function App() {
         <ReactNotifications />
 
         <Header />
-
         <Routes>
           <Route
             path="/"
@@ -87,6 +89,27 @@ function App() {
             exact
             element={isLogged ? <UserAllServices /> : <NotFound />}
           />
+          <Route
+            path="/pending"
+            exact
+            element={isLogged ? <PendingOrders /> : <NotFound />}
+          />
+          <Route
+            path="/rejected"
+            exact
+            element={isLogged ? <RejectedOrders /> : <NotFound />}
+          />
+          <Route
+            path="/accepted"
+            exact
+            element={isLogged ? <AcceptedOrders /> : <NotFound />}
+          />
+          <Route
+            path="/userServices"
+            exact
+            element={isLogged ? <UserAllServices /> : <NotFound />}
+          />
+
           <Route path="/register" exact element={<Register />} />
           <Route
             path="/user/activate/:activation_token"
@@ -114,7 +137,9 @@ function App() {
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
           <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
+
           <Route path="/checkout" exact element={<Checkout />} />
+
           <Route
             path="/transactionReport"
             exact

@@ -60,11 +60,23 @@ const checkoutSchema = new Schema(
     },
     orderStatus: {
       type: String,
-      default: "Pending",
+      default: "pending",
     },
     serviceProviderEmail: {
       type: String,
       trim: true,
+      required: true,
+    },
+    serviceTitle: {
+      type: String,
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    image: {
+      type: Object,
       required: true,
     },
   },
