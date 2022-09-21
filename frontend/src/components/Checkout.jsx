@@ -22,6 +22,7 @@ export default function Checkout() {
   const[phone,setPhone]=useState();
   const[date,setDate]=useState();
   const[time,setTime]=useState();
+  const[serviceProviderEmail,setServiceProviderEmail]=useState("test@mail.com");
 
 
 
@@ -40,22 +41,22 @@ export default function Checkout() {
         province,
         phone,
         date,
-        time
-
+        time,
+        serviceProviderEmail,
       }
 
       console.log(newCheckout);
       try {
-        await axios.post("/bank/", newCheckout);
+        await axios.post("/checkout", newCheckout);
         Store.addNotification({
-          title: "Checkout Details Saved Successfully",
+          title: "Booking Details Saved Successfully",
           message: "Your will recive your payments to this account",
           animationIn: ["animate__animated", "animate__fadeIn"],
           animationOut: ["animate__animated", "animate__fadeOut"],
           type: "success",
           insert: "top",
           container: "top-right",
-          
+
           dismiss: {
             duration: 1500,
             onScreen: true,
@@ -63,13 +64,13 @@ export default function Checkout() {
           },
 
           width:400
-        }); 
-        setTimeout(() => {
-          window.location.href = "/selectpaymethod";
-        }, 1500);
+        });
+
       } catch (err) {
         alert(err);
       }
+
+
       setLoading(false);
     
     
@@ -136,7 +137,7 @@ export default function Checkout() {
                     E-Mail address
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
                     name="email"
                     id="email"
