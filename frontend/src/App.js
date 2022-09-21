@@ -24,6 +24,7 @@ import Register from "./components/Register";
 import Header from "./components/header/Header";
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
+import Checkout from "./components/Checkout";
 
 import SelectPayMethod from "./components/SelectPayMethod";
 import TransactionReport from "./components/TransactionReport";
@@ -136,6 +137,9 @@ function App() {
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
           <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
+
+          <Route path="/checkout" exact element={<Checkout />} />
+
           <Route
             path="/transactionReport"
             exact
