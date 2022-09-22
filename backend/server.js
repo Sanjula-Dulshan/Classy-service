@@ -14,6 +14,7 @@ import userRouter from "./routes/userRouter.js";
 
 import payRouter from "./routes/payMethodRouter.js";
 import checkoutRouter from "./routes/checkoutRouter.js";
+import feedbackRouter from "./routes/feedbackRoute.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -32,6 +33,7 @@ app.use("/user", userRouter);
 app.use("/bank", payRouter);
 app.use("/checkout", checkoutRouter);
 app.use("/orders", checkoutRouter);
+app.use("/feedback", feedbackRouter);
 
 // Connect to MongoDB
 mongoose

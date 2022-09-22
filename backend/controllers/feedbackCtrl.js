@@ -10,7 +10,8 @@ const feedbackCtrl = {
         comment,
       });
 
-      await newFeedback.save();
+      await newFeedback.save({ _id: req.params.id });
+
       res.status(200).json({ msg: "Feedback created" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });

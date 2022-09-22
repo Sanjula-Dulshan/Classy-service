@@ -15,6 +15,8 @@ export default function OrderList() {
   const [comment, setComment] = useState("");
   const [modal, setModal] = useState(false);
 
+  let _id;
+
   const handleFeedback = async (e) => {
     e.preventDefault();
     const newFeedback = {
@@ -23,7 +25,7 @@ export default function OrderList() {
     };
     console.log(newFeedback);
     try {
-      await axios.post("/feedback/", newFeedback);
+      await axios.post(`/feedback/${_id}`, newFeedback);
       Store.addNotification({
         title: "Feedback Saved Successfully",
         message: "Thank you for your feedback",
@@ -49,6 +51,7 @@ export default function OrderList() {
     }
   };
 
+  const toggle = () => setModal(!modal);
   useEffect(() => {
     axios
       .get("/orders/")
@@ -86,7 +89,7 @@ export default function OrderList() {
                   <div className="row g-0 ">
                     <div className="col-md-2">
                       <img
-                        src={data.image.url}
+                        // src={data.image.url}
                         className="img mt-2"
                         style={{ height: "90%", width: "90%" }}
                       />
@@ -150,7 +153,7 @@ export default function OrderList() {
                                     backgroundColor: "#1E1E1E",
                                     color: "white",
                                   }}
-                                  //   onClick={() => confirm(data._id)}
+                                  onClick={() => toggle()}
                                 >
                                   LEAVE FEEDBACK
                                 </button>
@@ -215,65 +218,6 @@ export default function OrderList() {
                             </div>
                           </div>
                         </section> */}
-
-                        <div
-                          class="modal fade"
-                          id="feedback"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          {/* Popup modal */}
-                          <Modal
-                            centered
-                            size="lg"
-                            isOpen={modal}
-                            toggle={() => setModal(!modal)}
-                          >
-                            <ModalHeader toggle={() => setModal(!modal)}>
-                              <h5>Feedback</h5>
-                            </ModalHeader>
-                            <ModalBody>
-                              <form>
-                                <div className="form-group">
-                                  <label>Title: </label>
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name="first_name"
-                                    onChange={(e) => setRating(e.target.value)}
-                                  />
-                                </div>
-                                <div className="form-group">
-                                  <label>Title: </label>
-                                  <textarea
-                                    className="form-control"
-                                    rows="3"
-                                    onChange={(e) => setComment(e.target.value)}
-                                  />
-                                </div>
-                              </form>
-                            </ModalBody>
-                            <ModalFooter>
-                              <button
-                                className="btn btn-danger"
-                                data-bs-dismiss="modal"
-                                // onClick={() => handleDelete(noteid)}
-                              >
-                                <i className="fas fa-trash-alt"></i>&nbsp;Delete
-                              </button>
-
-                              <button
-                                type="button"
-                                class="btn btn-success"
-                                data-bs-dismiss="modal"
-                                onClick={() => handleFeedback()}
-                              >
-                                Save
-                              </button>
-                            </ModalFooter>
-                          </Modal>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -282,6 +226,64 @@ export default function OrderList() {
             )
           )}
         </div>
+      </div>
+      <div
+        class="modal fade"
+        id="feedback"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        {/* Popup modal */}
+        <Modal
+          centered
+          size="lg"
+          isOpen={modal}
+          toggle={() => setModal(!modal)}
+        >
+          <ModalHeader toggle={() => setModal(!modal)}>
+            <h5>Feedback</h5>
+          </ModalHeader>
+          <ModalBody>
+            <form>
+              <div className="form-group">
+                <label>Title: </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="first_name"
+                  onChange={(e) => setRating(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label>Comment: </label>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <button
+              className="btn btn-danger"
+              data-bs-dismiss="modal"
+              // onClick={() => handleDelete(noteid)}
+            >
+              <i className="fas fa-trash-alt"></i>&nbsp;Delete
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+              onClick={(e) => handleFeedback(e)}
+            >
+              Save
+            </button>
+          </ModalFooter>
+        </Modal>
       </div>
     </div>
   );

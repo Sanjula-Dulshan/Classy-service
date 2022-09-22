@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const feedbackSchema = new Schema(
   {
     rating: {
-      type: Number,
+      type: String,
       required: true,
     },
     comment: {
