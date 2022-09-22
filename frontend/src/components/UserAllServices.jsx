@@ -104,7 +104,7 @@ export default function UserAllServices() {
       .catch((err) => {
         console.log(err);
       });
-  }, [auth.user]);
+  }, [auth.user, loading]);
 
   useEffect(() => {
     setLoading(true);
@@ -137,29 +137,33 @@ export default function UserAllServices() {
   };
 
   const deleteAll = () => {
-    services.forEach((service) => {
-      if (service.checked) {
-        handleDeleteAll(service._id, service.image.public_id).then(() => {
-          Store.addNotification({
-            title: "Services Deleted Successfully",
+    services
+      .forEach((service) => {
+        if (service.checked) {
+          handleDeleteAll(service._id, service.image.public_id);
+        }
+      })
+      .then(() => {
+        setLoading(false);
+        setIsCheck(false);
+        Store.addNotification({
+          title: "Services Deleted Successfully",
 
-            animationIn: ["animate__animated", "animate__fadeIn"],
-            animationOut: ["animate__animated", "animate__fadeOut"],
-            type: "danger",
-            insert: "top",
-            container: "top-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          type: "danger",
+          insert: "top",
+          container: "top-right",
 
-            dismiss: {
-              duration: 2500,
-              onScreen: true,
-              showIcon: true,
-            },
+          dismiss: {
+            duration: 2500,
+            onScreen: true,
+            showIcon: true,
+          },
 
-            width: 400,
-          });
+          width: 400,
         });
-      }
-    });
+      });
   };
 
   return (
