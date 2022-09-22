@@ -5,9 +5,11 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Store } from "react-notifications-component";
+import ReactStars from "react-rating-stars-component";
+import "./ratings/rstyle.css";
+// import Rating from "./Rating";
 
 import Sidebar from "./Sidebar";
-import "../components/ratings/rstyle.css";
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -62,6 +64,22 @@ export default function OrderList() {
         console.log(err);
       });
   }, []);
+
+  //rating
+  const ratings = {
+    size: 20,
+    count: 5,
+    color: "black",
+    activeColor: "red",
+    value: 7.5,
+    a11y: true,
+    emptyIcon: <i className="far fa-star" />,
+    halfIcon: <i className="fa fa-star-half-alt" />,
+    filledIcon: <i className="fa fa-star" />,
+    onChange: (newValue) => {
+      setRating(newValue);
+    },
+  };
 
   return (
     <div>
@@ -161,63 +179,6 @@ export default function OrderList() {
                             </tr>
                           </div>
                         </div>
-
-                        {/* <section>
-                          <div class="rt-container">
-                            <div class="col-rt-12">
-                              <form>
-                                <fieldset>
-                                  <span class="star-cb-group">
-                                    <input
-                                      type="radio"
-                                      id="rating-5"
-                                      name="rating"
-                                      value="5"
-                                    />
-                                    <label for="rating-5">5</label>
-                                    <input
-                                      type="radio"
-                                      id="rating-4"
-                                      name="rating"
-                                      value="4"
-                                      checked="checked"
-                                    />
-                                    <label for="rating-4">4</label>
-                                    <input
-                                      type="radio"
-                                      id="rating-3"
-                                      name="rating"
-                                      value="3"
-                                    />
-                                    <label for="rating-3">3</label>
-                                    <input
-                                      type="radio"
-                                      id="rating-2"
-                                      name="rating"
-                                      value="2"
-                                    />
-                                    <label for="rating-2">2</label>
-                                    <input
-                                      type="radio"
-                                      id="rating-1"
-                                      name="rating"
-                                      value="1"
-                                    />
-                                    <label for="rating-1">1</label>
-                                    <input
-                                      type="radio"
-                                      id="rating-0"
-                                      name="rating"
-                                      value="0"
-                                      class="star-cb-clear"
-                                    />
-                                    <label for="rating-0">0</label>
-                                  </span>
-                                </fieldset>
-                              </form>
-                            </div>
-                          </div>
-                        </section> */}
                       </div>
                     </div>
                   </div>
@@ -248,12 +209,66 @@ export default function OrderList() {
             <form>
               <div className="form-group">
                 <label>Title: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="first_name"
-                  onChange={(e) => setRating(e.target.value)}
-                />
+                <div className="rating">
+                  <ReactStars {...ratings} />
+                </div>
+                {/* <section>
+                  <div class="rt-container">
+                    <div class="col-rt-12">
+                      <form>
+                        <fieldset>
+                          <span class="star-cb-group">
+                            <input
+                              type="checkbox"
+                              id="rating-5"
+                              name="rating"
+                              value="5"
+                            />
+                            <label for="rating-5">5</label>
+                            <input
+                              type="checkbox"
+                              id="rating-4"
+                              name="rating"
+                              value="4"
+                              checked="checked"
+                            />
+                            <label for="rating-4">4</label>
+                            <input
+                              type="checkbox"
+                              id="rating-3"
+                              name="rating"
+                              value="3"
+                            />
+                            <label for="rating-3">3</label>
+                            <input
+                              type="checkbox"
+                              id="rating-2"
+                              name="rating"
+                              value="2"
+                            />
+                            <label for="rating-2">2</label>
+                            <input
+                              type="checkbox"
+                              id="rating-1"
+                              name="rating"
+                              value="1"
+                            />
+                            <label for="rating-1">1</label>
+                            <input
+                              type="checkbox"
+                              id="rating-0"
+                              name="rating"
+                              value="0"
+                              class="star-cb-clear"
+                            />
+                            <label for="rating-0">0</label>
+                            onChange={(e) => setRating(e.target.value)}
+                          </span>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </section> */}
               </div>
               <div className="form-group">
                 <label>Comment: </label>
