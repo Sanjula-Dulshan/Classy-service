@@ -26,20 +26,22 @@ const userCtrl = {
           .json({ msg: "Password must be at least 8 characters." });
 
       const passwordHash = await bcrypt.hash(password, 12);
-
-      const newUser = {
+      //
+      const newUser = new Users({
         name,
         email,
         nic,
         mobile,
         password: passwordHash,
-      };
+      });
+      //
+      //const activation_token = createActivationToken(newUser);
 
-      const activation_token = createActivationToken(newUser);
-
-      const url = `${CLIENT_URL}/user/activate/${activation_token}`;
-      sendMail(email, url, "Verify your email address");
-
+      // const url = `${CLIENT_URL}/user/activate/${activation_token}`;
+      // sendMail(email, url, "Verify your email address");
+     //
+     await newUser.save();
+     //
       res.json({
         msg: "Registration Successfull.Please verify your email to continue!",
       });
@@ -175,7 +177,7 @@ const userCtrl = {
 },
     deleteUser: async (req, res) => {
       try {
-          await Users.findByIdAndDelete({_id: req.user.id})
+          await Users.findByIdAndDelete(req.params.id)
           res.json({msg: "Profile Deleted!"})
       } catch (err) {
           return res.status(500).json({msg: err.message})

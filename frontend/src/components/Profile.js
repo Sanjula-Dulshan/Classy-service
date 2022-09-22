@@ -6,8 +6,8 @@ import { showSuccessMsg, showErrMsg } from "./utils/notification/Notification";
 import "./CSS/profile.css";
 import PasswordChecklist from "react-password-checklist";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { Link } from "react-router-dom";
 import ConfirmBox from "react-dialog-confirm";
+import Sidebar from "./Sidebar";
 
 const initialState = {
   name: "",
@@ -33,7 +33,7 @@ export default function Profile() {
   const handleChange = e => {
     const {name, value} = e.target
     setData({...data, [name]:value, err:'', success: ''})
-}
+};
 
 const changeAvatar = async(e) => {
     e.preventDefault()
@@ -62,7 +62,7 @@ const changeAvatar = async(e) => {
     } catch (err) {
         setData({...data, err: err.response.data.msg , success: ''})
     }
-}
+};
 
 const updateInfor = () => {
     try {
@@ -80,7 +80,7 @@ const updateInfor = () => {
     } catch (err) {
         setData({...data, err: err.response.data.msg , success: ''})
     }
-}
+};
 
 const updatePassword =async (e) => {
     if(isLength(password))
@@ -98,12 +98,12 @@ const updatePassword =async (e) => {
     } catch (err) {
         setData({...data, err: err.response.data.msg , success: ''})
     }
-}
+};
 
 const handleUpdate = () => {
     if(name || avatar|| mobile) updateInfor()
     if(password) updatePassword()
-}
+};
 
 const confirm = (id) => {
   setIsOpen(true);
@@ -115,20 +115,21 @@ const handleClose = () => {
 };
 
 const onDelete = (_id) => {
-  axios
-    .delete('user/delete')
-
-    .then((res) => {
-      console.log(res);
+  try{axios.delete(`user/delete/${_id}`)
+    .then(()=> {
       setIsOpen(false);
+      localStorage.removeItem("firstLogin");
+      localStorage.clear();
+      window.location.href = "/login";
     })
-    .catch((err) => {
-      console.log(err);
-    });
+  }catch (err) {
+      setData({...data, err: err.response.data.msg , success: ''})
+  }
 };
 
   return (
     <div>
+      <Sidebar />
       <div>
         {err && showErrMsg(err)}
         {success && showSuccessMsg(success)}
@@ -157,7 +158,7 @@ const onDelete = (_id) => {
           <br></br>
 
           <div style={{ position: "absolute", zIndex: "704" }}>
-          <ConfirmBox // Note : in this example all props are required
+          <ConfirmBox 
             options={{
               icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
               text: "Are you sure you want to delete your account?",
