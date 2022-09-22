@@ -21,6 +21,6 @@ router.patch('/update',auth, userCtrl.updateUser);
 
 router.post('/reset', auth, userCtrl.resetPassword);
 
-router.delete('/delete', auth, userCtrl.deleteUser);
+router.delete('/delete/:id', userCtrl.deleteUser);
 
 export default router;
