@@ -1,15 +1,53 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Store } from "react-notifications-component";
 
 import Sidebar from "./Sidebar";
 import "../components/ratings/rstyle.css";
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
+  const [rating, setRating] = useState([]);
+  const [comment, setComment] = useState("");
+  const [modal, setModal] = useState(false);
+
+  const handleFeedback = async (e) => {
+    e.preventDefault();
+    const newFeedback = {
+      rating,
+      comment,
+    };
+    console.log(newFeedback);
+    try {
+      await axios.post("/feedback/", newFeedback);
+      Store.addNotification({
+        title: "Feedback Saved Successfully",
+        message: "Thank you for your feedback",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        type: "success",
+        insert: "top",
+        container: "top-right",
+
+        dismiss: {
+          duration: 1500,
+          onScreen: true,
+          showIcon: true,
+        },
+
+        width: 400,
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   useEffect(() => {
     axios
@@ -177,6 +215,65 @@ export default function OrderList() {
                             </div>
                           </div>
                         </section> */}
+
+                        <div
+                          class="modal fade"
+                          id="feedback"
+                          tabindex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          {/* Popup modal */}
+                          <Modal
+                            centered
+                            size="lg"
+                            isOpen={modal}
+                            toggle={() => setModal(!modal)}
+                          >
+                            <ModalHeader toggle={() => setModal(!modal)}>
+                              <h5>Feedback</h5>
+                            </ModalHeader>
+                            <ModalBody>
+                              <form>
+                                <div className="form-group">
+                                  <label>Title: </label>
+                                  <input
+                                    className="form-control"
+                                    type="text"
+                                    name="first_name"
+                                    onChange={(e) => setRating(e.target.value)}
+                                  />
+                                </div>
+                                <div className="form-group">
+                                  <label>Title: </label>
+                                  <textarea
+                                    className="form-control"
+                                    rows="3"
+                                    onChange={(e) => setComment(e.target.value)}
+                                  />
+                                </div>
+                              </form>
+                            </ModalBody>
+                            <ModalFooter>
+                              <button
+                                className="btn btn-danger"
+                                data-bs-dismiss="modal"
+                                // onClick={() => handleDelete(noteid)}
+                              >
+                                <i className="fas fa-trash-alt"></i>&nbsp;Delete
+                              </button>
+
+                              <button
+                                type="button"
+                                class="btn btn-success"
+                                data-bs-dismiss="modal"
+                                onClick={() => handleFeedback()}
+                              >
+                                Save
+                              </button>
+                            </ModalFooter>
+                          </Modal>
+                        </div>
                       </div>
                     </div>
                   </div>
