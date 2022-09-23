@@ -18,7 +18,8 @@ const authReducer = (state = initialState, action) => {
                  ...state,
                  user: action.payload.user,
                  isWorker:action.payload.isWorker,
-                 iscustomer:action.payload.iscustomer
+                 iscustomer:action.payload.iscustomer,
+                 isAdmin:action.payload.isAdmin
             }
         default:
             return state

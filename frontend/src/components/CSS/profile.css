@@ -196,3 +196,15 @@
   border-radius: 15px;
   border-color: #1E1E1E;
 }
+
+.download {
+  width: 30%;
+  min-height: 80vh;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 0%;
+  margin-right: 0%;
+  background-color: #fbfdf3;
+  margin-bottom: 2%;
+  margin-top: 0%;
+}

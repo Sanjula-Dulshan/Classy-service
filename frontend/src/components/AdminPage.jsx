@@ -95,7 +95,7 @@ const filterData = (users,searchkey) =>{
       </div>
       
       <h2 className="profhead3">Manage User Accounts.</h2>
-
+      <div  style={{display:"flex"}}>
       <div className="admin">
         <div className="adminT">
           <br></br>
@@ -180,6 +180,12 @@ const filterData = (users,searchkey) =>{
 
           </div></div>
       <br></br>
-    </div></div>
+      </div>
+      <div className="download">
+        <div>
+      <button className="removebtn">Download</button></div>
+      </div>
+     </div>
+    </div>
   )
 }

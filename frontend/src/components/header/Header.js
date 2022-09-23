@@ -7,7 +7,7 @@ import "./header.css";
 export default function Header() {
   const auth = useSelector((state) => state.auth);
 
-  const { user, isLogged, isWorker, iscustomer } = auth;
+  const { user, isLogged, isWorker, iscustomer, isAdmin } = auth;
 
   const handleLogout = async () => {
     try {
@@ -97,6 +97,17 @@ export default function Header() {
               Contact Us
             </Link>
           </li>
+          <li>
+            {isAdmin ? (
+              <Link className="header-al" to="/admin">
+                {" "}
+                Admin Page
+              </Link>
+            ) : (
+              ""
+            )}
+          </li>
+
         </ul>
       </div>
       <ul style={transForm}>

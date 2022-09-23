@@ -37,10 +37,13 @@ function Login() {
             setUser({...user, err: '', success: res.data.msg})
 
             localStorage.setItem('firstLogin', true);
-
+            
          
             dispatch(dispatchLogin())
-            if( document.getElementById('user_role').value=='hire'){
+            if(user_role===1){
+                navigate("/admin");
+            }
+            else if( document.getElementById('user_role').value=='hire'){
                 localStorage.setItem('usertype',0);
                 navigate("/");
               }else{
