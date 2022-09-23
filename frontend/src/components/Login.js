@@ -40,10 +40,7 @@ function Login() {
             
          
             dispatch(dispatchLogin())
-            if(user_role===1){
-                navigate("/admin");
-            }
-            else if( document.getElementById('user_role').value=='hire'){
+           if( document.getElementById('user_role').value=='hire'){
                 localStorage.setItem('usertype',0);
                 navigate("/");
               }else{
