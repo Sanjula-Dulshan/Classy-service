@@ -34,6 +34,7 @@ import Profile from "./components/Profile";
 import PendingOrders from "./components/PendingOrders";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
+import AdminPage from "./components/AdminPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -140,6 +141,12 @@ function App() {
             path="/transactionReport"
             exact
             element={<TransactionReport />}
+          />
+
+        <Route
+            path="/admin"
+            exact
+            element={isLogged ? <AdminPage /> : <NotFound />}
           />
         </Routes>
       </BrowserRouter>

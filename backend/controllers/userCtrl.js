@@ -126,17 +126,6 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  getUserByEmail: async (req, res) => {
-    try {
-      const user = await Users.findOne({
-        email: req.params.userEmail,
-      }).select("-password");
-
-      res.json(user);
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
 
   logout: async (req, res) => {
     try {
