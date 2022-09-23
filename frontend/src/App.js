@@ -41,7 +41,7 @@ function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
-  const { isLogged } = auth;
+  const { isLogged, isAdmin } = auth;
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -150,7 +150,7 @@ function App() {
         <Route
             path="/admin"
             exact
-            element={isLogged ? <AdminPage /> : <NotFound />}
+            element={isAdmin ? <AdminPage /> : <NotFound />}
           />
         </Routes>
       </BrowserRouter>
