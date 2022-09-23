@@ -13,7 +13,7 @@ router.post("/refresh_token", userCtrl.getAccessToken);
 
 router.get("/infor", auth, userCtrl.getUserInfor);
 
-//router.get("/user/:userEmail", userCtrl.getUserByEmail);
+router.get("/allusers",userCtrl.allusers);
 
 router.get("/logout", userCtrl.logout);
 
