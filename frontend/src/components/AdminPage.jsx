@@ -8,6 +8,7 @@ import ConfirmBox from "react-dialog-confirm";
 import Sidebar from "./Sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import { faFileDownload} from "@fortawesome/free-solid-svg-icons";
 
 
 const initialState = {
@@ -123,16 +124,19 @@ const filterData = (users,searchkey) =>{
                   <div className="row">
                    <div style={{display:"flex"}}>
                    <div className="searchicon" >
-                     <FontAwesomeIcon icon={faMagnifyingGlass}/>
+                   <i className="fa-solid fa-magnifying-glass fa-2xl"><FontAwesomeIcon icon={faMagnifyingGlass}/></i> 
                    </div>
                     <div className="col-lg-4 mt-2 mb-2">
                         <input
+                          
                           className="form-control"
                           type="search"
                           placeholder="Search by name or email"
                           name="searchQuery"
                           onChange={handleSearch}>
-                        </input>       
+                           
+                        </input>   
+                          
                   </div>
                   </div>
                 </div>
@@ -183,7 +187,13 @@ const filterData = (users,searchkey) =>{
       </div>
       <div className="download">
         <div>
-      <button className="removebtn">Download</button></div>
+      <button className="downloadbtn">
+      <i className="fa-file-arrow-down fa-2x"><FontAwesomeIcon icon={faFileDownload} /></i>
+       &nbsp; &nbsp;Download Monthly
+       &nbsp;&nbsp;&nbsp;&nbsp;
+       Registered User Report
+       
+       </button></div>
       </div>
      </div>
     </div>
