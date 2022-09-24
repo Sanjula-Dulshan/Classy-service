@@ -25,7 +25,7 @@ import Header from "./components/header/Header";
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
 import Checkout from "./components/Checkout";
-
+import BankPayment from "./components/BankPayment";
 import SelectPayMethod from "./components/SelectPayMethod";
 import TransactionReport from "./components/TransactionReport";
 
@@ -35,6 +35,7 @@ import Profile from "./components/Profile";
 import PendingOrders from "./components/PendingOrders";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -145,6 +146,8 @@ function App() {
             exact
             element={<TransactionReport />}
           />
+
+          <Route path="/bankPayment" exact element={<BankPayment />} />
         </Routes>
       </BrowserRouter>
     </div>

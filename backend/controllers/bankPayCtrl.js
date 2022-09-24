@@ -1,4 +1,4 @@
-import BankPay from "../models/bankPayModel";
+import BankPay from "../models/bankPayModel.js";
 import { v4 as uuidv4 } from 'uuid';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -19,20 +19,24 @@ const BankPayCtrl = {
     createBankPay: async (req, res) => {
         try {
             const { invoiceNo, Date, amount, bankName, branchName, checkoutId, image } = req.body;
-            const user = await BankPay.findOne({ invoiceNo })
-            if (user) return res.status(400).json({ msg: "This bank already exists." })
-
+  
             const newBankPay = new BankPay({
                 invoiceNo, Date, amount, bankName, branchName, checkoutId, image
             })
 
-            await newBankPay.save()
+            await newBankPay.save()            
+            .then((data) => {
+                res.status(200).json({ data });
+            }).catch((err) => {
+                res.status(500).json({ msg: err.message });
+                console.log("Error Here : ",err);
+            });
 
             res.json({ msg: "Bank added successfully!" })
 
 
         } catch (err) {
-            return res.status(500).json({ msg: err.message })
+            return res.status(500).json({ msg: "Outer" })
         }
     },
 
