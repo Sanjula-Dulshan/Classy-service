@@ -76,8 +76,9 @@ function App() {
 
         <Header />
         <Routes>
+          <Route path="/" exact element={<Login />} />
           <Route
-            path="/"
+            path="/allServices"
             exact
             element={isLogged ? <AllServices /> : <NotFound />}
           />
@@ -119,7 +120,7 @@ function App() {
             exact
             element={<ActivationEmail />}
           />
-          <Route path="/login" exact element={<Login />} />
+
           <Route
             path="/profile"
             exact

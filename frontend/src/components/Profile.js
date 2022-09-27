@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -144,7 +145,9 @@ export default function Profile() {
         setIsOpen(false);
         localStorage.removeItem("firstLogin");
         localStorage.clear();
-        window.location.href = "/login";
+
+        window.location.href = "/";
+
       });
     } catch (err) {
       setData({ ...data, err: err.response.data.msg, success: "" });
