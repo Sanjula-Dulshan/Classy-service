@@ -70,23 +70,23 @@ export default function Sidebar() {
             }}
             items={[
               {
-                title: "Vehicle",
+                title: "Repair",
                 itemId: "",
                 elemBefore: () => <Icon name="user" />,
                 subNav: [
                   {
-                    title: "Open",
+                    title: "TV",
                     itemId: "/userServices",
                     // Requires v1.9.1+ (https://github.com/abhijithvijayan/react-minimal-side-navigation/issues/13)
                     elemBefore: () => <Icon name="cloud-snow" />,
                   },
                   {
-                    title: "Assigned",
+                    title: "Radio",
                     itemId: "/pending",
                     elemBefore: () => <Icon name="coffee" />,
                   },
                   {
-                    title: "Accepted",
+                    title: "Computer",
                     itemId: "/accepted",
                     elemBefore: () => <Icon name="coffee" />,
                   },
