@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import sendMail from "./sendMail.js";
 
 const CLIENT_URL = "http://localhost:3000";
+const date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+const savedDate=date.toString();
 
 const userCtrl = {
   register: async (req, res) => {
@@ -33,6 +35,7 @@ const userCtrl = {
         nic,
         mobile,
         password: passwordHash,
+        savedDate
       });
       //
       //const activation_token = createActivationToken(newUser);
@@ -69,6 +72,7 @@ const userCtrl = {
         nic,
         mobile,
         password,
+        savedDate
       });
 
       await newUser.save();
@@ -172,9 +176,8 @@ const userCtrl = {
           return res.status(500).json({msg: err.message})
       }
     },
-    
     allusers:async(req,res)=>{
-    Users.find().exec((err,Users)=>{
+     Users.find().exec((err,Users)=>{
         if(err){
             return res.status(400).json({
             error:err
@@ -186,6 +189,22 @@ const userCtrl = {
         });
     });
 },
+   userRecord:async(req,res)=>{
+   var find1=req.params.id;
+   find1=find1.toString();
+   Users.find({savedDate: { $regex: '.*' + find1 + '.*' } }).exec((err,Users)=>{
+     if(err){
+         return res.status(400).json({
+         error:err
+        });
+    }
+       return res.status(200).json({
+         
+         success:true,
+         userRecord:Users
+     });
+ });
+}
 
 };
 

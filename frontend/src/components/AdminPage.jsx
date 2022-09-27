@@ -9,6 +9,10 @@ import Sidebar from "./Sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import { faFileDownload} from "@fortawesome/free-solid-svg-icons";
+import generatePDF from "./UserReport";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const initialState = {
@@ -26,8 +30,10 @@ export default function AdminPage() {
   const {err, success } = data;
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
-
+  const[report,setReport] = useState([]); 
   const[request,setRequest] = useState([]); 
+  const [startDate, setStartDate] = useState();
+ 
     useEffect(()=>{
               
         axios.get("user/allusers").then((res)=>{
@@ -58,13 +64,30 @@ export default function AdminPage() {
         }
       };
 
+      const onDownload = (_id) => {
+         let mm = String(_id.getMonth() + 1).padStart(2, '0');
+         let yyyy = _id.getFullYear();
+         _id = yyyy + '_' + mm ;
+        try{axios.get(`user/getbydate/${_id}`)
+          .then((res)=> {
+            setReport(res.data.userRecord);
+            
+          })
+        }catch(err){
+              alert(err.message);
+            
+          }  
+      };       
+        
+      
+
 //search bar functions
 const filterData = (users,searchkey) =>{
 
   const result= users.filter((Users) =>
   Users.email.toLowerCase().includes(searchkey) ||
-  Users.email.includes(searchkey)||
-  Users.name.toLowerCase().includes(searchkey) ||
+  Users.email.includes(searchkey)||Users.email.toUpperCase().includes(searchkey) ||
+  Users.name.toLowerCase().includes(searchkey) ||Users.name.toUpperCase().includes(searchkey) ||
   Users.name.includes(searchkey)
   )
 
@@ -187,7 +210,18 @@ const filterData = (users,searchkey) =>{
       </div>
       <div className="download">
         <div>
-      <button className="downloadbtn">
+        <div className="dateselector" style={{display:"flex"}}>
+          <h4>Select Year and Month :</h4>
+        <DatePicker
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        selectsStart
+        startDate={startDate}
+        dateFormat="yyyy/MM"
+        showMonthYearPicker
+      /></div>
+       
+      <button className="downloadbtn"  onClick={() =>{onDownload(startDate);generatePDF(report);}}>
       <i className="fa-file-arrow-down fa-2x"><FontAwesomeIcon icon={faFileDownload} /></i>
        &nbsp; &nbsp;Download Monthly
        &nbsp;&nbsp;&nbsp;&nbsp;

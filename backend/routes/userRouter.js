@@ -15,6 +15,8 @@ router.get("/infor", auth, userCtrl.getUserInfor);
 
 router.get("/allusers",userCtrl.allusers);
 
+router.get("/getbydate/:id",userCtrl.userRecord);
+
 router.get("/logout", userCtrl.logout);
 
 router.patch('/update',auth, userCtrl.updateUser);
