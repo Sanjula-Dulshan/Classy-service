@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import fileUpload from "express-fileupload";
-import bodyParser  from  "body-parser";
+import bodyParser from "body-parser";
 
 import servicesRouter from "./routes/servicesRouter.js";
 import uploadRouter from "./routes/uploadRouter.js";
@@ -15,6 +15,7 @@ import upload from "./routes/upload.js";
 
 import payRouter from "./routes/payMethodRouter.js";
 import checkoutRouter from "./routes/checkoutRouter.js";
+import feedbackRouter from "./routes/feedbackRoute.js";
 import bankPayRouter from "./routes/bankPayRouter.js";
 
 const app = express();
@@ -31,11 +32,12 @@ app.use("/services", servicesRouter);
 app.use("/image", uploadRouter);
 app.use("/wishlist", wishListRouter);
 app.use("/user", userRouter);
-app.use("/api",upload);
+app.use("/api", upload);
 app.use("/bank", payRouter);
 app.use("/checkout", checkoutRouter);
+app.use("/orders", checkoutRouter);
+app.use("/feedback", feedbackRouter);
 app.use("/bankpay", bankPayRouter);
-
 
 // Connect to MongoDB
 mongoose
