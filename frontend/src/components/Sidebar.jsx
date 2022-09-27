@@ -1,83 +1,55 @@
 import React from "react";
+import { Navigation } from "react-minimal-side-navigation";
+import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
+import Icon from "awesome-react-icons";
 import "./sideBar.css";
 
 export default function Sidebar() {
   return (
-    <div className="container">
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        <nav
-          id="sidebarMenu"
-          className="collapse d-lg-block sidebar collapse bg-white "
-        >
-          <div className="position-sticky">
-            <nav class="navbar navbar-light bg-light">
-              <form class="form-inline">
-                <input
-                  class="form-control mr-sm-2 "
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  style={{ marginLeft: "8%" }}
-                />
-              </form>
-              <hr></hr>
-            </nav>
-            <div className="list-group list-group-flush mx-3 mt-4">
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-wrench fa-fw me-3"></i>
-                <span>Technicians</span>
-              </a>
-
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple   "
-              >
-                <i className="fas fa-car fa-fw me-3"></i>
-
-                <span>Vehicles</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-laptop fa-fw me-3"></i>
-                <span>IT</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple   "
-              >
-                <i className="fas fa-cogs fa-fw me-3"></i>
-                <span>Professional</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-print fa-fw me-3"></i>
-                <span>Printing</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple   "
-              >
-                <i className="fas fa-home fa-fw me-3"></i>
-                <span>House</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-users fa-fw me-3"></i>
-                <span>Beauty & Events</span>
-              </a>
-            </div>
-          </div>
-        </nav>
-      </div>
+    <div className="sidebar">
+      <>
+        <Navigation
+          // you can use your own router's api to get pathname
+          activeItemId="/management/members"
+          onSelect={({ itemId }) => {
+            // maybe push to the route
+          }}
+          items={[
+            {
+              title: "Dashboard",
+              itemId: "/dashboard",
+              // you can use your own custom Icon component as well
+              // icon is optional
+              elemBefore: () => <Icon name="inbox" />,
+            },
+            {
+              title: "Management",
+              itemId: "/management",
+              elemBefore: () => <Icon name="users" />,
+              subNav: [
+                {
+                  title: "Projects",
+                  itemId: "/management/projects",
+                },
+                {
+                  title: "Members",
+                  itemId: "/management/members",
+                },
+              ],
+            },
+            {
+              title: "Another Item",
+              itemId: "/another",
+              subNav: [
+                {
+                  title: "Teams",
+                  itemId: "/management/teams",
+                },
+              ],
+            },
+          ]}
+        />
+      </>
     </div>
   );
 }

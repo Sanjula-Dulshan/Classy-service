@@ -24,4 +24,10 @@ checkoutRouter.patch("/:id", CheckoutCtrl.updateServiceStatus);
 //Get pending services
 checkoutRouter.get("/pending/:userEmail", CheckoutCtrl.getPendingServices);
 
+//get accepted services
+checkoutRouter.get("/accepted/:userEmail", CheckoutCtrl.getAcceptedServices);
+
+//get rejected services
+checkoutRouter.get("/rejected/:userEmail", CheckoutCtrl.getRejectedServices);
+
 export default checkoutRouter;

@@ -24,6 +24,7 @@ import Register from "./components/Register";
 import Header from "./components/header/Header";
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
+import Checkout from "./components/Checkout";
 
 import SelectPayMethod from "./components/SelectPayMethod";
 import TransactionReport from "./components/TransactionReport";
@@ -33,12 +34,15 @@ import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 import PendingOrders from "./components/PendingOrders";
 import OrderList from "./components/OrderList";
+import RejectedOrders from "./components/RejectedOrders";
+import AcceptedOrders from "./components/AcceptedOrders";
+import AdminPage from "./components/AdminPage";
 
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
-  const { isLogged } = auth;
+  const { isLogged, isAdmin } = auth;
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -87,7 +91,21 @@ function App() {
             exact
             element={isLogged ? <UserAllServices /> : <NotFound />}
           />
-          <Route path="/pending" exact element={<PendingOrders />} />
+          <Route
+            path="/pending"
+            exact
+            element={isLogged ? <PendingOrders /> : <NotFound />}
+          />
+          <Route
+            path="/rejected"
+            exact
+            element={isLogged ? <RejectedOrders /> : <NotFound />}
+          />
+          <Route
+            path="/accepted"
+            exact
+            element={isLogged ? <AcceptedOrders /> : <NotFound />}
+          />
           <Route
             path="/userServices"
             exact
@@ -126,10 +144,19 @@ function App() {
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
           <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
+
+          <Route path="/checkout" exact element={<Checkout />} />
+
           <Route
             path="/transactionReport"
             exact
             element={<TransactionReport />}
+          />
+
+          <Route
+            path="/admin"
+            exact
+            element={isAdmin ? <AdminPage /> : <NotFound />}
           />
         </Routes>
       </BrowserRouter>

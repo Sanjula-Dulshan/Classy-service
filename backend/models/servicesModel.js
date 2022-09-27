@@ -59,6 +59,10 @@ const servicesSchema = new Schema(
       type: Object,
       required: true,
     },
+    checked: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

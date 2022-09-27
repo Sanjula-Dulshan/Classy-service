@@ -182,11 +182,11 @@ export default function PendingOrders() {
                   <span className="fw-bold ">Location: </span>
                   {data.city}
                   <br />
-                  <span className="fw-bold ">Fee: </span>Rs.
-                  {data.amount}
-                  <br />
-                  <span className="fw-bold ">Phone </span>
+                  <span className="fw-bold ">Contact: </span>
                   {data.mobile}
+                  <br />
+                  <span className="fw-bold ">Payment: </span>Rs.
+                  {data.amount}
                 </div>
                 <div className="extra content">
                   <div className="ui two buttons">

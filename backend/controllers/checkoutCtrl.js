@@ -20,7 +20,6 @@ const checkoutCtrl = {
         mobile,
         date,
         time,
-        image,
         addressLine1,
         addressLine2,
         province,
@@ -29,6 +28,7 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+        image,
       } = req.body;
 
       const newCheckout = new Checkout({
@@ -39,7 +39,6 @@ const checkoutCtrl = {
         mobile,
         date,
         time,
-        image,
         addressLine1,
         addressLine2,
         province,
@@ -48,6 +47,7 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+        image,
       });
 
       await newCheckout.save();
@@ -75,14 +75,18 @@ const checkoutCtrl = {
         { _id: req.params.id },
         {
           uid,
-          name,
+          firstName,
+          lastName,
           email,
-          address,
+          mobile,
+          date,
+          time,
+          addressLine1,
+          addressLine2,
+          province,
           city,
-          country,
-          zip,
-          total,
-          cart,
+          orderStatus,
+          serviceProviderEmail,
         }
       );
 
@@ -122,7 +126,37 @@ const checkoutCtrl = {
 
       const services = await Checkout.find({
         serviceProviderEmail: userEmail,
-        orderStatus: "Pending",
+        orderStatus: "pending",
+      });
+
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  getAcceptedServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+
+      const services = await Checkout.find({
+        serviceProviderEmail: userEmail,
+        orderStatus: "accept",
+      });
+
+      res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  getRejectedServices: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+
+      const services = await Checkout.find({
+        serviceProviderEmail: userEmail,
+        orderStatus: "reject",
       });
 
       res.status(200).json(services);
