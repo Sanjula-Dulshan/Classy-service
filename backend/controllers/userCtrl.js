@@ -26,20 +26,22 @@ const userCtrl = {
           .json({ msg: "Password must be at least 8 characters." });
 
       const passwordHash = await bcrypt.hash(password, 12);
-
-      const newUser = {
+      //
+      const newUser = new Users({
         name,
         email,
         nic,
         mobile,
         password: passwordHash,
-      };
+      });
+      //
+      //const activation_token = createActivationToken(newUser);
 
-      const activation_token = createActivationToken(newUser);
-
-      const url = `${CLIENT_URL}/user/activate/${activation_token}`;
-      sendMail(email, url, "Verify your email address");
-
+      // const url = `${CLIENT_URL}/user/activate/${activation_token}`;
+      // sendMail(email, url, "Verify your email address");
+      //
+      await newUser.save();
+      //
       res.json({
         msg: "Registration Successfull.Please verify your email to continue!",
       });
@@ -124,17 +126,6 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  getUserByEmail: async (req, res) => {
-    try {
-      const user = await Users.findOne({
-        email: req.params.userEmail,
-      }).select("-password");
-
-      res.json(user);
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
   logout: async (req, res) => {
     try {
       res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
@@ -142,6 +133,65 @@ const userCtrl = {
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
+  },
+
+  updateUser: async (req, res) => {
+    try {
+      const { name, avatar, mobile } = req.body;
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          name,
+          avatar,
+          mobile,
+        }
+      );
+
+      res.json({ msg: "Update Success!" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  resetPassword: async (req, res) => {
+    try {
+      const { password } = req.body;
+
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        {
+          password: passwordHash,
+        }
+      );
+
+      res.json({ msg: "Password successfully changed!" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      await Users.findByIdAndDelete(req.params.id);
+      res.json({ msg: "Profile Deleted!" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  allusers: async (req, res) => {
+    Users.find().exec((err, Users) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        existingUser: Users,
+      });
+    });
   },
 };
 
