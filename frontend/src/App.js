@@ -32,15 +32,18 @@ import TransactionReport from "./components/TransactionReport";
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
+import ViewProfile from "./components/ViewProfile";
 import PendingOrders from "./components/PendingOrders";
+import OrderList from "./components/OrderList";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
+import AdminPage from "./components/AdminPage";
 
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
-  const { isLogged } = auth;
+  const { isLogged, isAdmin } = auth;
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -134,6 +137,17 @@ function App() {
             exact
             element={isLogged ? <ViewService /> : <NotFound />}
           />
+          <Route
+
+            path="/viewProfile"
+            exact
+            element={isLogged ? <ViewProfile /> : <NotFound />}
+
+            path="/viewOrder"
+            exact
+            element={isLogged ? <OrderList /> : <NotFound />}
+
+          />
 
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
@@ -145,6 +159,12 @@ function App() {
             path="/transactionReport"
             exact
             element={<TransactionReport />}
+          />
+
+          <Route
+            path="/admin"
+            exact
+            element={isAdmin ? <AdminPage /> : <NotFound />}
           />
         </Routes>
       </BrowserRouter>

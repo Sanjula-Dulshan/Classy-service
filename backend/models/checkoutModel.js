@@ -58,6 +58,10 @@ const checkoutSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: Object,
+      required: true,
+    },
     orderStatus: {
       type: String,
       default: "pending",
@@ -73,10 +77,6 @@ const checkoutSchema = new Schema(
     },
     amount: {
       type: Number,
-      required: true,
-    },
-    image: {
-      type: Object,
       required: true,
     },
   },

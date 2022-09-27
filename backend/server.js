@@ -15,6 +15,7 @@ import upload from "./routes/upload.js";
 
 import payRouter from "./routes/payMethodRouter.js";
 import checkoutRouter from "./routes/checkoutRouter.js";
+import feedbackRouter from "./routes/feedbackRoute.js";
 import bankPayRouter from "./routes/bankPayRouter.js";
 
 const app = express();
@@ -34,6 +35,8 @@ app.use("/user", userRouter);
 app.use("/api", upload);
 app.use("/bank", payRouter);
 app.use("/checkout", checkoutRouter);
+app.use("/orders", checkoutRouter);
+app.use("/feedback", feedbackRouter);
 app.use("/bankpay", bankPayRouter);
 
 // Connect to MongoDB
