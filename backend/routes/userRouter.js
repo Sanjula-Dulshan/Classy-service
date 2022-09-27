@@ -15,6 +15,8 @@ router.get("/infor", auth, userCtrl.getUserInfor);
 
 router.get("/user/:userEmail", userCtrl.getUserByEmail);
 
+router.get("/getbydate/:id",userCtrl.userRecord);
+
 router.get("/logout", userCtrl.logout);
 
 router.get("/allusers", userCtrl.allusers);

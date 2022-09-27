@@ -23,6 +23,7 @@
     "mongoose": "^6.5.3",
     "node-fetch": "^3.2.10",
     "nodemailer": "^6.7.8",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "react-datepicker": "^4.8.0"
   }
 }
