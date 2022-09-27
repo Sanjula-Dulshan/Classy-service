@@ -73,44 +73,44 @@ export default function AllServices() {
         </div>
       ) : (
         <div
-          class="ui cards mt-5 all_services container"
+          className="ui cards mt-5 all_services container"
           style={{ marginLeft: "10%", marginBottom: "30px" }}
         >
           {services.map((data, index) => (
             <div
-              class="card"
+              className="card"
               key={index}
               style={{ backgroundColor: "#FBFDF3" }}
             >
-              <div class="content">
+              <div className="content">
                 <div className="heart">
                   <a href="#" onClick={() => wishlistHandler(data)}>
                     <i
-                      class="heart icon right floated"
+                      className="heart icon right floated"
                       data-tip="Add to Wishlist"
                     />
                   </a>
                 </div>
 
                 <img
-                  class="left floated ui image"
+                  className="left floated ui image"
                   style={{ height: "60px", width: "70px" }}
                   src={data.image.url}
                   alt=""
                 />
 
-                <div class="header">
+                <div className="header">
                   <b>{data.title}</b>
                 </div>
-                <div class="meta">{data.location}</div>
-                <i class="bi bi-telephone ">{data.phone}</i>
+                <div className="meta">{data.location}</div>
+                <i className="bi bi-telephone ">{data.phone}</i>
               </div>
-              <div class="extra content">
-                <div class="ui two buttons" style={{ marginLeft: "10%" }}>
+              <div className="extra content">
+                <div className="ui two buttons" style={{ marginLeft: "10%" }}>
                   <tr>
                     <td>
                       <Link
-                        class="ui button"
+                        className="ui button"
                         to={"/addBank"}
                         data-tip="Click to Buy service"
                         style={{ backgroundColor: "#FEA82F", color: "black" }}
@@ -120,7 +120,7 @@ export default function AllServices() {
                     </td>
                     <td>
                       <Link
-                        class="ui button"
+                        className="ui button"
                         to={"/viewService"}
                         data-tip="Click to view Service Details"
                         style={{
