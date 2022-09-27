@@ -36,6 +36,9 @@ export default function PendingOrders() {
     if (accept) {
       setAccept(false);
 
+      console.log("42");
+      console.log("accept: ", accept);
+      console.log("reject: ", reject);
       try {
         setLoading(true);
         await axios
@@ -73,6 +76,9 @@ export default function PendingOrders() {
     }
     if (reject) {
       setReject(false);
+      console.log("82");
+      console.log("accept: ", accept);
+      console.log("reject: ", reject);
 
       try {
         setLoading(true);

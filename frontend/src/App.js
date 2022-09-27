@@ -33,6 +33,7 @@ import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
 import PendingOrders from "./components/PendingOrders";
+import OrderList from "./components/OrderList";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
 import AdminPage from "./components/AdminPage";
@@ -134,6 +135,11 @@ function App() {
             exact
             element={isLogged ? <ViewService /> : <NotFound />}
           />
+          <Route
+            path="/viewOrder"
+            exact
+            element={isLogged ? <OrderList /> : <NotFound />}
+          />
 
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
@@ -147,7 +153,7 @@ function App() {
             element={<TransactionReport />}
           />
 
-        <Route
+          <Route
             path="/admin"
             exact
             element={isAdmin ? <AdminPage /> : <NotFound />}
