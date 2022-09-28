@@ -67,18 +67,7 @@ const checkoutSchema = new Schema(
       trim: true,
       required: true,
     },
-    serviceTitle: {
-      type: String,
-      required: true,
-    },
-    amount: {
-      type: Number,
-      required: true,
-    },
-    image: {
-      type: Object,
-      required: true,
-    },
+
   },
   {
     timestamps: true,

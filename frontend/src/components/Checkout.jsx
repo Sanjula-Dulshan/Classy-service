@@ -15,13 +15,14 @@ export default function Checkout() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
-  const [address1, setAddress1] = useState();
-  const [address2, setAddress2] = useState();
+  const [addressLine1, setAddress1] = useState();
+  const [addressLine2, setAddress2] = useState();
   const [city, setCity] = useState();
   const [province, setProvincee] = useState();
-  const[phone,setPhone]=useState();
+  const[mobile,setPhone]=useState();
   const[date,setDate]=useState();
   const[time,setTime]=useState();
+  const[serviceProviderEmail,setServiceProviderEmail]=useState("aaaaaa@mail.com");
 
 
 
@@ -34,19 +35,20 @@ export default function Checkout() {
         firstName,
         lastName,
         email,
-        address1,
-        address2,
+        addressLine1,
+        addressLine2,
         city,
         province,
-        phone,
+        mobile,
         date,
-        time
+        time,
+        serviceProviderEmail
 
       }
 
       console.log(newCheckout);
       try {
-        await axios.post("/bank/", newCheckout);
+        await axios.post("/checkout/", newCheckout);
         Store.addNotification({
           title: "Checkout Details Saved Successfully",
           message: "Your will recive your payments to this account",
@@ -233,8 +235,7 @@ export default function Checkout() {
                     name="fname"
                     type="text"
                     className="form-control"
-                    onChange={(e) => setProvincee
-                      (e.target.value)}
+                    onChange={(e) => setProvincee(e.target.value)}
                   >
                     <option value="Western">Western</option>
                     <option value="Southern">Southern</option>

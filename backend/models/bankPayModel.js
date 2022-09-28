@@ -29,7 +29,7 @@ const bankPaySchema = new Schema({
     },
 
     image : {
-        type : String,
+        type : Object,
       //  required : true
     },
 

@@ -16,7 +16,58 @@ export default function BankPayment() {
   const [invoiceNo, setInvoiceNo] = useState();
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
+  const [image, setImage] = useState(false);
 
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("e.target", e.target.files[0]);
+      const file = e.target.files[0];
+
+      if (!file) return alert("File not exist.");
+
+      if (file.size > 5 * 1024 * 1024)
+        // 5mb
+        return alert("Maximum file size: 5MB");
+
+      if (file.type !== "image/jpeg" && file.type !== "image/png")
+        return alert("Please upload only jpeg/png");
+
+      let formData = new FormData();
+      console.log("formData", formData);
+      formData.append("file", file);
+      console.log("formData.append", formData);
+
+      setLoading(true);
+      const res = await axios.post("/image/upload", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setLoading(false);
+      setImage(res.data);
+      console.log("res", res);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
+
+  const handleDestroy = async () => {
+    try {
+      setLoading(true);
+      await axios.post("/image/destroy", { public_id: image.public_id });
+      setLoading(false);
+      setImage(false);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
+  const styleUpload = {
+    display: image ? "block" : "none",
+  };
 
 
 
@@ -29,6 +80,7 @@ export default function BankPayment() {
         invoiceNo,
         bankName,
         branchName,
+        image
       }
 
       console.log(newBank);
@@ -163,21 +215,21 @@ export default function BankPayment() {
              
 
               <div className="create_service">
-                  <div className="upload">
+              <div className="upload">
                     <input
                       type="file"
                       name="file"
                       id="file_up"
-
+                      onChange={handleUpload}
                     />
                     {loading ? (
                       <div id="file_img">
                         <Loading />
                       </div>
                     ) : (
-                      <div id="file_img" >
-                        <img />
-                        <span >X</span>
+                      <div id="file_img" style={styleUpload}>
+                        <img src={image ? image.url : ""} alt="" />
+                        <span onClick={handleDestroy}>X</span>
                       </div>
                     )}
                   </div>
