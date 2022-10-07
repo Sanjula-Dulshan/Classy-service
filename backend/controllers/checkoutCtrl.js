@@ -9,6 +9,19 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getAllOrders: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+      console.log("userEmail", userEmail);
+      const checkouts = await Checkout.find({
+        email: userEmail,
+      });
+      console.log("checkouts", checkouts);
+      res.status(200).json(checkouts);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 
   createCheckout: async (req, res) => {
     try {

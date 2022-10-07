@@ -2,32 +2,33 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Store } from "react-notifications-component";
 import ReactStars from "react-rating-stars-component";
 import "./ratings/rstyle.css";
-// import Rating from "./Rating";
 
 import Sidebar from "./Sidebar";
 
 export default function OrderList() {
+  const auth = useSelector((state) => state.auth);
   const [orders, setOrders] = useState([]);
   const [rating, setRating] = useState([]);
   const [comment, setComment] = useState("");
   const [modal, setModal] = useState(false);
-
-  let _id;
+  const [orderID, setOrderID] = useState("");
 
   const handleFeedback = async (e) => {
     e.preventDefault();
     const newFeedback = {
       rating,
       comment,
+      orderID,
     };
-    console.log(newFeedback);
+
     try {
-      await axios.post(`/feedback/${_id}`, newFeedback);
+      await axios.post("/feedback/", newFeedback);
+
       Store.addNotification({
         title: "Feedback Saved Successfully",
         message: "Thank you for your feedback",
@@ -53,17 +54,22 @@ export default function OrderList() {
     }
   };
 
-  const toggle = () => setModal(!modal);
+  const toggle = (_id) => {
+    setOrderID(_id);
+    setModal(!modal);
+  };
   useEffect(() => {
+    const { email } = auth.user;
+    console.log("63", email);
     axios
-      .get("/orders/")
+      .get(`/orders/${email}`)
       .then((res) => {
         setOrders(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [auth.user]);
 
   //rating
   const ratings = {
@@ -81,6 +87,22 @@ export default function OrderList() {
     },
   };
 
+  //get all feedbacks
+  const [feedback, setFeedbacks] = useState([]);
+  const [rate, setRate] = useState(0);
+  useEffect(() => {
+    axios
+      .get("/feedback/")
+
+      .then((res) => {
+        setFeedbacks(res.data);
+        setRate(res.data.rating);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <Sidebar />
@@ -94,98 +116,117 @@ export default function OrderList() {
         </h1>
 
         <div className="mt-5" style={{ marginLeft: "15%" }}>
-          {console.log("orders", orders)}
-          {orders?.map(
-            (data, index) => (
-              console.log("41", data),
-              (
-                <div
-                  className="card mb-2 container"
-                  key={index}
-                  style={{ backgroundColor: "#FBFDF3" }}
-                >
-                  <div className="row g-0 ">
-                    <div className="col-md-2">
-                      <img
-                        // src={data.image.url}
-                        className="img mt-2"
-                        style={{ height: "90%", width: "90%" }}
-                      />
+          {orders?.map((orderData, index) => (
+            <div
+              className="card mb-2 container"
+              key={index}
+              style={{ backgroundColor: "#FBFDF3" }}
+            >
+              <div className="row g-0 ">
+                <div className="col-md-2">
+                  <img
+                    // src={orderData.image.url}
+                    className="img mt-2"
+                    style={{ height: "60%", width: "80%" }}
+                  />
+                </div>
+                <div className="col-md-8">
+                  <div className="card-body">
+                    <div>
+                      <h4 className="card-title">
+                        <b>{orderData.serviceTitle}</b>
+                      </h4>
                     </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <h4 className="card-title">
-                          <b>{data.serviceTitle}</b>
-                        </h4>
-                        <br></br>
+                    <br></br>
 
-                        {data.orderStatus === "pending" ? (
-                          <h5>
-                            <b>
-                              Status:
-                              <span style={{ backgroundColor: "yellow" }}>
-                                Pending{" "}
-                              </span>
-                            </b>
-                          </h5>
-                        ) : (
-                          <div></div>
-                        )}
-                        {data.orderStatus === "accept" ? (
-                          <h5>
-                            <b>
-                              Status:
-                              <span style={{ backgroundColor: "green" }}>
-                                Accept{" "}
-                              </span>
-                            </b>
-                          </h5>
-                        ) : (
-                          <div></div>
-                        )}
+                    {orderData.orderStatus === "pending" ? (
+                      <h5>
+                        <b>
+                          Status:
+                          <span style={{ backgroundColor: "yellow" }}>
+                            Pending{" "}
+                          </span>
+                        </b>
+                      </h5>
+                    ) : (
+                      <div></div>
+                    )}
+                    {orderData.orderStatus === "accept" ? (
+                      <h5>
+                        <b>
+                          Status:
+                          <span style={{ backgroundColor: "green" }}>
+                            Accept{" "}
+                          </span>
+                        </b>
+                      </h5>
+                    ) : (
+                      <div></div>
+                    )}
 
-                        {data.orderStatus === "reject" ? (
-                          <h5>
-                            <b>
-                              Status:
-                              <span style={{ backgroundColor: "red" }}>
-                                Reject{" "}
-                              </span>
-                            </b>
-                          </h5>
-                        ) : (
-                          <div></div>
-                        )}
-
-                        <div className="extra content">
-                          <div
-                            className="ui two buttons"
-                            style={{ marginLeft: "40%" }}
-                          >
-                            <tr>
-                              <td>
-                                <button
-                                  class="ui button mb-2"
-                                  style={{
-                                    marginLeft: "50px",
-                                    backgroundColor: "#1E1E1E",
-                                    color: "white",
-                                  }}
-                                  onClick={() => toggle()}
-                                >
-                                  LEAVE FEEDBACK
-                                </button>
-                              </td>
-                            </tr>
-                          </div>
+                    {orderData.orderStatus === "reject" ? (
+                      <h5>
+                        <b>
+                          Status:
+                          <span style={{ backgroundColor: "red" }}>
+                            Reject{" "}
+                          </span>
+                        </b>
+                      </h5>
+                    ) : (
+                      <div></div>
+                    )}
+                    <div>
+                      {feedback?.map((feedbackData, index) => (
+                        <div>
+                          {feedbackData.orderID === orderData._id ? (
+                            <div>
+                              <h5>
+                                <b>
+                                  <ReactStars
+                                    {...{
+                                      size: 20,
+                                      value: feedbackData.rating,
+                                      edit: false,
+                                    }}
+                                  />
+                                </b>
+                              </h5>
+                              <h6>{feedbackData.comment}</h6>
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
                         </div>
+                      ))}
+                    </div>
+                    <div className="extra content">
+                      <div
+                        className="ui two buttons"
+                        style={{ marginLeft: "40%" }}
+                      >
+                        <tr>
+                          <td>
+                            <button
+                              class="ui button mb-2"
+                              style={{
+                                marginLeft: "50px",
+                                backgroundColor: "#1E1E1E",
+                                color: "white",
+                              }}
+                              onClick={() => toggle(orderData._id)}
+                            >
+                              LEAVE FEEDBACK
+                            </button>
+                          </td>
+                        </tr>
                       </div>
                     </div>
                   </div>
                 </div>
-              )
-            )
-          )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <div
@@ -212,63 +253,6 @@ export default function OrderList() {
                 <div className="rating">
                   <ReactStars {...ratings} />
                 </div>
-                {/* <section>
-                  <div class="rt-container">
-                    <div class="col-rt-12">
-                      <form>
-                        <fieldset>
-                          <span class="star-cb-group">
-                            <input
-                              type="checkbox"
-                              id="rating-5"
-                              name="rating"
-                              value="5"
-                            />
-                            <label for="rating-5">5</label>
-                            <input
-                              type="checkbox"
-                              id="rating-4"
-                              name="rating"
-                              value="4"
-                              checked="checked"
-                            />
-                            <label for="rating-4">4</label>
-                            <input
-                              type="checkbox"
-                              id="rating-3"
-                              name="rating"
-                              value="3"
-                            />
-                            <label for="rating-3">3</label>
-                            <input
-                              type="checkbox"
-                              id="rating-2"
-                              name="rating"
-                              value="2"
-                            />
-                            <label for="rating-2">2</label>
-                            <input
-                              type="checkbox"
-                              id="rating-1"
-                              name="rating"
-                              value="1"
-                            />
-                            <label for="rating-1">1</label>
-                            <input
-                              type="checkbox"
-                              id="rating-0"
-                              name="rating"
-                              value="0"
-                              class="star-cb-clear"
-                            />
-                            <label for="rating-0">0</label>
-                            onChange={(e) => setRating(e.target.value)}
-                          </span>
-                        </fieldset>
-                      </form>
-                    </div>
-                  </div>
-                </section> */}
               </div>
               <div className="form-group">
                 <label>Comment: </label>

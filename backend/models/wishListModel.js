@@ -18,6 +18,10 @@ const wishListSchema = new Schema(
     image: {
       type: Object,
     },
+    userEmail: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
