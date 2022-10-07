@@ -4,7 +4,7 @@ import "jspdf-autotable";
 
 const generatePDF = (report) => {
   // initialize jsPDF
-
+  console.log(report);
   const doc = new jsPDF();
 
   // define the columns we want and their titles
@@ -34,10 +34,6 @@ const generatePDF = (report) => {
       report.email,
       report.nic
      
-
-      // called date-fns to format the date on the report
-
-      // format(new Date(report.updated_at), "yyyy-MM-dd")
     ];
 
     // push each tickcet's info into a row
