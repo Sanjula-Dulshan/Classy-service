@@ -1,8 +1,6 @@
-
-
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 
 import { isLength, isMatch } from "./utils/validation/Validation";
@@ -162,6 +160,20 @@ export default function Profile() {
         {success && showSuccessMsg(success)}
         {loading && <h3>Loading.....</h3>}
       </div>
+      <Link to="/allServices">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{
+                  fontSize: "22px",
+                  marginLeft: "18%",
+                  marginTop:"14px",
+                  marginBottom:"-30px",
+                  color: "#FEA82F",
+                }}
+              >
+                Back
+              </i>
+            </Link>
       <img
         className="profimage"
         src="https://res.cloudinary.com/dl99x/image/upload/v1662162175/Sample_User_Icon_urnlt1.png"
@@ -208,7 +220,7 @@ export default function Profile() {
           <div className="col-md-13 mb-3 font" style={{ display: "flex" }}>
             <label htmlFor="name">
               <label style={{ color: "red" }}>*</label>
-              Name : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Name : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
@@ -225,7 +237,7 @@ export default function Profile() {
           <div className="col-md-13 mb-3 font" style={{ display: "flex" }}>
             <label htmlFor="email">
               <label style={{ color: "red" }}>*</label>
-              Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>

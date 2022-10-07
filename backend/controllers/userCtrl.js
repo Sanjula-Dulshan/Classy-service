@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import sendMail from "./sendMail.js";
 
 const CLIENT_URL = "http://localhost:3000";
-const date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+const date = new Date().toJSON().slice(0,10).replace(/-/g,'-');
 const savedDate=date.toString();
 
 const userCtrl = {
@@ -46,7 +46,7 @@ const userCtrl = {
      await newUser.save();
      //
       res.json({
-        msg: "Registration Successfull.Please verify your email to continue!",
+        msg: "Registration Successfull.Please login to continue!",
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -63,9 +63,11 @@ const userCtrl = {
       const { name, email, nic, mobile, password } = user;
 
       const check = await Users.findOne({ email });
+      const checknic = await Users.findOne({ nic });
       if (check)
         return res.status(400).json({ msg: "This email already exists." });
-
+      if (checknic)
+        return res.status(400).json({ msg: "There is an existing account under your NIC number!." });
       const newUser = new Users({
         name,
         email,
