@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigation } from "react-minimal-side-navigation";
 import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
 import Icon from "awesome-react-icons";
@@ -10,6 +10,7 @@ import "./sideBar.css";
 export default function Sidebar() {
   const auth = useSelector((state) => state.auth);
   const { user, isLogged, isWorker, iscustomer } = auth;
+  const [TV, setTV] = useState("TV");
 
   const navigate = useNavigate();
   return (
@@ -76,23 +77,23 @@ export default function Sidebar() {
                 subNav: [
                   {
                     title: "TV",
-                    itemId: "/userServices",
+                    itemId: `/allServices/${TV}`,
                     // Requires v1.9.1+ (https://github.com/abhijithvijayan/react-minimal-side-navigation/issues/13)
                     elemBefore: () => <Icon name="cloud-snow" />,
                   },
                   {
                     title: "Radio",
-                    itemId: "/pending",
+                    itemId: "/allServices",
                     elemBefore: () => <Icon name="coffee" />,
                   },
                   {
                     title: "Computer",
-                    itemId: "/accepted",
+                    itemId: "/allServices",
                     elemBefore: () => <Icon name="coffee" />,
                   },
                   {
-                    title: "Cancelled",
-                    itemId: "/rejected",
+                    title: "Phone",
+                    itemId: "/allServices",
                     elemBefore: () => <Icon name="coffee" />,
                   },
                 ],

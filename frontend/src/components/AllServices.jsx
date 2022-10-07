@@ -4,18 +4,28 @@ import { useEffect, useState } from "react";
 import "./allServices.css";
 import RiseLoader from "react-spinners/RiseLoader";
 import Sidebar from "./Sidebar";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { Store } from "react-notifications-component";
 
 export default function AllServices() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
+  const param = useSearchParams();
+
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);
+    console.log("param.category", param.category);
+    if (param.category) {
+      const getServices = async () => {
+        const res = await axios.get(`/services/filter/${param.category}`);
+        setServices(res.data);
+      };
+      getServices();
+    }
 
     axios
       .get("/services/")

@@ -83,6 +83,11 @@ function App() {
             element={isLogged ? <AllServices /> : <NotFound />}
           />
           <Route
+            path="/allServices/:category"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
+          <Route
             path="/addService"
             exact
             element={isLogged ? <CreateService /> : <NotFound />}
@@ -138,15 +143,14 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
           <Route
-
             path="/viewProfile"
             exact
             element={isLogged ? <ViewProfile /> : <NotFound />}
-
+          />
+          <Route
             path="/viewOrder"
             exact
             element={isLogged ? <OrderList /> : <NotFound />}
-
           />
 
           <Route path="/addBank" exact element={<AddBank />} />
