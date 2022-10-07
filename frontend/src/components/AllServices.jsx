@@ -25,7 +25,6 @@ export default function AllServices() {
 
       .then((res) => {
         setServices(res.data);
-        console.log("37 service: ", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +33,7 @@ export default function AllServices() {
 
   useEffect(() => {
     console.log("param.category: ", param.category);
-    console.log("param: ", param);
+
     if (param.category) {
       const getServices = async () => {
         const res = await axios.get(`/services/filter/${param.category}`);
@@ -94,7 +93,7 @@ export default function AllServices() {
           <RiseLoader color={"#FEA82F"} loading={loading} size={30} />
         </div>
       ) : (
-        <div>
+        <div style={{ marginLeft: "100px" }}>
           {filterEmpty ? (
             <div className="d-flex align-items-center justify-content-center vh-100">
               <div className="text-center">
@@ -109,8 +108,8 @@ export default function AllServices() {
             </div>
           ) : (
             <div
-              className="ui cards mt-5 all_services container"
-              style={{ marginLeft: "10%", marginBottom: "30px" }}
+              className="ui cards mt-5  container"
+              style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
             >
               {services.map((data, index) => (
                 <div
