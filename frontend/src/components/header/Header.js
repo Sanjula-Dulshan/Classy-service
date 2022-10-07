@@ -49,7 +49,7 @@ export default function Header() {
 
         <ul style={transForm}>
           <li>
-            <Link className="header-al" to="/">
+            <Link className="header-al" to="/allServices">
               {" "}
               Home
             </Link>

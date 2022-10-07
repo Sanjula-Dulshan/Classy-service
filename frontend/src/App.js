@@ -83,6 +83,11 @@ function App() {
             element={isLogged ? <AllServices /> : <NotFound />}
           />
           <Route
+            path="/allServices/:category"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
+          <Route
             path="/addService"
             exact
             element={isLogged ? <CreateService /> : <NotFound />}

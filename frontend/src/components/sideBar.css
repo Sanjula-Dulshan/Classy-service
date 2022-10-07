@@ -22,7 +22,7 @@
 
 @media (max-width: 991.98px) {
   .sidebar {
-    width: 100%;
+    width: 30%;
   }
 }
 .sidebar .active {
