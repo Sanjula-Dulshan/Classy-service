@@ -44,6 +44,7 @@ export default function CreateService() {
     setTimeout(() => {
       setPageLoading(false);
     }, 2000);
+    console.log("param: ", param);
     if (param.id) {
       setOnEdit(true);
       axios.get("/services").then((res) => {

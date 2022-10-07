@@ -11,7 +11,6 @@ function NotFound() {
   }, []);
   return (
     <div>
-      {console.log("not found", loading)}
       {loading ? (
         <div className="load">
           <RiseLoader color={"#FEA82F"} loading={loading} size={30} />
