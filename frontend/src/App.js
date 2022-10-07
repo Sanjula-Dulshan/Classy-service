@@ -138,15 +138,14 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
           <Route
-
             path="/viewProfile"
             exact
             element={isLogged ? <ViewProfile /> : <NotFound />}
-
+          />
+          <Route
             path="/viewOrder"
             exact
             element={isLogged ? <OrderList /> : <NotFound />}
-
           />
 
           <Route path="/addBank" exact element={<AddBank />} />
