@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Navigation } from "react-minimal-side-navigation";
 import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
-import Icon from "awesome-react-icons";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -77,32 +76,50 @@ export default function Sidebar() {
             }}
             items={[
               {
-                title: "All Services",
+                title: <b>All Services</b>,
                 itemId: `/allServices`,
               },
               {
                 title: "Technicians",
                 itemId: `/allServices/${"Technicians"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/external-itim2101-lineal-itim2101/20/000000/external-technician-male-occupation-avatar-itim2101-lineal-itim2101.png" />
+                ),
               },
               {
                 title: "Repair",
                 itemId: `/allServices/${"Repair"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/open-end-wrench.png" />
+                ),
               },
               {
                 title: "IT",
                 itemId: `/allServices/${"IT"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/laptop--v1.png" />
+                ),
               },
               {
                 title: "House",
                 itemId: `/allServices/${"House"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/home-page.png" />
+                ),
               },
               {
                 title: "Garden",
                 itemId: `/allServices/${"Garden"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/garden.png" />
+                ),
               },
               {
                 title: "Beauty & Event",
                 itemId: `/allServices/${"Beauty & Event"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/external-anggara-glyph-anggara-putra/20/000000/external-group-basic-user-interface-anggara-glyph-anggara-putra.png" />
+                ),
               },
             ]}
           />
