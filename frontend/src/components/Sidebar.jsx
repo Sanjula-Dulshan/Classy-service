@@ -34,23 +34,30 @@ export default function Sidebar() {
                   {
                     title: "Open",
                     itemId: "/userServices",
-                    // Requires v1.9.1+ (https://github.com/abhijithvijayan/react-minimal-side-navigation/issues/13)
-                    elemBefore: () => <Icon name="cloud-snow" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-dygo-kerismaker/20/000000/external-Pending-management-dygo-kerismaker.png" />
+                    ),
                   },
                   {
                     title: "Assigned",
                     itemId: "/pending",
-                    elemBefore: () => <Icon name="coffee" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/20/FEA82F/external-active-basic-ui-elements-2.3-sbts2018-solid-sbts2018.png" />
+                    ),
                   },
                   {
                     title: "Accepted",
                     itemId: "/accepted",
-                    elemBefore: () => <Icon name="coffee" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/color/20/000000/double-tick.png" />
+                    ),
                   },
                   {
                     title: "Cancelled",
                     itemId: "/rejected",
-                    elemBefore: () => <Icon name="coffee" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-those-icons-flat-those-icons/17/000000/external-Remove-interface-those-icons-flat-those-icons.png" />
+                    ),
                   },
                 ],
               },
@@ -70,41 +77,32 @@ export default function Sidebar() {
             }}
             items={[
               {
-                title: "Repair",
-                itemId: "",
-                elemBefore: () => <Icon name="user" />,
-                subNav: [
-                  {
-                    title: "TV",
-                    itemId: `/allServices/${"TV"}`,
-                    elemBefore: () => <Icon name="cloud-snow" />,
-                  },
-                  {
-                    title: "Radio",
-                    itemId: `/allServices/${"Radio"}`,
-                    elemBefore: () => <Icon name="coffee" />,
-                  },
-                  {
-                    title: "Computer",
-                    itemId: "/allServices",
-                    elemBefore: () => <Icon name="coffee" />,
-                  },
-                  {
-                    title: "Phone",
-                    itemId: "/allServices",
-                    elemBefore: () => <Icon name="coffee" />,
-                  },
-                ],
+                title: "All Services",
+                itemId: `/allServices`,
               },
               {
-                title: "Another Item",
-                itemId: "",
-                subNav: [
-                  {
-                    title: "Teams",
-                    itemId: "/management/teams",
-                  },
-                ],
+                title: "Technicians",
+                itemId: `/allServices/${"Technicians"}`,
+              },
+              {
+                title: "Repair",
+                itemId: `/allServices/${"Repair"}`,
+              },
+              {
+                title: "IT",
+                itemId: `/allServices/${"IT"}`,
+              },
+              {
+                title: "House",
+                itemId: `/allServices/${"House"}`,
+              },
+              {
+                title: "Garden",
+                itemId: `/allServices/${"Garden"}`,
+              },
+              {
+                title: "Beauty & Event",
+                itemId: `/allServices/${"Beauty & Event"}`,
               },
             ]}
           />
