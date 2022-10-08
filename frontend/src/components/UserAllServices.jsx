@@ -226,25 +226,38 @@ export default function UserAllServices() {
               onCancel={handleCloseDeleteAll}
             />
           </div>
+          <div>
+            <tr className=" float-end">
+              <td>
+                <div className="search">
+                  <input
+                    className="form-control"
+                    type="search"
+                    placeholder="search"
+                    name="search"
+                    onChange={hancdleSearchArea}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="delete-all">
+                  <span>Select all</span>
+                  <input
+                    type="checkbox"
+                    checked={isCheck}
+                    onChange={checkAll}
+                  />
 
-          <div className="delete-all">
-            <span>Select all</span>
-            <input type="checkbox" checked={isCheck} onChange={checkAll} />
-
-            <button onClick={confirmDeleteAll}>Delete ALL</button>
+                  <button onClick={confirmDeleteAll}>Delete ALL</button>
+                </div>
+              </td>
+            </tr>
           </div>
 
           <div
             className="ui cards mt-4 container"
             style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
           >
-            <input
-              className="form-control"
-              type="search"
-              placeholder="search"
-              name="search"
-              onChange={hancdleSearchArea}
-            />
             {services?.map((data, index) => (
               <div
                 className="card"
