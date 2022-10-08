@@ -28,6 +28,7 @@ import Checkout from "./components/Checkout";
 import BankPayment from "./components/BankPayment";
 import SelectPayMethod from "./components/SelectPayMethod";
 import TransactionReport from "./components/TransactionReport";
+import CardPay from "./components/CardPay";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
@@ -148,6 +149,7 @@ function App() {
           />
 
           <Route path="/bankPayment" exact element={<BankPayment />} />
+          <Route path="/cardPayment" exact element={<CardPay />} />
         </Routes>
       </BrowserRouter>
     </div>

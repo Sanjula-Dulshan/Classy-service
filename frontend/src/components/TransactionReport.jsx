@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 import "./AddBank.css";
@@ -10,8 +11,15 @@ export default function TransactionReport() {
   const[request,setRequest] = useState([]);
   const[loading,setLoading] = useState(false);
   const[searchTerm,setSearchTerm] = useState("");
-  const[field,setField] = useState("");
-  const[spec,setSpec] = useState("");
+
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get("/checkout/").then((res) => {
+      setRequest(res.data);
+      setLoading(false);
+    });
+  }, []);
 
 
     
@@ -63,13 +71,11 @@ export default function TransactionReport() {
                     
                     <tr key={index}>
                        <th scope="row">{index+1}</th>
-                       <td>{data.title}</td>
-                       <td>{ data.note.length>50 ?(data.note.substring(0, 50)+"..."):(data.note)}</td>
-                          
+                       <td>{data._id}</td>
+                       <td>{ data.serviceProviderEmail}</td>
+                       <td>{ data.orderStatus}</td>   
                        <td>
-  
-                       Null
-                           
+                       { data.amount}    
                        </td>
   
                     </tr>
