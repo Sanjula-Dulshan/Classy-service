@@ -118,6 +118,7 @@ export default function CreateService() {
       const { name, value } = e.target;
       setService({ ...service, [name]: value });
     }
+    console.log("service", service);
   };
 
   const confirm = (e) => {
