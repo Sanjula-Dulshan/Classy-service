@@ -75,8 +75,8 @@
 .create_service form {
   max-width: 500px;
   min-width: 290px;
-  width: 50%;
-  margin: 15px 30px;
+  width: 40%;
+  margin: 10px 30px;
 }
 .create_service form .row {
   width: 100%;
@@ -90,6 +90,7 @@
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
+  margin-right: 20px;
   font-weight: 700;
 }
 .create_service form .btn-cancel:hover {
@@ -105,6 +106,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 700;
+  margin-left: 20px;
   border: none;
   align-items: flex-start;
 }
@@ -116,7 +118,7 @@
 }
 
 .flex_box {
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
 }
@@ -124,8 +126,8 @@
 /* Float four columns side by side */
 .card-column {
   float: right;
-  width: 65%;
-  padding: 0 10px;
+  width: 80%;
+  padding: 0px 10px;
 }
 
 /* Remove extra left and right margins, due to padding */
