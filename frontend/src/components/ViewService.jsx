@@ -57,7 +57,7 @@ export default function ViewService() {
           <div className="mt-5 ">
             <Link to="/">
               <i
-                class="fas fa-arrow-circle-left"
+                className="fas fa-arrow-circle-left"
                 style={{
                   fontSize: "22px",
                   marginLeft: "15%",

@@ -30,6 +30,17 @@ a:active {
   height: 100vh;
 }
 
+.search {
+  width: 100%;
+}
+
+.search input {
+  height: 35px;
+  width: 200px;
+  transform: translateY(5px);
+  margin: 0 15px;
+}
+
 .delete-all {
   text-align: right;
   margin: 20px;

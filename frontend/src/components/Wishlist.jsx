@@ -75,7 +75,7 @@ export default function Wishlist() {
           />
         </div>
         <div style={{ textAlign: "center" }}>
-          <i class="heart icon "></i>
+          <i className="heart icon "></i>
         </div>
         <h1 style={{ textAlign: "center" }}>
           <b>My WishList</b>
@@ -123,7 +123,7 @@ export default function Wishlist() {
                             </td>
                             <td>
                               <button
-                                class="ui button mb-2"
+                                className="ui button mb-2"
                                 style={{
                                   marginLeft: "50px",
                                   color: "red",
@@ -139,7 +139,7 @@ export default function Wishlist() {
                     </p>
 
                     <p className="card-text">
-                      <i class="bi bi-telephone ">{data.phone}</i>
+                      <i className="bi bi-telephone ">{data.phone}</i>
                     </p>
                   </div>
                 </div>

@@ -38,7 +38,7 @@ function Login() {
       dispatch(dispatchLogin());
       if (document.getElementById("user_role").value == "hire") {
         localStorage.setItem("usertype", 0);
-        navigate("/");
+        navigate("/allServices");
       } else {
         navigate("/userServices");
         localStorage.setItem("usertype", 1);

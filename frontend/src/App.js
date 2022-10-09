@@ -76,8 +76,14 @@ function App() {
 
         <Header />
         <Routes>
+          <Route path="/" exact element={<Login />} />
           <Route
-            path="/"
+            path="/allServices"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
+          <Route
+            path="/allServices/:category"
             exact
             element={isLogged ? <AllServices /> : <NotFound />}
           />
@@ -119,7 +125,7 @@ function App() {
             exact
             element={<ActivationEmail />}
           />
-          <Route path="/login" exact element={<Login />} />
+
           <Route
             path="/profile"
             exact
@@ -137,15 +143,14 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
           <Route
-
             path="/viewProfile"
             exact
             element={isLogged ? <ViewProfile /> : <NotFound />}
-
+          />
+          <Route
             path="/viewOrder"
             exact
             element={isLogged ? <OrderList /> : <NotFound />}
-
           />
 
           <Route path="/addBank" exact element={<AddBank />} />

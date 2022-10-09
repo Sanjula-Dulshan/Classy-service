@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import sendMail from "./sendMail.js";
 
 const CLIENT_URL = "http://localhost:3000";
+const date = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+const savedDate=date.toString();
 
 const userCtrl = {
   register: async (req, res) => {
@@ -33,17 +35,18 @@ const userCtrl = {
         nic,
         mobile,
         password: passwordHash,
+        savedDate
       });
       //
       //const activation_token = createActivationToken(newUser);
 
       // const url = `${CLIENT_URL}/user/activate/${activation_token}`;
       // sendMail(email, url, "Verify your email address");
-      //
-      await newUser.save();
-      //
+     //
+     await newUser.save();
+     //
       res.json({
-        msg: "Registration Successfull.Please verify your email to continue!",
+        msg: "Registration Successfull.Please login to continue!",
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -60,15 +63,18 @@ const userCtrl = {
       const { name, email, nic, mobile, password } = user;
 
       const check = await Users.findOne({ email });
+      const checknic = await Users.findOne({ nic });
       if (check)
         return res.status(400).json({ msg: "This email already exists." });
-
+      if (checknic)
+        return res.status(400).json({ msg: "There is an existing account under your NIC number!." });
       const newUser = new Users({
         name,
         email,
         nic,
         mobile,
         password,
+        savedDate
       });
 
       await newUser.save();
@@ -127,18 +133,6 @@ const userCtrl = {
     }
   },
 
-  getUserByEmail: async (req, res) => {
-    try {
-      const user = await Users.findOne({
-        email: req.params.userEmail,
-      }).select("-password");
-
-      res.json(user);
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
-
   logout: async (req, res) => {
     try {
       res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
@@ -150,62 +144,70 @@ const userCtrl = {
 
   updateUser: async (req, res) => {
     try {
-      const { name, avatar, mobile } = req.body;
-      await Users.findOneAndUpdate(
-        { _id: req.user.id },
-        {
-          name,
-          avatar,
-          mobile,
-        }
-      );
+        const {name, avatar,mobile} = req.body
+        await Users.findOneAndUpdate({_id: req.user.id}, {
+            name, avatar,mobile
+        })
 
-      res.json({ msg: "Update Success!" });
+        res.json({msg: "Update Success!"})
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+        return res.status(500).json({msg: err.message})
     }
-  },
+},
 
   resetPassword: async (req, res) => {
     try {
-      const { password } = req.body;
+        const {password} = req.body
+        
+        const passwordHash = await bcrypt.hash(password, 12)
 
-      const passwordHash = await bcrypt.hash(password, 12);
+        await Users.findOneAndUpdate({_id: req.user.id}, {
+            password: passwordHash
+        })
 
-      await Users.findOneAndUpdate(
-        { _id: req.user.id },
-        {
-          password: passwordHash,
-        }
-      );
-
-      res.json({ msg: "Password successfully changed!" });
+        res.json({msg: "Password successfully changed!"})
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+        return res.status(500).json({msg: err.message})
     }
-  },
-  deleteUser: async (req, res) => {
-    try {
-      await Users.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Profile Deleted!" });
-    } catch (err) {
-      return res.status(500).json({ msg: err.message });
-    }
-  },
-
-  allusers: async (req, res) => {
-    Users.find().exec((err, Users) => {
-      if (err) {
-        return res.status(400).json({
-          error: err,
-        });
+},
+    deleteUser: async (req, res) => {
+      try {
+          await Users.findByIdAndDelete(req.params.id)
+          res.json({msg: "Profile Deleted!"})
+      } catch (err) {
+          return res.status(500).json({msg: err.message})
       }
-      return res.status(200).json({
-        success: true,
-        existingUser: Users,
-      });
+    },
+    allusers:async(req,res)=>{
+     Users.find().exec((err,Users)=>{
+        if(err){
+            return res.status(400).json({
+            error:err
+           });
+       }
+          return res.status(200).json({
+            success:true,
+            existingUser:Users
+        });
     });
-  },
+},
+   userRecord:async(req,res)=>{
+   var find1=req.params.id;
+   find1=find1.toString();
+   Users.find({savedDate: { $regex: '.*' + find1 + '.*' } }).exec((err,Users)=>{
+     if(err){
+         return res.status(400).json({
+         error:err
+        });
+    }
+       return res.status(200).json({
+         
+         success:true,
+         userRecord:Users
+     });
+ });
+}
+
 };
 
 function validateEmail(email) {
