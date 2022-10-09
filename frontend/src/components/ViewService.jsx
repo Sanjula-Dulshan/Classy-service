@@ -39,6 +39,7 @@ export default function ViewService() {
       .get(`user/user/${userEmail}`)
       .then((res) => {
         setServiceProvider(res.data);
+        console.log("42", userEmail);
       })
       .catch((err) => {
         console.log(err);

@@ -9,6 +9,7 @@ export default function ViewProfile() {
   const [phone, setPhone] = useState("");
   const [_id, set_id] = useState("");
   const [serviceProvider, setServiceProvider] = useState("");
+  const [feedback, setFeedback] = useState([]);
 
   let userEmail;
 
@@ -22,9 +23,18 @@ export default function ViewProfile() {
     axios
       .get(`user/user/${userEmail}`)
       .then((res) => {
-        console.log(res.data);
         setServiceProvider(res.data);
-        console.log("27", serviceProvider);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+
+      .get(`feedback/feedback/${_id}`)
+      .then((res) => {
+        console.log("41", res.data);
+        setFeedback(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -86,30 +96,32 @@ export default function ViewProfile() {
               <h5 className="ml-3">
                 <b>Ratings & Reviews :</b>
               </h5>
-              <div className="extra content mt-4">
-                <div
-                  className="card mb-3 container ml-3 pb-3 mr-3"
-                  style={{ width: "90%", height: "25%" }}
-                >
-                  <div className="row g-0">
-                    <div className="col-md-2 mt-2">
-                      <img
-                        className="rounded-circle shadow-4"
-                        style={{ height: "80%", width: "80%" }}
-                        alt="Avatar"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <div className="card-body">
-                        <h5 className="card-title">dddd</h5>
+              {feedback.map((data, index) => (
+                <div className="extra content mt-4" key={index}>
+                  <div
+                    className="card mb-3 container ml-3 pb-3 mr-3"
+                    style={{ width: "90%", height: "25%" }}
+                  >
+                    <div className="row g-0">
+                      <div className="col-md-2 mt-2">
+                        <img
+                          className="rounded-circle shadow-4"
+                          style={{ height: "80%", width: "80%" }}
+                          alt="Avatar"
+                        />
                       </div>
-                      <div className="card-body">
-                        <h5 className="card-title">dddd</h5>
+                      <div className="col-md-4">
+                        <div className="card-body">
+                          <h5 className="card-title">{data.rating}</h5>
+                        </div>
+                        <div className="card-body">
+                          <h5 className="card-title">{data.comment}</h5>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </form>
           </div>
         </div>

@@ -122,7 +122,7 @@ const checkoutCtrl = {
       const { id } = req.params;
       const { status } = req.body;
       console.log("id", id);
-      console.log("status", status);
+      console.log("statusService", status);
       const data = await Checkout.findOneAndUpdate(
         { _id: id },
         { orderStatus: status }
@@ -187,6 +187,7 @@ const checkoutCtrl = {
         { _id: id },
         { feedbackStatus: feedbackStatus }
       );
+
       res.status(200).json({ msg: "Feedback status updated" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });

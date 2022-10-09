@@ -97,7 +97,7 @@ export default function AllServices() {
           <RiseLoader color={"#FEA82F"} loading={loading} size={30} />
         </div>
       ) : (
-        <div style={{ marginLeft: "100px" }}>
+        <div style={{ marginLeft: "250px" }}>
           {filterEmpty ? (
             <div className="d-flex align-items-center justify-content-center vh-100">
               <div className="text-center">
