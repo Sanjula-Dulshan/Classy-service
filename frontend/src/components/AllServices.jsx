@@ -7,8 +7,10 @@ import Sidebar from "./Sidebar";
 import { Link, useParams } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import { Store } from "react-notifications-component";
+import { useSelector } from "react-redux";
 
 export default function AllServices() {
+  const auth = useSelector((state) => state.auth);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterEmpty, setFilterEmpty] = useState(false);
@@ -50,7 +52,9 @@ export default function AllServices() {
   }, [param]);
 
   const wishlistHandler = (data) => {
-    axios.post("/wishlist/", data).then((res) => {
+    const { email } = auth.user;
+    console.log("34", data);
+    axios.post(`/wishlist/${email}`, data).then((res) => {
       Store.addNotification({
         title: "Service Added to Wishlist",
         animationIn: ["animate__animated", "animate__fadeIn"],

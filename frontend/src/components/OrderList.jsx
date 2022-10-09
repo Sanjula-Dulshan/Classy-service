@@ -2,32 +2,53 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Store } from "react-notifications-component";
 import ReactStars from "react-rating-stars-component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import ConfirmBox from "react-dialog-confirm";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import "./ratings/rstyle.css";
-// import Rating from "./Rating";
 
 import Sidebar from "./Sidebar";
 
+const initialState = {
+  rating: 0,
+  comment: "",
+};
 export default function OrderList() {
+  const auth = useSelector((state) => state.auth);
   const [orders, setOrders] = useState([]);
-  const [rating, setRating] = useState([]);
-  const [comment, setComment] = useState("");
+  // const [rating, setRating] = useState();
+  const [review, setReview] = useState(initialState);
   const [modal, setModal] = useState(false);
+  const [orderID, setOrderID] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [id, setId] = useState();
 
-  let _id;
+  const handleChangeInput = (e) => {
+    console.log("e.target: ", e.target);
+    const { name, value } = e.target;
+    setReview({ ...review, [name]: value });
+  };
+  console.log("review: ", review);
+
+  const confirm = (id) => {
+    setIsOpen(true);
+    setId(id);
+  };
 
   const handleFeedback = async (e) => {
     e.preventDefault();
-    const newFeedback = {
-      rating,
-      comment,
-    };
-    console.log(newFeedback);
+
     try {
-      await axios.post(`/feedback/${_id}`, newFeedback);
+      await axios.post("/feedback/", { ...review, orderID });
+      await axios.patch(`/orders/feedback/${orderID}`, {
+        feedbackStatus: true,
+      });
+
       Store.addNotification({
         title: "Feedback Saved Successfully",
         message: "Thank you for your feedback",
@@ -53,17 +74,22 @@ export default function OrderList() {
     }
   };
 
-  const toggle = () => setModal(!modal);
+  const toggle = (_id) => {
+    setOrderID(_id);
+    setModal(!modal);
+  };
   useEffect(() => {
+    const { email } = auth.user;
+    console.log("63", email);
     axios
-      .get("/orders/")
+      .get(`/orders/${email}`)
       .then((res) => {
         setOrders(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [auth.user]);
 
   //rating
   const ratings = {
@@ -77,14 +103,115 @@ export default function OrderList() {
     halfIcon: <i className="fa fa-star-half-alt" />,
     filledIcon: <i className="fa fa-star" />,
     onChange: (newValue) => {
-      setRating(newValue);
+      setReview({ ...review, rating: newValue });
     },
+  };
+
+  //get all feedbacks
+  const [feedback, setFeedbacks] = useState([]);
+  const [rate, setRate] = useState(0);
+  useEffect(() => {
+    axios
+      .get("/feedback/")
+
+      .then((res) => {
+        setFeedbacks(res.data);
+        setRate(res.data.rating);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const onDelete = (_id) => {
+    axios
+      .delete(`/feedback/${_id}`)
+      .then((res) => {
+        console.log(res);
+        setIsOpen(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const toggleEdit = (_id) => {
+    setUpdateID(_id);
+    setModal(!modal);
+  };
+  //update feedback
+  const [update, setUpdate] = useState(false);
+  const [updateID, setUpdateID] = useState("");
+  const [updateRating, setUpdateRating] = useState(0);
+  const [updateComment, setUpdateComment] = useState("");
+  const [onEdit, setOnEdit] = useState(false);
+
+  const onUpdate = (_id) => {
+    setUpdate(true);
+    setUpdateID(_id);
+  };
+
+  //update feedback
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const newFeedback = {
+      rating: updateRating,
+      comment: updateComment,
+    };
+
+    try {
+      await axios.put(`/feedback/${updateID}`, newFeedback);
+
+      Store.addNotification({
+        title: "Feedback Updated Successfully",
+        message: "Thank you for your feedback",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        type: "success",
+        insert: "top",
+        container: "top-right",
+
+        dismiss: {
+          duration: 1500,
+          onScreen: true,
+          showIcon: true,
+        },
+
+        width: 400,
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
     <div>
       <Sidebar />
       <div className="mt-4 container">
+        <div style={{ position: "absolute", zIndex: "704" }}>
+          <ConfirmBox // Note : in this example all props are required
+            options={{
+              icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
+              text: "Are you sure you want to delete this service ?",
+              confirm: "yes",
+              cancel: "no",
+              btn: true,
+            }}
+            isOpen={isOpen}
+            onClose={handleClose}
+            onConfirm={() => {
+              onDelete(id);
+            }}
+            onCancel={handleClose}
+          />
+        </div>
         <div style={{ position: "absolute", zIndex: "704" }}></div>
         <div style={{ textAlign: "center" }}>
           <i class="cart icon "></i>
@@ -94,98 +221,292 @@ export default function OrderList() {
         </h1>
 
         <div className="mt-5" style={{ marginLeft: "15%" }}>
-          {console.log("orders", orders)}
-          {orders?.map(
-            (data, index) => (
-              console.log("41", data),
-              (
-                <div
-                  className="card mb-2 container"
-                  key={index}
-                  style={{ backgroundColor: "#FBFDF3" }}
-                >
-                  <div className="row g-0 ">
-                    <div className="col-md-2">
-                      <img
-                        // src={data.image.url}
-                        className="img mt-2"
-                        style={{ height: "90%", width: "90%" }}
-                      />
+          {orders?.map((orderData, index) => (
+            <div
+              className="card mb-2 container"
+              key={index}
+              style={{ backgroundColor: "#FBFDF3" }}
+            >
+              <div className="row g-0 ">
+                <div className="col-md-2">
+                  <img
+                    src={orderData.image.url}
+                    className="img mt-2"
+                    style={{ height: "60%", width: "80%" }}
+                  />
+                </div>
+                <div className="col-md-8">
+                  <div className="card-body">
+                    <div>
+                      <h4 className="card-title">
+                        <b>{orderData.serviceTitle}</b>
+                      </h4>
                     </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <h4 className="card-title">
-                          <b>{data.serviceTitle}</b>
-                        </h4>
-                        <br></br>
+                    <br></br>
 
-                        {data.orderStatus === "pending" ? (
-                          <h5>
-                            <b>
-                              Status:
-                              <span style={{ backgroundColor: "yellow" }}>
-                                Pending{" "}
-                              </span>
-                            </b>
-                          </h5>
-                        ) : (
-                          <div></div>
-                        )}
-                        {data.orderStatus === "accept" ? (
-                          <h5>
-                            <b>
-                              Status:
-                              <span style={{ backgroundColor: "green" }}>
-                                Accept{" "}
-                              </span>
-                            </b>
-                          </h5>
-                        ) : (
-                          <div></div>
-                        )}
+                    {orderData.orderStatus === "pending" ? (
+                      <h5>
+                        <b>
+                          Status:
+                          <span style={{ backgroundColor: "yellow" }}>
+                            Pending{" "}
+                          </span>
+                        </b>
+                      </h5>
+                    ) : (
+                      <div></div>
+                    )}
+                    {orderData.orderStatus === "accept" ? (
+                      <h5>
+                        <b>
+                          Status:
+                          <span style={{ backgroundColor: "green" }}>
+                            Accept{" "}
+                          </span>
+                        </b>
+                      </h5>
+                    ) : (
+                      <div></div>
+                    )}
 
-                        {data.orderStatus === "reject" ? (
-                          <h5>
-                            <b>
-                              Status:
-                              <span style={{ backgroundColor: "red" }}>
-                                Reject{" "}
-                              </span>
-                            </b>
-                          </h5>
-                        ) : (
-                          <div></div>
-                        )}
+                    {orderData.orderStatus === "reject" ? (
+                      <h5>
+                        <b>
+                          Status:
+                          <span style={{ backgroundColor: "red" }}>
+                            Reject{" "}
+                          </span>
+                        </b>
+                      </h5>
+                    ) : (
+                      <div></div>
+                    )}
+                    {orderData.orderStatus === "accept" ? (
+                      <div>
+                        {console.log("order", orderData)}
+                        {console.log("feedback", feedback)}
 
-                        <div className="extra content">
-                          <div
-                            className="ui two buttons"
-                            style={{ marginLeft: "40%" }}
-                          >
-                            <tr>
-                              <td>
-                                <button
-                                  class="ui button mb-2"
-                                  style={{
-                                    marginLeft: "50px",
-                                    backgroundColor: "#1E1E1E",
-                                    color: "white",
-                                  }}
-                                  onClick={() => toggle()}
-                                >
-                                  LEAVE FEEDBACK
-                                </button>
-                              </td>
-                            </tr>
+                        {orderData.feedbackStatus ? (
+                          <div>
+                            {feedback?.map((feedbackData, index) => (
+                              <div key={index}>
+                                {feedbackData.orderID === orderData._id ? (
+                                  <div>
+                                    <h5>
+                                      <b>
+                                        <ReactStars
+                                          {...{
+                                            size: 20,
+                                            value: feedbackData.rating,
+                                            edit: false,
+                                          }}
+                                        />
+                                      </b>
+                                    </h5>
+                                    <h6>{feedbackData.comment}</h6>
+                                    <div className="extra content">
+                                      <div
+                                        className="ui two buttons"
+                                        style={{ marginLeft: "40%" }}
+                                      >
+                                        <tr>
+                                          <td>
+                                            <button
+                                              class="ui button mb-2"
+                                              style={{
+                                                marginLeft: "50px",
+                                                backgroundColor: "#FEA82F",
+                                                color: "white",
+                                              }}
+                                              onClick={() =>
+                                                toggle(orderData._id)
+                                              }
+                                            >
+                                              <FontAwesomeIcon icon={faEdit} />
+                                            </button>
+                                          </td>
+                                          <td>
+                                            <button
+                                              class="ui button mb-2"
+                                              style={{
+                                                marginLeft: "50px",
+                                                backgroundColor: "red",
+                                                color: "white",
+                                              }}
+                                              onClick={() =>
+                                                confirm(feedbackData._id)
+                                              }
+                                            >
+                                              <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+                                          </td>
+                                        </tr>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div></div>
+                                )}
+                              </div>
+                            ))}
                           </div>
-                        </div>
+                        ) : (
+                          <div>
+                            <div className="extra content">
+                              <div
+                                className="ui two buttons"
+                                style={{ marginLeft: "40%" }}
+                              >
+                                <tr>
+                                  <td>
+                                    <button
+                                      class="ui button mb-2"
+                                      style={{
+                                        marginLeft: "50px",
+                                        backgroundColor: "#1E1E1E",
+                                        color: "white",
+                                      }}
+                                      onClick={() => toggle(orderData._id)}
+                                    >
+                                      LEAVE FEEDBACK
+                                    </button>
+                                  </td>
+                                </tr>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* {feedback.length > 0 ? (
+                          <div>
+                            {feedback?.map((feedbackData, index) => (
+                              <div key={index}>
+                                {console.log("index: ", index)}
+                                {console.log("288", orderData._id)}
+                                {console.log("289", feedbackData.orderID)}
+                                {console.log(
+                                  "-------------------------------------"
+                                )}
+                                {feedbackData.orderID === orderData._id ? (
+                                  <div>
+                                    {console.log("291")}
+                                    <h5>
+                                      <b>
+                                        <ReactStars
+                                          {...{
+                                            size: 20,
+                                            value: feedbackData.rating,
+                                            edit: false,
+                                          }}
+                                        />
+                                      </b>
+                                    </h5>
+                                    <h6>{feedbackData.comment}</h6>
+                                    <div className="extra content">
+                                      <div
+                                        className="ui two buttons"
+                                        style={{ marginLeft: "40%" }}
+                                      >
+                                        <tr>
+                                          <td>
+                                            <button
+                                              class="ui button mb-2"
+                                              style={{
+                                                marginLeft: "50px",
+                                                backgroundColor: "#FEA82F",
+                                                color: "white",
+                                              }}
+                                              onClick={() =>
+                                                toggle(orderData._id)
+                                              }
+                                            >
+                                              <FontAwesomeIcon icon={faEdit} />
+                                            </button>
+                                          </td>
+                                          <td>
+                                            <button
+                                              class="ui button mb-2"
+                                              style={{
+                                                marginLeft: "50px",
+                                                backgroundColor: "red",
+                                                color: "white",
+                                              }}
+                                              onClick={() =>
+                                                confirm(feedbackData._id)
+                                              }
+                                            >
+                                              <FontAwesomeIcon icon={faTrash} />
+                                            </button>
+                                          </td>
+                                        </tr>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div>
+                                    <div className="extra content">
+                                      {console.log("345")}
+                                      <div
+                                        className="ui two buttons"
+                                        style={{ marginLeft: "40%" }}
+                                      >
+                                        <tr>
+                                          <td>
+                                            <button
+                                              class="ui button mb-2"
+                                              style={{
+                                                marginLeft: "50px",
+                                                backgroundColor: "#1E1E1E",
+                                                color: "white",
+                                              }}
+                                              onClick={() =>
+                                                toggle(orderData._id)
+                                              }
+                                            >
+                                              LEAVE FEEDBACK
+                                            </button>
+                                          </td>
+                                        </tr>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="extra content">
+                            <div
+                              className="ui two buttons"
+                              style={{ marginLeft: "40%" }}
+                            >
+                              <tr>
+                                <td>
+                                  <button
+                                    class="ui button mb-2"
+                                    style={{
+                                      marginLeft: "50px",
+                                      backgroundColor: "#1E1E1E",
+                                      color: "white",
+                                    }}
+                                    onClick={() => toggle(orderData._id)}
+                                  >
+                                    LEAVE FEEDBACK
+                                  </button>
+                                </td>
+                              </tr>
+                            </div>
+                          </div>
+                        )} */}
                       </div>
-                    </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
-              )
-            )
-          )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <div
@@ -203,79 +524,28 @@ export default function OrderList() {
           toggle={() => setModal(!modal)}
         >
           <ModalHeader toggle={() => setModal(!modal)}>
-            <h5>Feedback</h5>
+            <h5>Add Feedback</h5>
           </ModalHeader>
+
           <ModalBody>
             <form>
               <div className="form-group">
                 <label>Title: </label>
                 <div className="rating">
-                  <ReactStars {...ratings} />
+                  <ReactStars
+                    {...ratings}
+                    name="rating"
+                    onchange={handleChangeInput}
+                  />
                 </div>
-                {/* <section>
-                  <div class="rt-container">
-                    <div class="col-rt-12">
-                      <form>
-                        <fieldset>
-                          <span class="star-cb-group">
-                            <input
-                              type="checkbox"
-                              id="rating-5"
-                              name="rating"
-                              value="5"
-                            />
-                            <label for="rating-5">5</label>
-                            <input
-                              type="checkbox"
-                              id="rating-4"
-                              name="rating"
-                              value="4"
-                              checked="checked"
-                            />
-                            <label for="rating-4">4</label>
-                            <input
-                              type="checkbox"
-                              id="rating-3"
-                              name="rating"
-                              value="3"
-                            />
-                            <label for="rating-3">3</label>
-                            <input
-                              type="checkbox"
-                              id="rating-2"
-                              name="rating"
-                              value="2"
-                            />
-                            <label for="rating-2">2</label>
-                            <input
-                              type="checkbox"
-                              id="rating-1"
-                              name="rating"
-                              value="1"
-                            />
-                            <label for="rating-1">1</label>
-                            <input
-                              type="checkbox"
-                              id="rating-0"
-                              name="rating"
-                              value="0"
-                              class="star-cb-clear"
-                            />
-                            <label for="rating-0">0</label>
-                            onChange={(e) => setRating(e.target.value)}
-                          </span>
-                        </fieldset>
-                      </form>
-                    </div>
-                  </div>
-                </section> */}
               </div>
               <div className="form-group">
                 <label>Comment: </label>
                 <textarea
                   className="form-control"
                   rows="3"
-                  onChange={(e) => setComment(e.target.value)}
+                  name="comment"
+                  onChange={handleChangeInput}
                 />
               </div>
             </form>

@@ -8,8 +8,10 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import ConfirmBox from "react-dialog-confirm";
 import Sidebar from "./Sidebar";
+import { useSelector } from "react-redux";
 
 export default function Wishlist() {
+  const auth = useSelector((state) => state.auth);
   const [wishlist, setWishlist] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
@@ -20,8 +22,11 @@ export default function Wishlist() {
   };
 
   useEffect(() => {
+    const { email } = auth.user;
+    console.log(email);
     axios
-      .get("/wishlist/")
+
+      .get(`/wishlist/${email}`)
       .then((res) => {
         setWishlist(res.data);
         console.log(res.data);
@@ -29,7 +34,7 @@ export default function Wishlist() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [auth.user]);
 
   const handleClose = () => {
     setIsOpen(!isOpen);

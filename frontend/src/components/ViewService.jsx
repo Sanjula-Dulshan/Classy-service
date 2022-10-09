@@ -126,15 +126,18 @@ export default function ViewService() {
                             <b>{serviceProvider.name}</b>
                           </h5>
                         </div>
-                        <div
-                          className="ui button"
-                          style={{
-                            backgroundColor: "#FEA82F",
-                            color: "black",
-                            marginLeft: "8%",
-                          }}
-                        >
-                          View Profile
+                        <div>
+                          <Link
+                            class="ui button"
+                            to={"/viewServiceProfile"}
+                            style={{
+                              backgroundColor: "#FEA82F",
+                              color: "black",
+                              marginLeft: "8%",
+                            }}
+                          >
+                            View Profile
+                          </Link>
                         </div>
                       </div>
                     </div>
