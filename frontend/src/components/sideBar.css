@@ -1,11 +1,11 @@
-body {
-  background-color: #fbfbfb;
-}
-@media (min-width: 991.98px) {
-  main {
-    padding-left: 240px;
+/* body {
+    background-color: #fbfbfb;
   }
-}
+  @media (min-width: 991.98px) {
+    main {
+      padding-left: 240px;
+    }
+  } */
 
 /* Sidebar */
 .sidebar {
@@ -13,7 +13,7 @@ body {
   top: 100px;
   bottom: 0;
   left: 0;
-  height: match-parent;
+  height: 100%;
   padding: 58px 0 0; /* Height of navbar */
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
   width: 240px;
@@ -22,7 +22,7 @@ body {
 
 @media (max-width: 991.98px) {
   .sidebar {
-    width: 100%;
+    width: 30%;
   }
 }
 .sidebar .active {

@@ -2,18 +2,12 @@ import React, { useState } from "react";
 
 import "./AddBank.css";
 
-
-
 export default function SelectPayMethod() {
-  
-  
   return (
     <div className="card-row2">
       <div className="card-column2">
-
-        <div >
+        <div>
           <label className="title">SELECT PAYMENT METHOD</label>
-          
 
             <div className="method-container">
               <a href="/cardpay">
@@ -27,15 +21,9 @@ export default function SelectPayMethod() {
               <button className="btn-payoff" >Cash On Delivery <img src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-cash-30_mwwzdi.png" /></button>
             </div> 
 
-            
-          
-            
-  
-        </div>
 
+        </div>
       </div>
     </div>
-
-    
   );
 }

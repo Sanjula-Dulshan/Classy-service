@@ -58,6 +58,17 @@ const servicesCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getServicesByCategory: async (req, res) => {
+    try {
+      const { category } = req.params;
+      console.log("category: ", category);
+      const services = await Services.find({ category });
+
+      return res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   deleteService: async (req, res) => {
     try {
       const { id } = req.params;

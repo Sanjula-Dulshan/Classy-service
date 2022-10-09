@@ -7,16 +7,16 @@ import "./header.css";
 export default function Header() {
   const auth = useSelector((state) => state.auth);
 
-  const { user, isLogged, isWorker, iscustomer } = auth;
+  const { user, isLogged, isWorker, iscustomer, isAdmin } = auth;
 
   const handleLogout = async () => {
     try {
       await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (err) {
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   };
 
@@ -26,7 +26,7 @@ export default function Header() {
         <Link to="/profile" className="avatar">
           <img src={user.avatar} alt="" />{" "}
           <li>
-            <Link className="header-al" to="/login" onClick={handleLogout}>
+            <Link className="header-al" to="/" onClick={handleLogout}>
               Logout
             </Link>
           </li>
@@ -49,7 +49,7 @@ export default function Header() {
 
         <ul style={transForm}>
           <li>
-            <Link className="header-al" to="/">
+            <Link className="header-al" to="/allServices">
               {" "}
               Home
             </Link>
@@ -96,6 +96,16 @@ export default function Header() {
               {" "}
               Contact Us
             </Link>
+          </li>
+          <li>
+            {isAdmin ? (
+              <Link className="header-al" to="/admin">
+                {" "}
+                Admin Page
+              </Link>
+            ) : (
+              ""
+            )}
           </li>
         </ul>
       </div>

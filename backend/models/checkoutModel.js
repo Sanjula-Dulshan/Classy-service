@@ -61,6 +61,7 @@ const checkoutSchema = new Schema(
     image: {
       type: Object,
      // required: true,
+
     },
     orderStatus: {
       type: String,
@@ -83,6 +84,11 @@ const checkoutSchema = new Schema(
     paymentId: {
       type: String,
       //required: true,
+
+    feedbackStatus: {
+      type: Boolean,
+      default: false,
+
     },
 
     paymentMethod: {

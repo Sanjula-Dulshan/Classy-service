@@ -7,6 +7,7 @@ import "./styles/confirm.css";
 import "./allServices.css";
 import Sidebar from "./Sidebar";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import generatePDF from "./JobListReport";
 
 export default function AcceptedOrders() {
   const auth = useSelector((state) => state.auth);
@@ -68,6 +69,11 @@ export default function AcceptedOrders() {
         </div>
       ) : (
         <div style={{ marginLeft: "100px" }}>
+          <div className="report">
+            <button onClick={() => generatePDF(services)}>
+              Download Job List
+            </button>
+          </div>
           <div
             className="ui cards mt-4 container"
             style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
@@ -119,7 +125,7 @@ export default function AcceptedOrders() {
         </div>
       )}
       <div
-        class="modal fade"
+        className="modal fade"
         id="viewNote"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"

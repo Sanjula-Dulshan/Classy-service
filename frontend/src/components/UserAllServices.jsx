@@ -18,17 +18,24 @@ export default function UserAllServices() {
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDeleteAll, setIsOpenDeleteAll] = useState(false);
+
   const [id, setId] = useState();
   const [publicId, setPublicId] = useState();
+  const [isCheck, setIsCheck] = useState(false);
 
   const confirm = (id, public_id) => {
     setIsOpen(true);
+
     setId(id);
     setPublicId(public_id);
   };
 
+  const confirmDeleteAll = () => {
+    setIsOpenDeleteAll(true);
+  };
+
   const handleDelete = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
     try {
       setLoading(true);
       const destroyImg = axios.post("/image/destroy", { public_id });
@@ -60,8 +67,28 @@ export default function UserAllServices() {
     }
   };
 
+  const handleDeleteAll = async (id, public_id) => {
+    try {
+      setLoading(true);
+      const destroyImg = axios.post("/image/destroy", { public_id });
+      const deleteService = axios.delete(`/services/${id}`);
+
+      await destroyImg;
+      await deleteService;
+      setLoading(false);
+      setIsOpenDeleteAll(false);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
   const handleClose = () => {
     setIsOpen(!isOpen);
+    setIsOpenDeleteAll(false);
+  };
+
+  const handleCloseDeleteAll = () => {
+    setIsOpenDeleteAll(!isOpenDeleteAll);
   };
 
   useEffect(() => {
@@ -75,7 +102,7 @@ export default function UserAllServices() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [auth.user, loading]);
 
   useEffect(() => {
     setLoading(true);
@@ -90,6 +117,69 @@ export default function UserAllServices() {
 
   function truncate(str, n) {
     return str?.length > n ? str.substring(0, n - 1) + "..." : str;
+  }
+
+  const handleCheck = (id) => {
+    services.forEach((service) => {
+      if (service._id === id) service.checked = !service.checked;
+    });
+    setServices([...services]);
+  };
+
+  const checkAll = () => {
+    services.forEach((service) => {
+      service.checked = !isCheck;
+    });
+    setServices([...services]);
+    setIsCheck(!isCheck);
+  };
+
+  const deleteAll = () => {
+    services
+      .forEach((service) => {
+        if (service.checked) {
+          handleDeleteAll(service._id, service.image.public_id);
+        }
+      })
+      .then(() => {
+        setLoading(false);
+        setIsCheck(false);
+        Store.addNotification({
+          title: "Services Deleted Successfully",
+
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+
+          dismiss: {
+            duration: 2500,
+            onScreen: true,
+            showIcon: true,
+          },
+
+          width: 400,
+        });
+      });
+  };
+
+  const filterData = (data, searchkey) => {
+    const result = data.filter((service) =>
+      service.title.toLowerCase().includes(searchkey)
+    );
+
+    setServices(result);
+  };
+
+  function hancdleSearchArea(e) {
+    const { email } = auth.user;
+    const searchKey = e.currentTarget.value;
+
+    axios.get(`/services/${email}`).then((res) => {
+      filterData(res.data, searchKey);
+      console.log("res.data", res.data);
+    });
   }
 
   return (
@@ -118,6 +208,50 @@ export default function UserAllServices() {
               onCancel={handleClose}
             />
           </div>
+
+          <div style={{ position: "absolute", zIndex: "704" }}>
+            <ConfirmBox // Note : in this example all props are required
+              options={{
+                icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
+                text: "Are you sure you want to services ?",
+                confirm: "yes",
+                cancel: "no",
+                btn: true,
+              }}
+              isOpen={isOpenDeleteAll}
+              onClose={handleCloseDeleteAll}
+              onConfirm={deleteAll}
+              onCancel={handleCloseDeleteAll}
+            />
+          </div>
+          <div>
+            <tr className=" float-end">
+              <td>
+                <div className="search">
+                  <input
+                    className="form-control"
+                    type="search"
+                    placeholder="search"
+                    name="search"
+                    onChange={hancdleSearchArea}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="delete-all">
+                  <span>Select all</span>
+                  <input
+                    type="checkbox"
+                    checked={isCheck}
+                    onChange={checkAll}
+                  />
+
+                  <button onClick={confirmDeleteAll}>Delete ALL</button>
+                </div>
+              </td>
+            </tr>
+          </div>
+
           <div
             className="ui cards mt-4 container"
             style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
@@ -129,6 +263,11 @@ export default function UserAllServices() {
                 style={{ backgroundColor: "#FBFDF3" }}
               >
                 <div className="content">
+                  <input
+                    type="checkbox"
+                    checked={data.checked}
+                    onChange={() => handleCheck(data._id)}
+                  />
                   <div className="header mt-2 mb-4">
                     <b>{data.title}</b>
                   </div>

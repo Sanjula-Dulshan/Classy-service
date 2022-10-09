@@ -1,6 +1,6 @@
 import "./CSS/userFunction.css";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showErrMsg, showSuccessMsg } from "./utils/notification/Notification";
 import { isEmpty, isEmail, isLength } from "./utils/validation/Validation.js";
@@ -19,6 +19,7 @@ const initialState = {
 
 function Register() {
   const [user, setUser] = useState(initialState);
+  const navigate = useNavigate();
 
   const { name, email, nic, mobile, password, cf_password, err, success } =
     user;
@@ -64,6 +65,7 @@ function Register() {
       });
 
       setUser({ ...user, err: "", success: res.data.msg });
+      navigate('/');
     } catch (err) {
       err.response.data.msg &&
         setUser({ ...user, err: err.response.data.msg, success: "" });
@@ -90,7 +92,7 @@ function Register() {
           <label className="subLable2">Already a member?</label>
         </div>
         <br />
-        <Link to="/login">
+        <Link to="/">
           <button type="submit" className="side-btn">
             Login Here
           </button>

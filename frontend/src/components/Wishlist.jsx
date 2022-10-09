@@ -8,8 +8,10 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { Link } from "react-router-dom";
 import ConfirmBox from "react-dialog-confirm";
 import Sidebar from "./Sidebar";
+import { useSelector } from "react-redux";
 
 export default function Wishlist() {
+  const auth = useSelector((state) => state.auth);
   const [wishlist, setWishlist] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
@@ -20,8 +22,11 @@ export default function Wishlist() {
   };
 
   useEffect(() => {
+    const { email } = auth.user;
+    console.log(email);
     axios
-      .get("/wishlist/")
+
+      .get(`/wishlist/${email}`)
       .then((res) => {
         setWishlist(res.data);
         console.log(res.data);
@@ -29,7 +34,7 @@ export default function Wishlist() {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [auth.user]);
 
   const handleClose = () => {
     setIsOpen(!isOpen);
@@ -70,7 +75,7 @@ export default function Wishlist() {
           />
         </div>
         <div style={{ textAlign: "center" }}>
-          <i class="heart icon "></i>
+          <i className="heart icon "></i>
         </div>
         <h1 style={{ textAlign: "center" }}>
           <b>My WishList</b>
@@ -118,7 +123,7 @@ export default function Wishlist() {
                             </td>
                             <td>
                               <button
-                                class="ui button mb-2"
+                                className="ui button mb-2"
                                 style={{
                                   marginLeft: "50px",
                                   color: "red",
@@ -134,7 +139,7 @@ export default function Wishlist() {
                     </p>
 
                     <p className="card-text">
-                      <i class="bi bi-telephone ">{data.phone}</i>
+                      <i className="bi bi-telephone ">{data.phone}</i>
                     </p>
                   </div>
                 </div>
