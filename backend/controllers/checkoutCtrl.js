@@ -47,7 +47,10 @@ const checkoutCtrl = {
 
       await newCheckout.save();
       console.log("save success");
-      res.json({ msg: "Checkout added successfully!" });
+      //print the id of the new checkout
+      console.log(newCheckout._id);
+      res.json({ msg: "Checkout added successfully!", id: newCheckout._id });
+
     } catch (err) {
       console.log(err.message);
       return res.status(500).json({ msg: err.message });
@@ -158,6 +161,8 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  
 };
 
 

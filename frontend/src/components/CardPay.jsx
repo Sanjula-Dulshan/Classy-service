@@ -18,6 +18,7 @@ export default function CardPay() {
   const [expiryDate, setExpiryDate] = useState();
   const [isAgree, setIsAgree] = useState(false);
   const [amount, setAmount] = useState(54545454);
+  const [checkoutId, setCheckoutId] = useState(localStorage.getItem("checkoutId"));
 
 
 
@@ -31,6 +32,7 @@ export default function CardPay() {
         cvv,
         expiryDate,
         amount,
+        checkoutId
       }
 
       console.log(newCard);

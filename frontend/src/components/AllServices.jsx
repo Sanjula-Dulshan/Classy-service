@@ -64,6 +64,14 @@ export default function AllServices() {
     console.log(data);
   };
 
+  const setDataForCheckout = (data) => {
+    let { title, fee, userEmail } = data;
+    localStorage.setItem("title", title);
+    localStorage.setItem("fee", fee);
+    localStorage.setItem("userEmail", userEmail);
+  };
+
+
   return (
     <div>
       <Sidebar />
@@ -111,9 +119,10 @@ export default function AllServices() {
                     <td>
                       <Link
                         class="ui button"
-                        to={"/addBank"}
+                        to={"/checkout"}
                         data-tip="Click to Buy service"
                         style={{ backgroundColor: "#FEA82F", color: "black" }}
+                        onClick={() => setDataForCheckout(data)}
                       >
                         Buy
                       </Link>

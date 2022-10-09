@@ -42,7 +42,7 @@ export default function TransactionReport() {
                         <label> Select Year & Month:  </label>
                         <input type="month" id="start" name="trip-start"></input>
 
-                            <button onClick={()=>generatePDF()} className="btn-report" >Download PDF <img src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-cash-30_mwwzdi.png" /></button>
+                            <button onClick={()=>generatePDF(request)} className="btn-report" >Download PDF <img src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-cash-30_mwwzdi.png" /></button>
                         </div>
   
                     </div>

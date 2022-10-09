@@ -79,6 +79,15 @@ const checkoutSchema = new Schema(
       type: Number,
       //required: true,
     },
+
+    paymentId: {
+      type: String,
+      //required: true,
+    },
+
+    paymentMethod: {
+      type: String,
+    },  
   },
   {
     timestamps: true,

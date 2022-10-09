@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 
-const generatePDF = () => {
+const generatePDF = (report) => {
 
   // initialize jsPDF
 
@@ -18,17 +18,39 @@ const generatePDF = () => {
 
   // define the columns we want and their titles
 
-  const tableColumn = ["No", "Transaction ID", "Reciver","Payment Method" ,"Amount"];
+  const tableColumn = ["No", "Transaction ID", "Reciver","Payment status" ,"Amount"];
 
   // define an empty array of rows
 
   const tableRows = [];
+  let no = 0;
 
+  report.forEach(report => {
 
+    no++;
+
+    const reportData = [
+      no,
+      report._id,
+      report.serviceProviderEmail,
+      report.paymentMethod,
+      report.amount,
+
+      // called date-fns to format the date on the report
+
+     // format(new Date(report.updated_at), "yyyy-MM-dd")
+
+    ];
+
+    // push each tickcet's info into a row
+
+    tableRows.push(reportData);
+
+  });
 
   // for each ticket pass all its data into an array
 
-  let no = 0;
+ 
 
   
 

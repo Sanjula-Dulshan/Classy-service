@@ -1,4 +1,5 @@
 import BankPay from "../models/bankPayModel.js";
+import Checkout from '../models/checkoutModel.js';
 import { v4 as uuidv4 } from 'uuid';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -18,7 +19,7 @@ const BankPayCtrl = {
 
     createBankPay: async (req, res) => {
         try {
-            const { invoiceNo, Date, amount, bankName, branchName, checkoutId, image } = req.body;
+            const { invoiceNo, Date, amount, bankName, branchName, checkoutId, image, } = req.body;
   
             const newBankPay = new BankPay({
                 invoiceNo, Date, amount, bankName, branchName, checkoutId, image
@@ -27,6 +28,10 @@ const BankPayCtrl = {
             await newBankPay.save()            
             .then((data) => {
                 res.status(200).json({ data });
+                 //add payemnt details to checkout
+                 Checkout.findOneAndUpdate({ _id: checkoutId }, { paymentMethod: "bank", paymentId: data._id}).then(
+                    console.log("payment details added to checkout", checkoutId)
+                )
             }).catch((err) => {
                 res.status(500).json({ msg: err.message });
                 console.log("Error Here : ",err);

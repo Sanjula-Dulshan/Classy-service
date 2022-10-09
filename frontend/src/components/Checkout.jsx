@@ -22,7 +22,9 @@ export default function Checkout() {
   const[mobile,setPhone]=useState();
   const[date,setDate]=useState();
   const[time,setTime]=useState();
-  const[serviceProviderEmail,setServiceProviderEmail]=useState("aaaaaa@mail.com");
+  const[serviceProviderEmail,setServiceProviderEmail]=useState(localStorage.getItem("userEmail"));
+  const[amount,setAmount]=useState(localStorage.getItem("fee"));
+  const[serviceTitle,setServiceTitle]=useState(localStorage.getItem("title"));
 
 
 
@@ -48,7 +50,11 @@ export default function Checkout() {
 
       console.log(newCheckout);
       try {
-        await axios.post("/checkout/", newCheckout);
+        await axios.post("/checkout/", newCheckout).then((res) => {
+          console.log(res.data);
+          localStorage.setItem("checkoutId",res.data.id);
+          setLoading(false);
+
         Store.addNotification({
           title: "Checkout Details Saved Successfully",
           message: "Your will recive your payments to this account",
@@ -69,6 +75,8 @@ export default function Checkout() {
         setTimeout(() => {
           window.location.href = "/selectpaymethod";
         }, 1500);
+        });
+
       } catch (err) {
         alert(err);
       }
