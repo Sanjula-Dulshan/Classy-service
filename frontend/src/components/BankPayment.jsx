@@ -130,8 +130,8 @@ export default function BankPayment() {
 
   
   return (
-    <div className="card-row">
-      <div className="card-column">
+    <div className="b-card-row">
+      <div className="b-card-column">
         <LoadingOverlay
               active={loading}
               spinner={<PropagateLoader />}

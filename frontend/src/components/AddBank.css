@@ -210,7 +210,7 @@
 }
 
 /* Float four columns side by side */
-.card-column {
+.b-card-column {
   float: right;
   width: 65%;
   padding: 0 10px;
@@ -229,13 +229,13 @@
 
 
 /* Remove extra left and right margins, due to padding */
-.card-row {
+.b-card-row {
   margin: 0 -5px;
   margin-right: 200px;
 }
 
 /* Clear floats after the columns */
-.card-row:after {
+.b-card-row:after {
   content: "";
   display: table;
   clear: both;
