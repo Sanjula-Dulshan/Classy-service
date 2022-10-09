@@ -96,6 +96,7 @@ export default function TransactionReport() {
           </div>
         </div>
       </div>
+      </div>
     </div>
   );
 }
