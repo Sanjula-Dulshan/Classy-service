@@ -15,13 +15,16 @@ export default function Checkout() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
-  const [address1, setAddress1] = useState();
-  const [address2, setAddress2] = useState();
+  const [addressLine1, setAddress1] = useState();
+  const [addressLine2, setAddress2] = useState();
   const [city, setCity] = useState();
   const [province, setProvincee] = useState();
-  const[phone,setPhone]=useState();
+  const[mobile,setPhone]=useState();
   const[date,setDate]=useState();
   const[time,setTime]=useState();
+  const[serviceProviderEmail,setServiceProviderEmail]=useState(localStorage.getItem("userEmail"));
+  const[amount,setAmount]=useState(localStorage.getItem("fee"));
+  const[serviceTitle,setServiceTitle]=useState(localStorage.getItem("title"));
 
 
 
@@ -34,19 +37,24 @@ export default function Checkout() {
         firstName,
         lastName,
         email,
-        address1,
-        address2,
+        addressLine1,
+        addressLine2,
         city,
         province,
-        phone,
+        mobile,
         date,
-        time
+        time,
+        serviceProviderEmail
 
       }
 
       console.log(newCheckout);
       try {
-        await axios.post("/bank/", newCheckout);
+        await axios.post("/checkout/", newCheckout).then((res) => {
+          console.log(res.data);
+          localStorage.setItem("checkoutId",res.data.id);
+          setLoading(false);
+
         Store.addNotification({
           title: "Checkout Details Saved Successfully",
           message: "Your will recive your payments to this account",
@@ -67,6 +75,8 @@ export default function Checkout() {
         setTimeout(() => {
           window.location.href = "/selectpaymethod";
         }, 1500);
+        });
+
       } catch (err) {
         alert(err);
       }
@@ -82,8 +92,8 @@ export default function Checkout() {
 
   
   return (
-    <div className="card-row">
-      <div className="card-column">
+    <div className="b-card-row">
+      <div className="b-card-column">
         <LoadingOverlay
               active={loading}
               spinner={<PropagateLoader />}
@@ -233,8 +243,7 @@ export default function Checkout() {
                     name="fname"
                     type="text"
                     className="form-control"
-                    onChange={(e) => setProvincee
-                      (e.target.value)}
+                    onChange={(e) => setProvincee(e.target.value)}
                   >
                     <option value="Western">Western</option>
                     <option value="Southern">Southern</option>

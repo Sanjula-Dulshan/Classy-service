@@ -9,36 +9,88 @@ import { Store } from 'react-notifications-component';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
-export default function AddBank() {
+export default function BankPayment() {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("1234");
-  const [accName, setAccName] = useState();
-  const [accNumber, setAccNumber] = useState();
+  const [Date, setDate] = useState();
+  const [invoiceNo, setInvoiceNo] = useState();
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
-  const [isAgree, setIsAgree] = useState(false);
+  const [image, setImage] = useState(false);
+  const [checkoutId, setCheckoutId] = useState(localStorage.getItem("checkoutId"));
+
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("e.target", e.target.files[0]);
+      const file = e.target.files[0];
+
+      if (!file) return alert("File not exist.");
+
+      if (file.size > 5 * 1024 * 1024)
+        // 5mb
+        return alert("Maximum file size: 5MB");
+
+      if (file.type !== "image/jpeg" && file.type !== "image/png")
+        return alert("Please upload only jpeg/png");
+
+      let formData = new FormData();
+      console.log("formData", formData);
+      formData.append("file", file);
+      console.log("formData.append", formData);
+
+      setLoading(true);
+      const res = await axios.post("/image/upload", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setLoading(false);
+      setImage(res.data);
+      console.log("res", res);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
+
+  const handleDestroy = async () => {
+    try {
+      setLoading(true);
+      await axios.post("/image/destroy", { public_id: image.public_id });
+      setLoading(false);
+      setImage(false);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
+
+  const styleUpload = {
+    display: image ? "block" : "none",
+  };
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isAgree) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }else{
       setLoading(true);
       const newBank = {
         uid,
-        accName,
-        accNumber,
+        Date,
+        invoiceNo,
         bankName,
         branchName,
+        image,
+        checkoutId
       }
 
       console.log(newBank);
       try {
-        await axios.post("/bank/", newBank);
-        Store.addNotification({
+        await axios.post("/bankpay/", newBank).then((res) => {
+          console.log(res.data);
+
+          Store.addNotification({
           title: "Bank Details Saved Successfully",
           message: "Your will recive your payments to this account",
           animationIn: ["animate__animated", "animate__fadeIn"],
@@ -58,11 +110,16 @@ export default function AddBank() {
         setTimeout(() => {
           window.location.href = "/";
         }, 1500);
+        }).catch((err) => {
+          console.log(err);
+        });
+        
+        
       } catch (err) {
         alert(err);
       }
       setLoading(false);
-    }
+    
     
   };
 
@@ -80,40 +137,43 @@ export default function AddBank() {
               spinner={<PropagateLoader />}
           >
         <div className="bg-card">
-          <label className="title">ADD BANK DETAILS</label>
+          <label className="title">Bank Deposit</label>
           <div className="add_bank">
 
             
            
             <form onSubmit={handleSubmit}>
               
-                <div className="">
-                  <label htmlFor="title" className="form-label">
-                    Account Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="acc_name"
-                    id="acc_name"
-                    required
-                    onChange={(e) => setAccName(e.target.value)}
-                  />
-                </div>
-              
+                             
 
               <div className="row mt-4">
                 <div className="col">
                   <label htmlFor="title" className="form-label">
-                    Account Number
+                    Invoice No
                   </label>
                   <input
-                    type="number"
+                    type="text"
+                    className="form-control"
+                    name="inv_number"
+                    id="inv_number"
+                    required
+                    onChange={(e) => setInvoiceNo(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col">
+                  <label htmlFor="title" className="form-label">
+                    Date
+                  </label>
+                  <input
+                    type="date"
                     className="form-control"
                     name="acc_number"
                     id="acc_number"
                     required
-                    onChange={(e) => setAccNumber(e.target.value)}
+                    onChange={(e) => setDate(e.target.value)}
                   />
                 </div>
               </div>
@@ -158,27 +218,27 @@ export default function AddBank() {
 
              
 
-              <div className="row mt-5">
-                <div className="col">
-                  <div className="form-check">
-                    <div>
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        name="needBuyerAddress"
-                        id="exampleCheck1"
-                        onChange={(e) => setIsAgree(e.target.checked)}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="exampleCheck1"
-                      >
-                        I accept terms and conditions
-                      </label>
-                    </div>
-                    
+              <div className="create_service">
+              <div className="upload">
+                    <input
+                      type="file"
+                      name="file"
+                      id="file_up"
+                      onChange={handleUpload}
+                    />
+                    {loading ? (
+                      <div id="file_img">
+                        <Loading />
+                      </div>
+                    ) : (
+                      <div id="file_img" style={styleUpload}>
+                        <img src={image ? image.url : ""} alt="" />
+                        <span onClick={handleDestroy}>X</span>
+                      </div>
+                    )}
                   </div>
-                </div>
+
+
               </div>
               <div className="row ">
                 <div className="col flex_box">

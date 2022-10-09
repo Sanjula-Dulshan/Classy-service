@@ -60,7 +60,8 @@ const checkoutSchema = new Schema(
     },
     image: {
       type: Object,
-      required: true,
+     // required: true,
+
     },
     orderStatus: {
       type: String,
@@ -69,20 +70,30 @@ const checkoutSchema = new Schema(
     serviceProviderEmail: {
       type: String,
       trim: true,
-      required: true,
+     // required: true,
     },
     serviceTitle: {
       type: String,
-      required: true,
+     // required: true,
     },
     amount: {
       type: Number,
-      required: true,
+      //required: true,
     },
+
+    paymentId: {
+      type: String,
+      //required: true,
+
     feedbackStatus: {
       type: Boolean,
       default: false,
+
     },
+
+    paymentMethod: {
+      type: String,
+    },  
   },
   {
     timestamps: true,

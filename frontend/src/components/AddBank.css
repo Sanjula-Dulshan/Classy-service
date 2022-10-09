@@ -209,14 +209,13 @@
 }
 
 /* Float four columns side by side */
-/******************************************************/
-/* .card-column {
+
+.b-card-column {
   float: right;
   width: 65%;
   padding: 0 10px;
   margin-left: -350px;
-} */
-/******************************************************/
+} 
 .card-column2 {
   float: right;
   width: 70%;
@@ -228,20 +227,18 @@
 }
 
 /* Remove extra left and right margins, due to padding */
-/******************************************************/
-/* .card-row {
+
+.b-card-row {
   margin: 0 -5px;
   margin-right: 200px;
-} */
+} 
 
 /* Clear floats after the columns */
-
-/* .card-row:after {
+.b-card-row:after {
   content: "";
   display: table;
   clear: both;
-} */
-/******************************************************/
+}
 
 /* Responsive columns */
 /* @media screen and (max-width: 600px) {

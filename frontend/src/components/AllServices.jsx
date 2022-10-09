@@ -89,6 +89,14 @@ export default function AllServices() {
     console.log(data);
   };
 
+  const setDataForCheckout = (data) => {
+    let { title, fee, userEmail } = data;
+    localStorage.setItem("title", title);
+    localStorage.setItem("fee", fee);
+    localStorage.setItem("userEmail", userEmail);
+  };
+
+
   return (
     <div>
       <Sidebar />
@@ -182,8 +190,11 @@ export default function AllServices() {
                     </div>
                   </div>
                 </div>
+
+
               ))}
               <ReactTooltip />
+
             </div>
           )}
         </div>
