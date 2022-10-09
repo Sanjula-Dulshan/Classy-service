@@ -24,6 +24,7 @@ export default function ViewProfile() {
       .then((res) => {
         console.log(res.data);
         setServiceProvider(res.data);
+        console.log("27", serviceProvider);
       })
       .catch((err) => {
         console.log(err);

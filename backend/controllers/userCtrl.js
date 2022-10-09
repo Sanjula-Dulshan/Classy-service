@@ -134,6 +134,7 @@ const userCtrl = {
       }).select("-password");
 
       res.json(user);
+      console.log(user);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

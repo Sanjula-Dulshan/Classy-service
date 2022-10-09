@@ -26,6 +26,30 @@ const feedbackCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  updateFeedback: async (req, res) => {
+    try {
+      const { rating, comment } = req.body;
+      await Feedback.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          rating,
+          comment,
+        }
+      );
+
+      res.status(200).json({ msg: "Feedback updated" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  deleteFeedback: async (req, res) => {
+    try {
+      await Feedback.findByIdAndDelete(req.params.id);
+      res.status(200).json({ msg: "Feedback deleted" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default feedbackCtrl;

@@ -129,7 +129,7 @@ export default function ViewService() {
                         <div>
                           <Link
                             class="ui button"
-                            to={"/viewProfile"}
+                            to={"/viewServiceProfile"}
                             style={{
                               backgroundColor: "#FEA82F",
                               color: "black",

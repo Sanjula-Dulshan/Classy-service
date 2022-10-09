@@ -33,4 +33,7 @@ checkoutRouter.get("/accepted/:userEmail", CheckoutCtrl.getAcceptedServices);
 //get rejected services
 checkoutRouter.get("/rejected/:userEmail", CheckoutCtrl.getRejectedServices);
 
+//update feedback status
+checkoutRouter.patch("/feedback/:id", CheckoutCtrl.updateFeedbackStatus);
+
 export default checkoutRouter;
