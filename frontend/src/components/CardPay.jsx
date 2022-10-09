@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
+import Sidebar from "./Sidebar";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 import { confirmAlert } from 'react-confirm-alert';
@@ -74,6 +75,7 @@ export default function CardPay() {
   
   return (
     <div className="b-card-row">
+      <Sidebar />
       <div className="b-card-column">
         <LoadingOverlay
               active={loading}

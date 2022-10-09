@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 
+
 import "./AddBank.css";
+import Sidebar from "./Sidebar";
 import generatePDF from "./TransReport";
 
 export default function TransactionReport() {
@@ -25,6 +27,7 @@ export default function TransactionReport() {
 
   return (
     <div className="card-row2">
+      <Sidebar />
       <div className="card-column2">
         <div>
           <label className="title">Transaction History</label>
