@@ -142,8 +142,9 @@ function App() {
             exact
             element={isLogged ? <ViewService /> : <NotFound />}
           />
+
           <Route
-            path="/viewProfile"
+            path="/viewServiceProfile"
             exact
             element={isLogged ? <ViewProfile /> : <NotFound />}
           />

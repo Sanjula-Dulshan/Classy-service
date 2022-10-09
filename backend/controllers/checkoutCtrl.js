@@ -177,6 +177,21 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  updateFeedbackStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { feedbackStatus } = req.body;
+      console.log("id", id);
+      console.log("feedbackStatus", feedbackStatus);
+      const data = await Checkout.findOneAndUpdate(
+        { _id: id },
+        { feedbackStatus: feedbackStatus }
+      );
+      res.status(200).json({ msg: "Feedback status updated" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 export default checkoutCtrl;
