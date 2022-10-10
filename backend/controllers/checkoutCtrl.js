@@ -40,6 +40,7 @@ const checkoutCtrl = {
         city,
         orderStatus,
         serviceProviderEmail,
+        image,
       } = req.body;
 
       const newCheckout = new Checkout({
@@ -56,6 +57,7 @@ const checkoutCtrl = {
         city,
         orderStatus,
         serviceProviderEmail,
+        image,
       });
 
       await newCheckout.save();

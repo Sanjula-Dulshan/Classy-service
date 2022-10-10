@@ -33,11 +33,9 @@ export default function Checkout() {
   const[serviceProviderEmail,setServiceProviderEmail]=useState(localStorage.getItem("userEmail"));
   const[amount,setAmount]=useState(localStorage.getItem("fee"));
   const[serviceTitle,setServiceTitle]=useState(localStorage.getItem("title"));
+  const[image,setImage]=useState(localStorage.getItem("image"));
 
 
-  useEffect(() => {
-    setUid(userEmail);
-  }, [userEmail]);
 
 
   const handleSubmit = async (e) => {
@@ -58,7 +56,10 @@ export default function Checkout() {
         mobile,
         date,
         time,
-        serviceProviderEmail
+        serviceProviderEmail,
+        amount,
+        serviceTitle,
+        image
 
       }
 
