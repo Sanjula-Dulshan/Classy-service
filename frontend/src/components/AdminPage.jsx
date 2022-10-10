@@ -128,7 +128,7 @@ const filterData = (users,searchkey) =>{
           <div style={{ position: "absolute", zIndex: "704" }}>
           <ConfirmBox 
             options={{
-              icon: <FontAwesomeIcon icon={faMagnifyingGlass}/>,
+              icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
               text: "Are you sure you want to delete your account?",
               confirm: "yes",
               cancel: "no",
