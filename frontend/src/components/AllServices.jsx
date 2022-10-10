@@ -86,6 +86,7 @@ export default function AllServices() {
     localStorage.setItem("phone", phone);
     localStorage.setItem("userEmail", userEmail);
     localStorage.setItem("image", image.url);
+    localStorage.setItem("public_id",image.public_id);
 
     console.log(data);
   };
@@ -162,6 +163,7 @@ export default function AllServices() {
                               backgroundColor: "#FEA82F",
                               color: "black",
                             }}
+                            onClick={() => setData(data)}
                           >
                             Buy
                           </Link>
