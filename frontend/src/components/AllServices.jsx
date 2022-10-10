@@ -64,6 +64,13 @@ export default function AllServices() {
     console.log(data);
   };
 
+  const setDataForCheckout = (data) => {
+    let { title, fee, userEmail, image } = data;
+    localStorage.setItem("title", title);
+    localStorage.setItem("fee", fee);
+    localStorage.setItem("userEmail", userEmail);
+    localStorage.setItem("image", image.url);
+  };
   return (
     <div>
       <Sidebar />
