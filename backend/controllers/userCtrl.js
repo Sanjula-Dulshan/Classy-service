@@ -63,11 +63,8 @@ const userCtrl = {
       const { name, email, nic, mobile, password } = user;
 
       const check = await Users.findOne({ email });
-      const checknic = await Users.findOne({ nic });
       if (check)
         return res.status(400).json({ msg: "This email already exists." });
-      if (checknic)
-        return res.status(400).json({ msg: "There is an existing account under your NIC number!." });
       const newUser = new Users({
         name,
         email,
