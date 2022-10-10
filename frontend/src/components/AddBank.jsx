@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Sidebar from "./Sidebar";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
 import LoadingOverlay from 'react-loading-overlay';
@@ -74,6 +75,7 @@ export default function AddBank() {
   
   return (
     <div className="b-card-row">
+      <Sidebar />
       <div className="b-card-column">
         <LoadingOverlay
               active={loading}

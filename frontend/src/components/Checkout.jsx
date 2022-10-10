@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
+import Sidebar from "./Sidebar";
 import LoadingOverlay from 'react-loading-overlay';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 import { confirmAlert } from 'react-confirm-alert';
 import { Store } from 'react-notifications-component'; 
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import { useSelector } from "react-redux";
 
 
 export default function Checkout() {
+
+ 
+
+  const auth = useSelector((state) => state.auth);
+  const { userEmail } = auth.user;
+
   const [loading, setLoading] = useState(false);
-  const [uid, setUid] = useState("1234");
+  const [uid, setUid] = useState("yasanthamax@gmail.com");
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
@@ -27,9 +35,15 @@ export default function Checkout() {
   const[serviceTitle,setServiceTitle]=useState(localStorage.getItem("title"));
 
 
+  useEffect(() => {
+    setUid(userEmail);
+  }, [userEmail]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+      alert(userEmail);
 
       setLoading(true);
       const newCheckout = {
@@ -93,6 +107,7 @@ export default function Checkout() {
   
   return (
     <div className="b-card-row">
+      <Sidebar />
       <div className="b-card-column">
         <LoadingOverlay
               active={loading}
