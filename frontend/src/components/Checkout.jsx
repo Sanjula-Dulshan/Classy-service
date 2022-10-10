@@ -33,7 +33,8 @@ export default function Checkout() {
   const[serviceProviderEmail,setServiceProviderEmail]=useState(localStorage.getItem("userEmail"));
   const[amount,setAmount]=useState(localStorage.getItem("fee"));
   const[serviceTitle,setServiceTitle]=useState(localStorage.getItem("title"));
-  const[image,setImage]=useState(localStorage.getItem("image"));
+  const[url,setImage]=useState(localStorage.getItem("image"));
+  const[public_id,setPublicId]=useState(localStorage.getItem("public_id"));
 
 
 
@@ -41,7 +42,10 @@ export default function Checkout() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      alert(userEmail);
+      const image = {
+        public_id,
+        url,
+      };
 
       setLoading(true);
       const newCheckout = {
