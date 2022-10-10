@@ -61,6 +61,7 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+
         image,
       });
 

@@ -76,7 +76,7 @@ export default function AllServices() {
   };
 
   const setData = (data) => {
-    let { title, description, category, location, fee, phone, userEmail } =
+    let { title, description, category, location, fee, phone, userEmail, image } =
       data;
     localStorage.setItem("title", title);
     localStorage.setItem("description", description);
@@ -85,18 +85,12 @@ export default function AllServices() {
     localStorage.setItem("fee", fee);
     localStorage.setItem("phone", phone);
     localStorage.setItem("userEmail", userEmail);
+    localStorage.setItem("image", image.url);
 
     console.log(data);
   };
 
-  const setDataForCheckout = (data) => {
 
-    let { title, fee, userEmail, image } = data;
-    localStorage.setItem("title", title);
-    localStorage.setItem("fee", fee);
-    localStorage.setItem("userEmail", userEmail);
-    localStorage.setItem("image", image.url);
-  };
 
   return (
     <div>
@@ -162,7 +156,7 @@ export default function AllServices() {
                         <td>
                           <Link
                             className="ui button"
-                            to={"/addBank"}
+                            to={"/checkout"}
                             data-tip="Click to Buy service"
                             style={{
                               backgroundColor: "#FEA82F",

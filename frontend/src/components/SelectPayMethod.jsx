@@ -10,10 +10,10 @@ export default function SelectPayMethod() {
           <label className="title">SELECT PAYMENT METHOD</label>
 
             <div className="method-container">
-              <a href="/cardpay">
+              <a href="/cardpayment">
                 <button className="btn-payon" >Credit/Debit Card <img src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-credit-card-30_zpetxw.png" /> </button> <br />
               </a>
-              <a href="/bankpay" >
+              <a href="/bankpayment" >
               <button className="btn-payon" >Bank Payment <img width={"30px"} src="https://res.cloudinary.com/sliit-yasantha/image/upload/v1662391777/icons8-merchant-account-50_f10lwd.png" /></button>
               </a>
             </div>  
