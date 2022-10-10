@@ -10,12 +10,12 @@ const bankPaySchema = new Schema({
 
     Date : {
         type : String,
-        required : true
+        //required : true
     },
 
     amount : {
-        type : String,
-        required : true
+        type : Number,
+       // required : true
     },
 
     bankName : {
@@ -29,13 +29,13 @@ const bankPaySchema = new Schema({
     },
 
     image : {
-        type : String,
-        required : true
+        type : Object,
+      //  required : true
     },
 
     checkoutId : {
         type : String,
-        required : true
+       // required : true
     },
 
 }, {

@@ -61,8 +61,10 @@ const servicesCtrl = {
   getServicesByCategory: async (req, res) => {
     try {
       const { category } = req.params;
+      console.log("category: ", category);
       const services = await Services.find({ category });
-      res.status(200).json(services);
+
+      return res.status(200).json(services);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

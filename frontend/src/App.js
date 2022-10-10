@@ -25,9 +25,10 @@ import Header from "./components/header/Header";
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
 import Checkout from "./components/Checkout";
-
+import BankPayment from "./components/BankPayment";
 import SelectPayMethod from "./components/SelectPayMethod";
 import TransactionReport from "./components/TransactionReport";
+import CardPay from "./components/CardPay";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
@@ -38,6 +39,7 @@ import OrderList from "./components/OrderList";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
 import AdminPage from "./components/AdminPage";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -142,8 +144,9 @@ function App() {
             exact
             element={isLogged ? <ViewService /> : <NotFound />}
           />
+
           <Route
-            path="/viewProfile"
+            path="/viewServiceProfile"
             exact
             element={isLogged ? <ViewProfile /> : <NotFound />}
           />
@@ -164,6 +167,10 @@ function App() {
             exact
             element={<TransactionReport />}
           />
+
+
+          <Route path="/bankPayment" exact element={<BankPayment />} />
+          <Route path="/cardPayment" exact element={<CardPay />} />
 
           <Route
             path="/admin"

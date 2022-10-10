@@ -169,13 +169,21 @@ export default function EditBank() {
   // }
 
   return (
-    <div className="card-row">
-      <div className="card-column">
-        <LoadingOverlay active={loading} spinner={<PropagateLoader />}>
-          <div className="bg-card">
-            <label className="title">EDIT BANK DETAILS</label>
-            <div className="add_bank">
-              <form onSubmit={handleSubmit}>
+
+    <div className="b-card-row">
+      <div className="b-card-column">
+        <LoadingOverlay
+              active={loading}
+              spinner={<PropagateLoader />}
+          >
+        <div className="bg-card">
+          <label className="title">EDIT BANK DETAILS</label>
+          <div className="add_bank">
+
+            
+           
+            <form onSubmit={handleSubmit}>
+                            
                 <div className="">
                   <label htmlFor="title" className="form-label">
                     Account Name

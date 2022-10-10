@@ -9,8 +9,22 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getAllOrders: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+      console.log("userEmail", userEmail);
+      const checkouts = await Checkout.find({
+        email: userEmail,
+      });
+      console.log("checkouts", checkouts);
+      res.status(200).json(checkouts);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 
   createCheckout: async (req, res) => {
+    console.log("In ctrl ", req.body);
     try {
       const {
         uid,
@@ -47,13 +61,17 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+
         image,
       });
 
       await newCheckout.save();
-
-      res.json({ msg: "Checkout added successfully!" });
+      console.log("save success");
+      //print the id of the new checkout
+      console.log(newCheckout._id);
+      res.json({ msg: "Checkout added successfully!", id: newCheckout._id });
     } catch (err) {
+      console.log(err.message);
       return res.status(500).json({ msg: err.message });
     }
   },
@@ -160,6 +178,22 @@ const checkoutCtrl = {
       });
 
       res.status(200).json(services);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  updateFeedbackStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { feedbackStatus } = req.body;
+      console.log("id", id);
+      console.log("feedbackStatus", feedbackStatus);
+      const data = await Checkout.findOneAndUpdate(
+        { _id: id },
+        { feedbackStatus: feedbackStatus }
+      );
+      res.status(200).json({ msg: "Feedback status updated" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

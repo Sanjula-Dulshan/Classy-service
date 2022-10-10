@@ -11,6 +11,10 @@ const feedbackSchema = new Schema(
       type: String,
       required: true,
     },
+    orderID: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

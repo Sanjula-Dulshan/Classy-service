@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Navigation } from "react-minimal-side-navigation";
 import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
-import Icon from "awesome-react-icons";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -10,7 +9,6 @@ import "./sideBar.css";
 export default function Sidebar() {
   const auth = useSelector((state) => state.auth);
   const { user, isLogged, isWorker, iscustomer } = auth;
-  const [TV, setTV] = useState("TV");
 
   const navigate = useNavigate();
   return (
@@ -35,23 +33,30 @@ export default function Sidebar() {
                   {
                     title: "Open",
                     itemId: "/userServices",
-                    // Requires v1.9.1+ (https://github.com/abhijithvijayan/react-minimal-side-navigation/issues/13)
-                    elemBefore: () => <Icon name="cloud-snow" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-dygo-kerismaker/20/000000/external-Pending-management-dygo-kerismaker.png" />
+                    ),
                   },
                   {
                     title: "Assigned",
                     itemId: "/pending",
-                    elemBefore: () => <Icon name="coffee" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/20/FEA82F/external-active-basic-ui-elements-2.3-sbts2018-solid-sbts2018.png" />
+                    ),
                   },
                   {
                     title: "Accepted",
                     itemId: "/accepted",
-                    elemBefore: () => <Icon name="coffee" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/color/20/000000/double-tick.png" />
+                    ),
                   },
                   {
                     title: "Cancelled",
                     itemId: "/rejected",
-                    elemBefore: () => <Icon name="coffee" />,
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-those-icons-flat-those-icons/17/000000/external-Remove-interface-those-icons-flat-those-icons.png" />
+                    ),
                   },
                 ],
               },
@@ -71,42 +76,50 @@ export default function Sidebar() {
             }}
             items={[
               {
-                title: "Repair",
-                itemId: "",
-                elemBefore: () => <Icon name="user" />,
-                subNav: [
-                  {
-                    title: "TV",
-                    itemId: `/allServices/${TV}`,
-                    // Requires v1.9.1+ (https://github.com/abhijithvijayan/react-minimal-side-navigation/issues/13)
-                    elemBefore: () => <Icon name="cloud-snow" />,
-                  },
-                  {
-                    title: "Radio",
-                    itemId: "/allServices",
-                    elemBefore: () => <Icon name="coffee" />,
-                  },
-                  {
-                    title: "Computer",
-                    itemId: "/allServices",
-                    elemBefore: () => <Icon name="coffee" />,
-                  },
-                  {
-                    title: "Phone",
-                    itemId: "/allServices",
-                    elemBefore: () => <Icon name="coffee" />,
-                  },
-                ],
+                title: <b>All Services</b>,
+                itemId: `/allServices`,
               },
               {
-                title: "Another Item",
-                itemId: "",
-                subNav: [
-                  {
-                    title: "Teams",
-                    itemId: "/management/teams",
-                  },
-                ],
+                title: "Technicians",
+                itemId: `/allServices/${"Technicians"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/external-itim2101-lineal-itim2101/20/000000/external-technician-male-occupation-avatar-itim2101-lineal-itim2101.png" />
+                ),
+              },
+              {
+                title: "Repair",
+                itemId: `/allServices/${"Repair"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/open-end-wrench.png" />
+                ),
+              },
+              {
+                title: "IT",
+                itemId: `/allServices/${"IT"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/laptop--v1.png" />
+                ),
+              },
+              {
+                title: "House",
+                itemId: `/allServices/${"House"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/home-page.png" />
+                ),
+              },
+              {
+                title: "Garden",
+                itemId: `/allServices/${"Garden"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/garden.png" />
+                ),
+              },
+              {
+                title: "Beauty & Event",
+                itemId: `/allServices/${"Beauty & Event"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/external-anggara-glyph-anggara-putra/20/000000/external-group-basic-user-interface-anggara-glyph-anggara-putra.png" />
+                ),
               },
             ]}
           />

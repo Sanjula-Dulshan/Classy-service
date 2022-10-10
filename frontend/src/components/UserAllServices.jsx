@@ -36,7 +36,6 @@ export default function UserAllServices() {
   };
 
   const handleDelete = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
     try {
       setLoading(true);
       const destroyImg = axios.post("/image/destroy", { public_id });
@@ -69,7 +68,6 @@ export default function UserAllServices() {
   };
 
   const handleDeleteAll = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
     try {
       setLoading(true);
       const destroyImg = axios.post("/image/destroy", { public_id });
@@ -166,6 +164,24 @@ export default function UserAllServices() {
       });
   };
 
+  const filterData = (data, searchkey) => {
+    const result = data.filter((service) =>
+      service.title.toLowerCase().includes(searchkey)
+    );
+
+    setServices(result);
+  };
+
+  function hancdleSearchArea(e) {
+    const { email } = auth.user;
+    const searchKey = e.currentTarget.value;
+
+    axios.get(`/services/${email}`).then((res) => {
+      filterData(res.data, searchKey);
+      console.log("res.data", res.data);
+    });
+  }
+
   return (
     <div>
       <Sidebar />
@@ -208,11 +224,32 @@ export default function UserAllServices() {
               onCancel={handleCloseDeleteAll}
             />
           </div>
+          <div>
+            <tr className=" float-end">
+              <td>
+                <div className="search">
+                  <input
+                    className="form-control"
+                    type="search"
+                    placeholder="search"
+                    name="search"
+                    onChange={hancdleSearchArea}
+                  />
+                </div>
+              </td>
+              <td>
+                <div className="delete-all">
+                  <span>Select all</span>
+                  <input
+                    type="checkbox"
+                    checked={isCheck}
+                    onChange={checkAll}
+                  />
 
-          <div className="delete-all">
-            <span>Select all</span>
-            <input type="checkbox" checked={isCheck} onChange={checkAll} />
-            <button onClick={confirmDeleteAll}>Delete ALL</button>
+                  <button onClick={confirmDeleteAll}>Delete ALL</button>
+                </div>
+              </td>
+            </tr>
           </div>
 
           <div
@@ -225,7 +262,6 @@ export default function UserAllServices() {
                 key={index}
                 style={{ backgroundColor: "#FBFDF3" }}
               >
-                {console.log(data)}
                 <div className="content">
                   <input
                     type="checkbox"
