@@ -25,22 +25,27 @@ import Header from "./components/header/Header";
 import AddBank from "./components/AddBank";
 import EditBank from "./components/EditBank";
 import Checkout from "./components/Checkout";
-
+import BankPayment from "./components/BankPayment";
 import SelectPayMethod from "./components/SelectPayMethod";
 import TransactionReport from "./components/TransactionReport";
+import CardPay from "./components/CardPay";
 
 import Login from "./components/Login";
 import ActivationEmail from "./components/ActivationEmail";
 import Profile from "./components/Profile";
+import ViewProfile from "./components/ViewProfile";
 import PendingOrders from "./components/PendingOrders";
+import OrderList from "./components/OrderList";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
+import AdminPage from "./components/AdminPage";
+
 
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const auth = useSelector((state) => state.auth);
-  const { isLogged } = auth;
+  const { isLogged, isAdmin } = auth;
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -73,8 +78,14 @@ function App() {
 
         <Header />
         <Routes>
+          <Route path="/" exact element={<Login />} />
           <Route
-            path="/"
+            path="/allServices"
+            exact
+            element={isLogged ? <AllServices /> : <NotFound />}
+          />
+          <Route
+            path="/allServices/:category"
             exact
             element={isLogged ? <AllServices /> : <NotFound />}
           />
@@ -116,7 +127,7 @@ function App() {
             exact
             element={<ActivationEmail />}
           />
-          <Route path="/login" exact element={<Login />} />
+
           <Route
             path="/profile"
             exact
@@ -134,6 +145,17 @@ function App() {
             element={isLogged ? <ViewService /> : <NotFound />}
           />
 
+          <Route
+            path="/viewServiceProfile"
+            exact
+            element={isLogged ? <ViewProfile /> : <NotFound />}
+          />
+          <Route
+            path="/viewOrder"
+            exact
+            element={isLogged ? <OrderList /> : <NotFound />}
+          />
+
           <Route path="/addBank" exact element={<AddBank />} />
           <Route path="/editBank" exact element={<EditBank />} />
           <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
@@ -144,6 +166,16 @@ function App() {
             path="/transactionReport"
             exact
             element={<TransactionReport />}
+          />
+
+
+          <Route path="/bankPayment" exact element={<BankPayment />} />
+          <Route path="/cardPayment" exact element={<CardPay />} />
+
+          <Route
+            path="/admin"
+            exact
+            element={isAdmin ? <AdminPage /> : <NotFound />}
           />
         </Routes>
       </BrowserRouter>

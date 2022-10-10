@@ -36,7 +36,6 @@ export default function UserAllServices() {
   };
 
   const handleDelete = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
     try {
       setLoading(true);
       const destroyImg = axios.post("/image/destroy", { public_id });
@@ -69,7 +68,6 @@ export default function UserAllServices() {
   };
 
   const handleDeleteAll = async (id, public_id) => {
-    console.log("deleteService", id, public_id);
     try {
       setLoading(true);
       const destroyImg = axios.post("/image/destroy", { public_id });
@@ -264,7 +262,6 @@ export default function UserAllServices() {
                 key={index}
                 style={{ backgroundColor: "#FBFDF3" }}
               >
-                {console.log(data)}
                 <div className="content">
                   <input
                     type="checkbox"

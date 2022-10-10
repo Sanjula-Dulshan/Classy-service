@@ -9,6 +9,9 @@ checkoutRouter.post("/", CheckoutCtrl.createCheckout);
 //Get all checkouts
 checkoutRouter.get("/", CheckoutCtrl.getCheckouts);
 
+//Get all orders by user email
+checkoutRouter.get("/:userEmail", CheckoutCtrl.getAllOrders);
+
 //Update checkout
 checkoutRouter.put("/:id", CheckoutCtrl.updateCheckout);
 
@@ -29,5 +32,8 @@ checkoutRouter.get("/accepted/:userEmail", CheckoutCtrl.getAcceptedServices);
 
 //get rejected services
 checkoutRouter.get("/rejected/:userEmail", CheckoutCtrl.getRejectedServices);
+
+//update feedback status
+checkoutRouter.patch("/feedback/:id", CheckoutCtrl.updateFeedbackStatus);
 
 export default checkoutRouter;

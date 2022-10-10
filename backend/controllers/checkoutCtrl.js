@@ -9,8 +9,22 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getAllOrders: async (req, res) => {
+    try {
+      const { userEmail } = req.params;
+      console.log("userEmail", userEmail);
+      const checkouts = await Checkout.find({
+        email: userEmail,
+      });
+      console.log("checkouts", checkouts);
+      res.status(200).json(checkouts);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 
   createCheckout: async (req, res) => {
+    console.log("In ctrl ",req.body);
     try {
       const {
         uid,
@@ -26,9 +40,6 @@ const checkoutCtrl = {
         city,
         orderStatus,
         serviceProviderEmail,
-        serviceTitle,
-        amount,
-        image,
       } = req.body;
 
       const newCheckout = new Checkout({
@@ -45,15 +56,16 @@ const checkoutCtrl = {
         city,
         orderStatus,
         serviceProviderEmail,
-        serviceTitle,
-        amount,
-        image,
       });
 
       await newCheckout.save();
+      console.log("save success");
+      //print the id of the new checkout
+      console.log(newCheckout._id);
+      res.json({ msg: "Checkout added successfully!", id: newCheckout._id });
 
-      res.json({ msg: "Checkout added successfully!" });
     } catch (err) {
+      console.log(err.message);
       return res.status(500).json({ msg: err.message });
     }
   },
@@ -74,19 +86,19 @@ const checkoutCtrl = {
       await Checkout.findOneAndUpdate(
         { _id: req.params.id },
         {
-            uid,
-            firstName,
-            lastName,
-            email,
-            mobile,
-            date,
-            time,
-            addressLine1,
-            addressLine2,
-            province,
-            city,
-            orderStatus,
-            serviceProviderEmail,
+          uid,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          date,
+          time,
+          addressLine1,
+          addressLine2,
+          province,
+          city,
+          orderStatus,
+          serviceProviderEmail,
         }
       );
 
@@ -98,7 +110,7 @@ const checkoutCtrl = {
 
   getByUid: async (req, res) => {
     try {
-      const checkouts = await Checkout.find({ uid: req.params.uid });
+      const checkouts = await Checkout.findOne({ uid: req.params.uid });
       res.json(checkouts);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -108,6 +120,8 @@ const checkoutCtrl = {
     try {
       const { id } = req.params;
       const { status } = req.body;
+      console.log("id", id);
+      console.log("status", status);
       const data = await Checkout.findOneAndUpdate(
         { _id: id },
         { orderStatus: status }
@@ -162,8 +176,23 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  updateFeedbackStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { feedbackStatus } = req.body;
+      console.log("id", id);
+      console.log("feedbackStatus", feedbackStatus);
+      const data = await Checkout.findOneAndUpdate(
+        { _id: id },
+        { feedbackStatus: feedbackStatus }
+      );
+      res.status(200).json({ msg: "Feedback status updated" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
 };
-
-
 
 export default checkoutCtrl;

@@ -9,35 +9,35 @@ import { Store } from 'react-notifications-component';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 
-export default function AddBank() {
+export default function CardPay() {
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("1234");
-  const [accName, setAccName] = useState();
-  const [accNumber, setAccNumber] = useState();
-  const [bankName, setBankName] = useState();
-  const [branchName, setBranchName] = useState();
+  const [cardName, setCardName] = useState();
+  const [cardNumber, setCardNumber] = useState();
+  const [cvv, setCVV] = useState();
+  const [expiryDate, setExpiryDate] = useState();
   const [isAgree, setIsAgree] = useState(false);
+  const [amount, setAmount] = useState(54545454);
+  const [checkoutId, setCheckoutId] = useState(localStorage.getItem("checkoutId"));
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isAgree) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }else{
       setLoading(true);
-      const newBank = {
+      const newCard = {
         uid,
-        accName,
-        accNumber,
-        bankName,
-        branchName,
+        cardName,
+        cardNumber,
+        cvv,
+        expiryDate,
+        amount,
+        checkoutId
       }
 
-      console.log(newBank);
+      console.log(newCard);
       try {
-        await axios.post("/bank/", newBank);
+        await axios.post("/CardPay/", newCard);
         Store.addNotification({
           title: "Bank Details Saved Successfully",
           message: "Your will recive your payments to this account",
@@ -62,7 +62,7 @@ export default function AddBank() {
         alert(err);
       }
       setLoading(false);
-    }
+    
     
   };
 
@@ -80,7 +80,7 @@ export default function AddBank() {
               spinner={<PropagateLoader />}
           >
         <div className="bg-card">
-          <label className="title">ADD BANK DETAILS</label>
+          <label className="title">VISA / MASTER Payment</label>
           <div className="add_bank">
 
             
@@ -89,7 +89,7 @@ export default function AddBank() {
               
                 <div className="">
                   <label htmlFor="title" className="form-label">
-                    Account Name
+                    Card holder Name
                   </label>
                   <input
                     type="text"
@@ -97,7 +97,7 @@ export default function AddBank() {
                     name="acc_name"
                     id="acc_name"
                     required
-                    onChange={(e) => setAccName(e.target.value)}
+                    onChange={(e) => setCardName(e.target.value)}
                   />
                 </div>
               
@@ -105,7 +105,7 @@ export default function AddBank() {
               <div className="row mt-4">
                 <div className="col">
                   <label htmlFor="title" className="form-label">
-                    Account Number
+                    Card Number
                   </label>
                   <input
                     type="number"
@@ -113,7 +113,7 @@ export default function AddBank() {
                     name="acc_number"
                     id="acc_number"
                     required
-                    onChange={(e) => setAccNumber(e.target.value)}
+                    onChange={(e) => setCardNumber(e.target.value)}
                   />
                 </div>
               </div>
@@ -122,36 +122,28 @@ export default function AddBank() {
               <div className="row mt-3">
                 <div className="col">
                   <label htmlFor="categories" className="form-label">
-                    Bank
+                    CVV
                   </label>
-                  <select
-                    name="bank"
+                  <input
+                    type="number"
                     className="form-control"
-                    onChange={(e) => setBankName(e.target.value)}
-                  >
-                    <option value="">Select a category</option>
-                    <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
-                    <option value="Sampath Bank Plc">Sampath Bank Plc</option>
-                    <option value="National Savings Bank">National Savings Bank</option>
-                    <option value="People’s Bank">People’s Bank</option>
-                    <option value="Hatton National Bank">Hatton National Bank</option>
-                    <option value="Seylan Bank Plc">Seylan Bank Plc</option>
-                    <option value="National Development Bank Plc">National Development Bank Plc</option>
-                    <option value="Nations Trust Bank Plc">Nations Trust Bank Plc</option>
-                    <option value="DFCC Bank">DFCC Bank</option>
-                  </select>
+                    name="bank_name"
+                    id="bank_name"
+                    required
+                    onChange={(e) => setCVV(e.target.value)}
+                  />
                 </div>
                 <div className="col">
                   <label htmlFor="location" className="form-label">
-                    Branch
+                    Exp date
                   </label>
                   <input
-                    type="text"
+                    type="month"
                     name="branch" 
                     className="form-control"
                     id="branch"
                     required
-                    onChange={(e) => setBranchName(e.target.value)}
+                    onChange={(e) => setExpiryDate(e.target.value)}
                   />
                 </div>
               </div>

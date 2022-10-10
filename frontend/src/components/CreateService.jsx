@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import RiseLoader from "react-spinners/RiseLoader";
-import "./styles/createService.css";
+import "./createService.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SideBar from "./Sidebar";
@@ -44,6 +44,7 @@ export default function CreateService() {
     setTimeout(() => {
       setPageLoading(false);
     }, 2000);
+    console.log("param: ", param);
     if (param.id) {
       setOnEdit(true);
       axios.get("/services").then((res) => {

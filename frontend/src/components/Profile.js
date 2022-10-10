@@ -1,13 +1,15 @@
 import React, { useState} from "react";
 import axios from "axios";
 import { useSelector} from "react-redux";
+import { Link } from "react-router-dom";
+
 import { isLength, isMatch } from "./utils/validation/Validation";
 import { showSuccessMsg, showErrMsg } from "./utils/notification/Notification";
 import "./CSS/profile.css";
 import PasswordChecklist from "react-password-checklist";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { Link } from "react-router-dom";
 import ConfirmBox from "react-dialog-confirm";
+import Sidebar from "./Sidebar";
 
 const initialState = {
   name: "",
@@ -23,117 +25,155 @@ export default function Profile() {
 
   const { user } = auth;
   const [data, setData] = useState(initialState);
-  const { name,mobile,password, cf_password,err, success } = data;
+  const { name, mobile, password, cf_password, err, success } = data;
 
   const [avatar, setAvatar] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
 
-  const handleChange = e => {
-    const {name, value} = e.target
-    setData({...data, [name]:value, err:'', success: ''})
-}
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value, err: "", success: "" });
+  };
 
-const changeAvatar = async(e) => {
-    e.preventDefault()
+  const changeAvatar = async (e) => {
+    e.preventDefault();
     try {
-        const file = e.target.files[0]
+      const file = e.target.files[0];
 
-        if(!file) return setData({...data, err: "No files were uploaded." , success: ''})
+      if (!file)
+        return setData({
+          ...data,
+          err: "No files were uploaded.",
+          success: "",
+        });
 
-        if(file.size > 1024 * 1024)
-            return setData({...data, err: "Size too large." , success: ''})
+      if (file.size > 1024 * 1024)
+        return setData({ ...data, err: "Size too large.", success: "" });
 
-        if(file.type !== 'image/jpeg' && file.type !== 'image/png')
-            return setData({...data, err: "File format is incorrect." , success: ''})
+      if (file.type !== "image/jpeg" && file.type !== "image/png")
+        return setData({
+          ...data,
+          err: "File format is incorrect.",
+          success: "",
+        });
 
-        let formData =  new FormData()
-        formData.append('file', file)
+      let formData = new FormData();
+      formData.append("file", file);
 
-        setLoading(true)
-        const res = await axios.post('/api/upload_avatar', formData, {
-            headers: {'content-type': 'multipart/form-data', Authorization: token}
-        })
+      setLoading(true);
+      const res = await axios.post("/api/upload_avatar", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: token,
+        },
+      });
 
-        setLoading(false)
-        setAvatar(res.data.url)
-        
+      setLoading(false);
+      setAvatar(res.data.url);
     } catch (err) {
-        setData({...data, err: err.response.data.msg , success: ''})
+      setData({ ...data, err: err.response.data.msg, success: "" });
     }
-}
+  };
 
-const updateInfor = () => {
+  const updateInfor = () => {
     try {
-        axios.patch('/user/update', {
-            name: name ? name : user.name,
-            mobile: mobile ? mobile : user.mobile,
-            avatar: avatar ? avatar : user.avatar
-        },{
-            headers: {Authorization: token}
-            
-        })
+      axios.patch(
+        "/user/update",
+        {
+          name: name ? name : user.name,
+          mobile: mobile ? mobile : user.mobile,
+          avatar: avatar ? avatar : user.avatar,
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
 
-        setData({...data, err: '' , success: "Updated Success!"})
-        
+      setData({ ...data, err: "", success: "Updated Success!" });
     } catch (err) {
-        setData({...data, err: err.response.data.msg , success: ''})
+      setData({ ...data, err: err.response.data.msg, success: "" });
     }
-}
+  };
 
-const updatePassword =async (e) => {
-    if(isLength(password))
-        return setData({...data, err: "Password must be at least 8 characters.", success: ''})
+  const updatePassword = async (e) => {
+    if (isLength(password))
+      return setData({
+        ...data,
+        err: "Password must be at least 8 characters.",
+        success: "",
+      });
 
-    if(!isMatch(password, cf_password))
-        return setData({...data, err: "Password did not match.", success: ''})
+    if (!isMatch(password, cf_password))
+      return setData({ ...data, err: "Password did not match.", success: "" });
 
     try {
-        axios.post('/user/reset', {password},{
-            headers: {Authorization: token}
-        })
+      axios.post(
+        "/user/reset",
+        { password },
+        {
+          headers: { Authorization: token },
+        }
+      );
 
-        setData({...data, err: '' , success: "Updated Success!"})
+      setData({ ...data, err: "", success: "Updated Success!" });
     } catch (err) {
-        setData({...data, err: err.response.data.msg , success: ''})
+      setData({ ...data, err: err.response.data.msg, success: "" });
     }
-}
+  };
 
-const handleUpdate = () => {
-    if(name || avatar|| mobile) updateInfor()
-    if(password) updatePassword()
-}
+  const handleUpdate = () => {
+    if (name || avatar || mobile) updateInfor();
+    if (password) updatePassword();
+  };
 
-const confirm = (id) => {
-  setIsOpen(true);
-  setId(id);
-};
+  const confirm = (id) => {
+    setIsOpen(true);
+    setId(id);
+  };
 
-const handleClose = () => {
-  setIsOpen(!isOpen);
-};
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  };
 
-const onDelete = (_id) => {
-  axios
-    .delete('user/delete')
+  const onDelete = (_id) => {
+    try {
+      axios.delete(`user/delete/${_id}`).then(() => {
+        setIsOpen(false);
+        localStorage.removeItem("firstLogin");
+        localStorage.clear();
 
-    .then((res) => {
-      console.log(res);
-      setIsOpen(false);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+        window.location.href = "/";
+
+      });
+    } catch (err) {
+      setData({ ...data, err: err.response.data.msg, success: "" });
+    }
+  };
 
   return (
     <div>
+      <Sidebar />
       <div>
         {err && showErrMsg(err)}
         {success && showSuccessMsg(success)}
         {loading && <h3>Loading.....</h3>}
       </div>
+      <Link to="/allServices">
+              <i
+                className="fas fa-arrow-circle-left"
+                style={{
+                  fontSize: "22px",
+                  marginLeft: "18%",
+                  marginTop:"14px",
+                  marginBottom:"-30px",
+                  color: "#FEA82F",
+                }}
+              >
+                Back
+              </i>
+            </Link>
       <img
         className="profimage"
         src="https://res.cloudinary.com/dl99x/image/upload/v1662162175/Sample_User_Icon_urnlt1.png"
@@ -147,7 +187,12 @@ const onDelete = (_id) => {
             <span>
               <i className="fas fa-camera"></i>
               <p>Change </p>
-              <input type="file" name="file" id="file_up"  onChange={changeAvatar}/>
+              <input
+                type="file"
+                name="file"
+                id="file_up"
+                onChange={changeAvatar}
+              />
             </span>
           </div>
           <div className="profhead2">
@@ -155,29 +200,27 @@ const onDelete = (_id) => {
             <p>Change Picture</p>
           </div>
           <br></br>
-
           <div style={{ position: "absolute", zIndex: "704" }}>
-          <ConfirmBox // Note : in this example all props are required
-            options={{
-              icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
-              text: "Are you sure you want to delete your account?",
-              confirm: "yes",
-              cancel: "no",
-              btn: true,
-            }}
-            isOpen={isOpen}
-            onClose={handleClose}
-            onConfirm={() => {
-              onDelete(id);
-            }}
-            onCancel={handleClose}
-          />
-        </div>
-
+            <ConfirmBox
+              options={{
+                icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
+                text: "Are you sure you want to delete your account?",
+                confirm: "yes",
+                cancel: "no",
+                btn: true,
+              }}
+              isOpen={isOpen}
+              onClose={handleClose}
+              onConfirm={() => {
+                onDelete(id);
+              }}
+              onCancel={handleClose}
+            />
+          </div>
           <div className="col-md-13 mb-3 font" style={{ display: "flex" }}>
             <label htmlFor="name">
               <label style={{ color: "red" }}>*</label>
-              Name : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Name : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
@@ -194,7 +237,7 @@ const onDelete = (_id) => {
           <div className="col-md-13 mb-3 font" style={{ display: "flex" }}>
             <label htmlFor="email">
               <label style={{ color: "red" }}>*</label>
-              Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Email : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
@@ -224,9 +267,9 @@ const onDelete = (_id) => {
               onChange={handleChange}
             />
           </div>
-          <button className="delbtn"
-           onClick={() => confirm(user._id)}
-          >Delete Account</button>
+          <button className="delbtn" onClick={() => confirm(user._id)}>
+            Delete Account
+          </button>
           <div className="col-md-13 mb-3 font" style={{ display: "flex" }}>
             <label htmlFor="password">
               Create New Password : &nbsp;&nbsp;&nbsp;
@@ -237,7 +280,8 @@ const onDelete = (_id) => {
               id="password"
               name="password"
               placeholder="Your password"
-              value={password} onChange={handleChange} 
+              value={password}
+              onChange={handleChange}
             />
           </div>
           <div className="pwd-checklist-profile">
@@ -265,7 +309,7 @@ const onDelete = (_id) => {
               name="cf_password"
               placeholder="Confirm password"
               value={cf_password}
-              onChange={handleChange} 
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -280,8 +324,11 @@ const onDelete = (_id) => {
             </em>
           </div>
           <center>
-            
-            <button className="savebtn" disabled={loading} onClick={handleUpdate}>
+            <button
+              className="savebtn"
+              disabled={loading}
+              onClick={handleUpdate}
+            >
               Save & Update
             </button>
           </center>

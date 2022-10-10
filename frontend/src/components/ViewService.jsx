@@ -55,9 +55,9 @@ export default function ViewService() {
       ) : (
         <div className="container ">
           <div className="mt-5 ">
-            <Link to="/">
+            <Link to="/allservices">
               <i
-                class="fas fa-arrow-circle-left"
+                className="fas fa-arrow-circle-left"
                 style={{
                   fontSize: "22px",
                   marginLeft: "15%",
@@ -126,15 +126,18 @@ export default function ViewService() {
                             <b>{serviceProvider.name}</b>
                           </h5>
                         </div>
-                        <div
-                          class="ui button"
-                          style={{
-                            backgroundColor: "#FEA82F",
-                            color: "black",
-                            marginLeft: "8%",
-                          }}
-                        >
-                          View Profile
+                        <div>
+                          <Link
+                            class="ui button"
+                            to={"/viewServiceProfile"}
+                            style={{
+                              backgroundColor: "#FEA82F",
+                              color: "black",
+                              marginLeft: "8%",
+                            }}
+                          >
+                            View Profile
+                          </Link>
                         </div>
                       </div>
                     </div>

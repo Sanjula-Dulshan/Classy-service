@@ -1,83 +1,132 @@
-import React from "react";
+import React, { useState } from "react";
+import { Navigation } from "react-minimal-side-navigation";
+import "react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import "./sideBar.css";
 
 export default function Sidebar() {
+  const auth = useSelector((state) => state.auth);
+  const { user, isLogged, isWorker, iscustomer } = auth;
+
+  const navigate = useNavigate();
   return (
-    <div className="container">
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        <nav
-          id="sidebarMenu"
-          className="collapse d-lg-block sidebar collapse bg-white "
-        >
-          <div className="position-sticky">
-            <nav class="navbar navbar-light bg-light">
-              <form class="form-inline">
-                <input
-                  class="form-control mr-sm-2 "
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  style={{ marginLeft: "8%" }}
-                />
-              </form>
-              <hr></hr>
-            </nav>
-            <div className="list-group list-group-flush mx-3 mt-4">
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-wrench fa-fw me-3"></i>
-                <span>Technicians</span>
-              </a>
+    <div className="sidebar">
+      <>
+        {isWorker ? (
+          <Navigation
+            // you can use your own router's api to get pathname
+            activeItemId="/management/members"
+            onSelect={({ itemId }) => {
+              navigate(itemId);
+              // maybe push to the route
+            }}
+            items={[
+              {
+                title: "",
+                itemId: "",
+                elemBefore: () => (
+                  <span className="fw-bold fs-5">My Services</span>
+                ),
+                subNav: [
+                  {
+                    title: "Open",
+                    itemId: "/userServices",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-dygo-kerismaker/20/000000/external-Pending-management-dygo-kerismaker.png" />
+                    ),
+                  },
+                  {
+                    title: "Assigned",
+                    itemId: "/pending",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-sbts2018-solid-sbts2018/20/FEA82F/external-active-basic-ui-elements-2.3-sbts2018-solid-sbts2018.png" />
+                    ),
+                  },
+                  {
+                    title: "Accepted",
+                    itemId: "/accepted",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/color/20/000000/double-tick.png" />
+                    ),
+                  },
+                  {
+                    title: "Cancelled",
+                    itemId: "/rejected",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/external-those-icons-flat-those-icons/17/000000/external-Remove-interface-those-icons-flat-those-icons.png" />
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        ) : (
+          ""
+        )}
 
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple   "
-              >
-                <i className="fas fa-car fa-fw me-3"></i>
-
-                <span>Vehicles</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-laptop fa-fw me-3"></i>
-                <span>IT</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple   "
-              >
-                <i className="fas fa-cogs fa-fw me-3"></i>
-                <span>Professional</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-print fa-fw me-3"></i>
-                <span>Printing</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple   "
-              >
-                <i className="fas fa-home fa-fw me-3"></i>
-                <span>House</span>
-              </a>
-              <a
-                href="#"
-                className="list-group-item list-group-item-action py-2 ripple  "
-              >
-                <i className="fas fa-users fa-fw me-3"></i>
-                <span>Beauty & Events</span>
-              </a>
-            </div>
-          </div>
-        </nav>
-      </div>
+        {iscustomer ? (
+          <Navigation
+            // you can use your own router's api to get pathname
+            activeItemId="/management/members"
+            onSelect={({ itemId }) => {
+              navigate(itemId);
+              // maybe push to the route
+            }}
+            items={[
+              {
+                title: <b>All Services</b>,
+                itemId: `/allServices`,
+              },
+              {
+                title: "Technicians",
+                itemId: `/allServices/${"Technicians"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/external-itim2101-lineal-itim2101/20/000000/external-technician-male-occupation-avatar-itim2101-lineal-itim2101.png" />
+                ),
+              },
+              {
+                title: "Repair",
+                itemId: `/allServices/${"Repair"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/open-end-wrench.png" />
+                ),
+              },
+              {
+                title: "IT",
+                itemId: `/allServices/${"IT"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/laptop--v1.png" />
+                ),
+              },
+              {
+                title: "House",
+                itemId: `/allServices/${"House"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/home-page.png" />
+                ),
+              },
+              {
+                title: "Garden",
+                itemId: `/allServices/${"Garden"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/ios/20/000000/garden.png" />
+                ),
+              },
+              {
+                title: "Beauty & Event",
+                itemId: `/allServices/${"Beauty & Event"}`,
+                elemBefore: () => (
+                  <img src="https://img.icons8.com/external-anggara-glyph-anggara-putra/20/000000/external-group-basic-user-interface-anggara-glyph-anggara-putra.png" />
+                ),
+              },
+            ]}
+          />
+        ) : (
+          ""
+        )}
+      </>
     </div>
   );
 }
