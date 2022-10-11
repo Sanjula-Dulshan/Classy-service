@@ -11,6 +11,7 @@ import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import ConfirmBox from "react-dialog-confirm";
 import RiseLoader from "react-spinners/RiseLoader";
 import { useNavigate } from "react-router-dom";
+import { faFileDownload} from "@fortawesome/free-solid-svg-icons";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "./ratings/rstyle.css";
 import generatePDF from "./MyOrderReport";
@@ -193,7 +194,7 @@ export default function OrderList() {
   //update feedback
   const handleUpdate = async () => {
     try {
-      setLoading(true);
+      
       await axios.put(`/feedback/${updateID}`, review).then(() => {
         Store.addNotification({
           title: "Feedback Updated Successfully",
@@ -214,7 +215,7 @@ export default function OrderList() {
         });
       });
       setModal(false);
-      setLoading(false);
+      window.location.reload(false);
     } catch (err) {
       alert(err);
     }
@@ -237,7 +238,8 @@ export default function OrderList() {
         <div>
           <div className="report">
             <button onClick={() => generatePDF(orders)}>
-              Download My Orders
+            <i className="fa-file-arrow-down fa-2x"><FontAwesomeIcon icon={faFileDownload} /></i>
+           {""}  Download My Report
             </button>
           </div>
           <div className="mt-4 container">
@@ -245,7 +247,7 @@ export default function OrderList() {
               <ConfirmBox // Note : in this example all props are required
                 options={{
                   icon: "https://img.icons8.com/ios/50/000000/error--v1.png",
-                  text: "Are you sure you want to delete this service ?",
+                  text: "Are you sure you want to delete this feedback ?",
                   confirm: "yes",
                   cancel: "no",
                   btn: true,
@@ -471,11 +473,7 @@ export default function OrderList() {
                       {console.log("rating: ", review.rating)}
 
                       <ReactStars
-                        {...{
-                          size: 20,
-                          value: review.rating,
-                          edit: false,
-                        }}
+                      {...ratings}
                       />
                     </div>
                   </div>

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import ConfirmBox from "react-dialog-confirm";
 import Sidebar from "./Sidebar";
 import { useSelector } from "react-redux";
+import { Store } from "react-notifications-component";
 
 export default function Wishlist() {
   const auth = useSelector((state) => state.auth);
@@ -47,6 +48,23 @@ export default function Wishlist() {
       .then((res) => {
         console.log(res);
         setIsOpen(false);
+        Store.addNotification({
+          title: "Removed from wishlist successfully",
+          message: "Product removed from wishlist",
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate_animated", "fadeIn"],
+          animationOut: ["animate_animated", "fadeOut"],
+          dismiss: {
+            duration: 2000,
+            onScreen: true,
+          },
+          width: 400,
+        });
+        window.location.reload(false);
+      
+
       })
       .catch((err) => {
         console.log(err);

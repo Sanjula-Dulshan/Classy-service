@@ -52,6 +52,31 @@ export default function AllServices() {
     }
   }, [param]);
 
+  const filterData = (data,searchKey) => {
+    const result = data.filter((item) =>
+    
+      item.title.toLowerCase().includes(searchKey) || 
+      item.category.toLowerCase().includes(searchKey) ||
+      item.title.toUpperCase().includes(searchKey) ||
+      item.category.toUpperCase().includes(searchKey)
+
+    );
+
+    
+    setServices(result);
+  };
+
+  function handleSearch(e) {
+    const searchKey = e.target.value;
+
+    axios.get("/services/").then((res) => {
+      filterData(res.data, searchKey);
+    });
+
+  }
+
+  
+
   const wishlistHandler = (data) => {
     const { email } = auth.user;
     console.log("34", data);
@@ -127,6 +152,17 @@ export default function AllServices() {
               className="ui cards mt-5  container"
               style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
             >
+               <div className="search">
+                
+                  <input
+                    className="form-control"
+                    type="search"
+                    placeholder="search"
+                    name="search"
+                    onChange={handleSearch}
+                    
+                  />
+                </div>
               {services.map((data, index) => (
                 <div
                   className="card"
