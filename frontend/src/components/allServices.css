@@ -82,3 +82,22 @@ a:active {
   background-color: #1e1e1e;
   text-transform: uppercase;
 }
+
+
+.search input {
+  height: 35px;
+  width: 200px;
+  transform: translateY(5px);
+  margin-left: 75%;
+
+}
+
+
+
+
+
+
+
+
+
+

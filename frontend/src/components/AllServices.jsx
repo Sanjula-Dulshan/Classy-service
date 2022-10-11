@@ -27,6 +27,7 @@ export default function AllServices() {
 
       .then((res) => {
         setServices(res.data);
+        console.log("30", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -51,6 +52,31 @@ export default function AllServices() {
     }
   }, [param]);
 
+  const filterData = (data,searchKey) => {
+    const result = data.filter((item) =>
+    
+      item.title.toLowerCase().includes(searchKey) || 
+      item.category.toLowerCase().includes(searchKey) ||
+      item.title.toUpperCase().includes(searchKey) ||
+      item.category.toUpperCase().includes(searchKey)
+
+    );
+
+    
+    setServices(result);
+  };
+
+  function handleSearch(e) {
+    const searchKey = e.target.value;
+
+    axios.get("/services/").then((res) => {
+      filterData(res.data, searchKey);
+    });
+
+  }
+
+  
+
   const wishlistHandler = (data) => {
     const { email } = auth.user;
     console.log("34", data);
@@ -64,7 +90,7 @@ export default function AllServices() {
         container: "top-right",
 
         dismiss: {
-          duration: 2500,
+          duration: 2000,
           onScreen: true,
           showIcon: true,
         },
@@ -76,8 +102,20 @@ export default function AllServices() {
   };
 
   const setData = (data) => {
-    let { title, description, category, location, fee, phone, userEmail, image } =
-      data;
+
+    let {
+      title,
+      description,
+      category,
+      location,
+      fee,
+      phone,
+      userEmail,
+      serviceProviderEmail,
+      image,
+    } = data;
+
+    
     localStorage.setItem("title", title);
     localStorage.setItem("description", description);
     localStorage.setItem("category", category);
@@ -85,8 +123,13 @@ export default function AllServices() {
     localStorage.setItem("fee", fee);
     localStorage.setItem("phone", phone);
     localStorage.setItem("userEmail", userEmail);
+
+    localStorage.setItem("serviceProviderEmail", serviceProviderEmail);
+    localStorage.setItem("image", image);
+
     localStorage.setItem("image", image.url);
     localStorage.setItem("public_id",image.public_id);
+
 
     console.log(data);
   };
@@ -101,7 +144,7 @@ export default function AllServices() {
           <RiseLoader color={"#FEA82F"} loading={loading} size={30} />
         </div>
       ) : (
-        <div style={{ marginLeft: "100px" }}>
+        <div style={{ marginLeft: "250px" }}>
           {filterEmpty ? (
             <div className="d-flex align-items-center justify-content-center vh-100">
               <div className="text-center">
@@ -119,20 +162,37 @@ export default function AllServices() {
               className="ui cards mt-5  container"
               style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
             >
+              
+               <div className="search">
+                
+                  <input
+                    className="form-control "
+                    type="search"
+                    placeholder="search"
+                    name="search"
+                    onChange={handleSearch}
+
+                  />
+                    
+                </div>
+                
               {services.map((data, index) => (
                 <div
-                  className="card"
+                  className="card mt-5"
+                  
                   key={index}
                   style={{ backgroundColor: "#FBFDF3" }}
                 >
                   <div className="content">
                     <div className="heart">
-                      <a href="#" onClick={() => wishlistHandler(data)}>
+                      <a href="/allServices" onClick={() => wishlistHandler(data)}>
                         <i
                           className="heart icon right floated"
+                          
                           data-tip="Add to Wishlist"
                         />
                       </a>
+                      
                     </div>
 
                     <img
@@ -190,7 +250,9 @@ export default function AllServices() {
 
 
               ))}
+
               <ReactTooltip />
+
 
             </div>
           )}

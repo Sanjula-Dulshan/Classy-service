@@ -13,7 +13,8 @@ export default function ViewService() {
   const [fee, setFee] = useState("");
   const [phone, setPhone] = useState("");
   const [serviceProvider, setServiceProvider] = useState("");
-
+  const [avatar, setAvatar] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
   let userEmail;
@@ -28,6 +29,9 @@ export default function ViewService() {
     setLocation(localStorage.getItem("location"));
     setFee(localStorage.getItem("fee"));
     setPhone(localStorage.getItem("phone"));
+    setServiceProvider(localStorage.getItem("serviceProvider"));
+    setAvatar(localStorage.getItem("avatar"));
+    setName(localStorage.getItem("name"));
 
     userEmail = localStorage.getItem("userEmail");
     setLoading(true);
@@ -39,6 +43,7 @@ export default function ViewService() {
       .get(`user/user/${userEmail}`)
       .then((res) => {
         setServiceProvider(res.data);
+        console.log("42", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +60,9 @@ export default function ViewService() {
       ) : (
         <div className="container ">
           <div className="mt-5 ">
-            <Link to="/allservices">
+
+            <Link to="/allServices">
+
               <i
                 className="fas fa-arrow-circle-left"
                 style={{
@@ -135,7 +142,26 @@ export default function ViewService() {
                               color: "black",
                               marginLeft: "8%",
                             }}
+                            //pass service provider email to local storage
+                            onClick={() => {
+                              localStorage.setItem(
+                                "serviceProviderEmail",
+                                serviceProvider.email
+                              );
+                              localStorage.setItem(
+                                "avatar",
+                                serviceProvider.avatar
+                              );
+                              localStorage.setItem(
+                                "name",
+                                serviceProvider.name
+                              );
+
+
+                            }}
                           >
+                            {console.log("149", serviceProvider.email)}
+                            {console.log("150", serviceProvider.avatar)}
                             View Profile
                           </Link>
                         </div>

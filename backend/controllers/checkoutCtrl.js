@@ -127,7 +127,7 @@ const checkoutCtrl = {
       const { id } = req.params;
       const { status } = req.body;
       console.log("id", id);
-      console.log("status", status);
+      console.log("statusService", status);
       const data = await Checkout.findOneAndUpdate(
         { _id: id },
         { orderStatus: status }
@@ -193,7 +193,55 @@ const checkoutCtrl = {
         { _id: id },
         { feedbackStatus: feedbackStatus }
       );
+
       res.status(200).json({ msg: "Feedback status updated" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  //get orders by service provider email
+  getOrdersByServiceProviderEmail: async (req, res) => {
+    try {
+      const { serviceProviderEmail } = req.params;
+      console.log("serviceProviderEmail", serviceProviderEmail);
+
+      const orders = await Checkout.find({
+        serviceProviderEmail: serviceProviderEmail,
+      });
+      console.log("orders", orders);
+      res.status(200).json(orders);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  //mongo pipeline to get documents where orderID in feedback  match _id in checkout
+  getFeedbacks: async (req, res) => {
+    try {
+      const { serviceProviderEmail } = req.params;
+      console.log("serviceProviderEmail", serviceProviderEmail);
+
+      const feedbacks = await Checkout.aggregate([
+        { $match: { "serviceProviderEmail": serviceProviderEmail } },
+        {
+          $lookup: {
+            from: "feedbacks",
+            localField: "_id",
+            foreignField: "orderID",
+            as: "feedback",
+          },
+        },
+        { $match: { feedback: { $ne: [] } } },
+        
+      ]);
+      //print feedbacks cursor data in console
+
+      feedbacks.forEach(doc => console.log(doc));
+     
+
+     
+      res.status(200).json(feedbacks);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

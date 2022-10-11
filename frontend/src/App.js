@@ -39,6 +39,7 @@ import OrderList from "./components/OrderList";
 import RejectedOrders from "./components/RejectedOrders";
 import AcceptedOrders from "./components/AcceptedOrders";
 import AdminPage from "./components/AdminPage";
+import Home from "./components/Home";
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
             exact
             element={isLogged ? <AllServices /> : <NotFound />}
           />
+          
           <Route
             path="/addService"
             exact
@@ -144,7 +146,11 @@ function App() {
             exact
             element={isLogged ? <ViewService /> : <NotFound />}
           />
-
+          <Route
+            path="/home"
+            exact
+            element={<Home/>}
+          />
           <Route
             path="/viewServiceProfile"
             exact
