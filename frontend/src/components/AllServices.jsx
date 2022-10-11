@@ -90,7 +90,7 @@ export default function AllServices() {
         container: "top-right",
 
         dismiss: {
-          duration: 2500,
+          duration: 2000,
           onScreen: true,
           showIcon: true,
         },
@@ -152,31 +152,37 @@ export default function AllServices() {
               className="ui cards mt-5  container"
               style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
             >
+              
                <div className="search">
                 
                   <input
-                    className="form-control"
+                    className="form-control "
                     type="search"
                     placeholder="search"
                     name="search"
                     onChange={handleSearch}
-                    
+
                   />
+                    
                 </div>
+                
               {services.map((data, index) => (
                 <div
-                  className="card"
+                  className="card mt-5"
+                  
                   key={index}
                   style={{ backgroundColor: "#FBFDF3" }}
                 >
                   <div className="content">
                     <div className="heart">
-                      <a href="#" onClick={() => wishlistHandler(data)}>
+                      <a href="/allServices" onClick={() => wishlistHandler(data)}>
                         <i
                           className="heart icon right floated"
+                          
                           data-tip="Add to Wishlist"
                         />
                       </a>
+                      <ReactTooltip globalEventOff="click" />
                     </div>
 
                     <img
@@ -231,7 +237,7 @@ export default function AllServices() {
                   </div>
                 </div>
               ))}
-              <ReactTooltip />
+           
             </div>
           )}
         </div>

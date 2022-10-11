@@ -83,6 +83,7 @@ export default function OrderList() {
       });
     }
   }, [loading, onEdit]);
+
   const handleChangeInput = (e) => {
     console.log("e.target: ", e.target);
     const { name, value } = e.target;
@@ -238,7 +239,7 @@ export default function OrderList() {
         <div>
           <div className="report">
             <button onClick={() => generatePDF(orders)}>
-            <i className="fa-file-arrow-down fa-2x"><FontAwesomeIcon icon={faFileDownload} /></i>
+            <i className="fa-file-arrow-down "><FontAwesomeIcon icon={faFileDownload} /></i>
            {""}  Download My Report
             </button>
           </div>
@@ -278,7 +279,7 @@ export default function OrderList() {
                   <div className="row g-0 ">
                     <div className="col-md-2">
                       <img
-                        // src={orderData.image.url}
+                        src={orderData.image.url}
                         className="img mt-2"
                         style={{ height: "60%", width: "80%" }}
                       />
