@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showErrMsg, showSuccessMsg } from "./utils/notification/Notification";
-import { isEmpty, isEmail, isLength } from "./utils/validation/Validation.js";
+import { isEmpty, isEmail, isLength,isMatch } from "./utils/validation/Validation.js";
 import PasswordChecklist from "react-password-checklist";
 
 const initialState = {
@@ -41,20 +41,22 @@ function Register() {
     )
       return setUser({
         ...user,
-        err: "Please fill in all fields.",
+        err: "Please fill in all fields!",
         success: "",
       });
 
     if (!isEmail(email))
-      return setUser({ ...user, err: "Invalid email type.", success: "" });
+      return setUser({ ...user, err: "Invalid email type!", success: "" });
 
     if (isLength(password))
       return setUser({
         ...user,
-        err: "Password must have at least 8 characters.",
+        err: "Password must have at least 8 characters!",
         success: "",
       });
 
+    if (!isMatch(password, cf_password))
+      return setUser({ ...user, err: "Password and confirm password not matched!", success: "" });
     try {
       const res = await axios.post("/user/register", {
         name,
