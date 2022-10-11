@@ -48,6 +48,19 @@ export default function Header() {
         </h1>
 
         <ul style={transForm}>
+        <li>
+            <Link className="header-al" to="#">
+              {" "}
+              About
+            </Link>
+          </li>
+          <li>
+            <Link className="header-al" to="#">
+              {" "}
+              Contact Us
+            </Link>
+          </li>
+
           <li>
             {iscustomer ? (
               <Link className="header-al" to="/allServices">
@@ -99,18 +112,7 @@ export default function Header() {
               ""
             )}
           </li>
-          <li>
-            <Link className="header-al" to="#">
-              {" "}
-              About
-            </Link>
-          </li>
-          <li>
-            <Link className="header-al" to="#">
-              {" "}
-              Contact Us
-            </Link>
-          </li>
+         
           <li>
             {isAdmin ? (
               <Link className="header-al" to="/admin">
