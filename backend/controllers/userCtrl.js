@@ -13,19 +13,27 @@ const userCtrl = {
       const { name, email, nic, mobile, password } = req.body;
 
       if (!name || !email || !nic || !mobile || !password)
-        return res.status(400).json({ msg: "Please fill in all fields." });
+        return res.status(400).json({ msg: "Please fill in all fields!" });
 
       if (!validateEmail(email))
-        return res.status(400).json({ msg: "Invalid emails." });
+        return res.status(400).json({ msg: "Invalid email!" });
 
       const user = await Users.findOne({ email });
       if (user)
-        return res.status(400).json({ msg: "This email already exists." });
+        return res.status(400).json({ msg: "This email already exists!" });
 
       if (password.length < 8)
         return res
           .status(400)
-          .json({ msg: "Password must be at least 8 characters." });
+          .json({ msg: "Password must be at least 8 characters!" });
+
+      if(password.search(/[A-Z]/) < 0) return res
+      .status(400)
+      .json({ msg: "Password must have uppercase letters!" });
+
+       if (password.search(/[0-9]/) < 0) return res
+       .status(400)
+       .json({ msg: "Password must have numeric values!" });
 
       const passwordHash = await bcrypt.hash(password, 12);
       //
@@ -65,11 +73,6 @@ const userCtrl = {
       const check = await Users.findOne({ email });
       if (check)
         return res.status(400).json({ msg: "This email already exists." });
-
-      if (checknic)
-        return res.status(400).json({
-          msg: "There is an existing account under your NIC number!.",
-        });
 
       const newUser = new Users({
         name,

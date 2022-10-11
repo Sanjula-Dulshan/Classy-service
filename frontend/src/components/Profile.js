@@ -101,12 +101,19 @@ export default function Profile() {
     if (isLength(password))
       return setData({
         ...data,
-        err: "Password must be at least 8 characters.",
+        err: "Password must be at least 8 characters!",
         success: "",
       });
 
     if (!isMatch(password, cf_password))
-      return setData({ ...data, err: "Password did not match.", success: "" });
+      return setData({ ...data, err: "Password did not match!", success: "" });
+
+    if(password.search(/[A-Z]/) < 0)
+    return setData({ ...data, err: "Password must have uppercase letters!", success: "" });
+
+    if (password.search(/[0-9]/) < 0)
+       return setData({ ...data, err: "Password must have numeric value!", success: "" });
+
 
     try {
       axios.post(
