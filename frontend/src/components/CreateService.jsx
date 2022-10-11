@@ -352,7 +352,7 @@ export default function CreateService() {
                           id="phone"
                           required
                           onChange={handleChangeInput}
-                          pattern="07[1,2,5,6,7,8][0-9]{7}"
+                          pattern="07[1,2,5,6,7,8,9,0][0-9]{7}"
                           maxLength="10"
                           placeholder="07xxxxxxxx"
                           value={service.phone}

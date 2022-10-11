@@ -52,17 +52,15 @@ export default function AllServices() {
     }
   }, [param]);
 
-  const filterData = (data,searchKey) => {
-    const result = data.filter((item) =>
-    
-      item.title.toLowerCase().includes(searchKey) || 
-      item.category.toLowerCase().includes(searchKey) ||
-      item.title.toUpperCase().includes(searchKey) ||
-      item.category.toUpperCase().includes(searchKey)
-
+  const filterData = (data, searchKey) => {
+    const result = data.filter(
+      (item) =>
+        item.title.toLowerCase().includes(searchKey) ||
+        item.category.toLowerCase().includes(searchKey) ||
+        item.title.toUpperCase().includes(searchKey) ||
+        item.category.toUpperCase().includes(searchKey)
     );
 
-    
     setServices(result);
   };
 
@@ -72,12 +70,10 @@ export default function AllServices() {
     axios.get("/services/").then((res) => {
       filterData(res.data, searchKey);
     });
-
   }
 
-  
-
-  const wishlistHandler = (data) => {
+  const wishlistHandler = (data, e) => {
+    e.preventDefault();
     const { email } = auth.user;
     console.log("34", data);
     axios.post(`/wishlist/${email}`, data).then((res) => {
@@ -102,7 +98,6 @@ export default function AllServices() {
   };
 
   const setData = (data) => {
-
     let {
       title,
       description,
@@ -115,7 +110,6 @@ export default function AllServices() {
       image,
     } = data;
 
-    
     localStorage.setItem("title", title);
     localStorage.setItem("description", description);
     localStorage.setItem("category", category);
@@ -123,18 +117,12 @@ export default function AllServices() {
     localStorage.setItem("fee", fee);
     localStorage.setItem("phone", phone);
     localStorage.setItem("userEmail", userEmail);
-
     localStorage.setItem("serviceProviderEmail", serviceProviderEmail);
-    localStorage.setItem("image", image);
-
     localStorage.setItem("image", image.url);
-    localStorage.setItem("public_id",image.public_id);
-
+    localStorage.setItem("public_id", image.public_id);
 
     console.log(data);
   };
-
-
 
   return (
     <div>
@@ -145,16 +133,31 @@ export default function AllServices() {
         </div>
       ) : (
         <div style={{ marginLeft: "250px" }}>
-          {filterEmpty ? (
-            <div className="d-flex align-items-center justify-content-center vh-100">
-              <div className="text-center">
-                <p className="fs-3">
-                  {" "}
-                  <span className="text-danger">Opps!</span> Services not found.
-                </p>
-                <p className="lead">
-                  The services you’re looking for doesn’t exist.
-                </p>
+          {services.length === 0 ? (
+            <div>
+              <div
+                className="ui cards mt-5  container search"
+                style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
+              >
+                <input
+                  className="form-control "
+                  type="search"
+                  placeholder="search"
+                  name="search"
+                  onChange={handleSearch}
+                />
+              </div>
+              <div className="d-flex align-items-center justify-content-center vh-100">
+                <div className="text-center">
+                  <p className="fs-3">
+                    {" "}
+                    <span className="text-danger">Opps!</span> Services not
+                    found.
+                  </p>
+                  <p className="lead">
+                    The services you’re looking for doesn’t exist.
+                  </p>
+                </div>
               </div>
             </div>
           ) : (
@@ -162,37 +165,33 @@ export default function AllServices() {
               className="ui cards mt-5  container"
               style={{ marginLeft: "10%", marginBottom: "30px", zIndex: "3" }}
             >
-              
-               <div className="search">
-                
-                  <input
-                    className="form-control "
-                    type="search"
-                    placeholder="search"
-                    name="search"
-                    onChange={handleSearch}
+              <div className="search">
+                <input
+                  className="form-control "
+                  type="search"
+                  placeholder="search"
+                  name="search"
+                  onChange={handleSearch}
+                />
+              </div>
 
-                  />
-                    
-                </div>
-                
               {services.map((data, index) => (
                 <div
                   className="card mt-5"
-                  
                   key={index}
                   style={{ backgroundColor: "#FBFDF3" }}
                 >
                   <div className="content">
                     <div className="heart">
-                      <a href="/allServices" onClick={() => wishlistHandler(data)}>
+                      <a
+                        href="/allServices"
+                        onClick={(e) => wishlistHandler(data, e)}
+                      >
                         <i
                           className="heart icon right floated"
-                          
                           data-tip="Add to Wishlist"
                         />
                       </a>
-                      
                     </div>
 
                     <img
@@ -247,13 +246,9 @@ export default function AllServices() {
                     </div>
                   </div>
                 </div>
-
-
               ))}
 
               <ReactTooltip />
-
-
             </div>
           )}
         </div>

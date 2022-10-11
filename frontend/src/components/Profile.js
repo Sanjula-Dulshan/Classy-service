@@ -1,6 +1,6 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { isLength, isMatch } from "./utils/validation/Validation";
@@ -145,7 +145,6 @@ export default function Profile() {
         localStorage.clear();
 
         window.location.href = "/";
-
       });
     } catch (err) {
       setData({ ...data, err: err.response.data.msg, success: "" });
@@ -161,19 +160,19 @@ export default function Profile() {
         {loading && <h3>Loading.....</h3>}
       </div>
       <Link to="/allServices">
-              <i
-                className="fas fa-arrow-circle-left"
-                style={{
-                  fontSize: "22px",
-                  marginLeft: "18%",
-                  marginTop:"14px",
-                  marginBottom:"-30px",
-                  color: "#FEA82F",
-                }}
-              >
-                Back
-              </i>
-            </Link>
+        <i
+          className="fas fa-arrow-circle-left"
+          style={{
+            fontSize: "22px",
+            marginLeft: "18%",
+            marginTop: "14px",
+            marginBottom: "-30px",
+            color: "#FEA82F",
+          }}
+        >
+          Back
+        </i>
+      </Link>
       <img
         className="profimage"
         src="https://res.cloudinary.com/dl99x/image/upload/v1662162175/Sample_User_Icon_urnlt1.png"
@@ -258,13 +257,15 @@ export default function Profile() {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
             <input
-              type="text"
+              type="tel"
               className="form-control"
               id="mobile"
               name="mobile"
-              placeholder="Mobile Number"
               defaultValue={user.mobile}
               onChange={handleChange}
+              pattern="07[1,2,5,6,7,8,9,0][0-9]{7}"
+              maxLength="10"
+              placeholder="07xxxxxxxx"
             />
           </div>
           <button className="delbtn" onClick={() => confirm(user._id)}>

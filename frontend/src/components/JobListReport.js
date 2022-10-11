@@ -57,7 +57,7 @@ const generatePDF = (report) => {
   // startY is basically margin-top
   var img = new Image();
   img.src =
-    "https://res.cloudinary.com/waste123/image/upload/v1663836090/u1icfoijw55ertgv7rvo.png";
+    "https://res.cloudinary.com/waste123/image/upload/v1665480912/Classy/sviymrxmn8pgnk80cywq.png";
   doc.addImage(img, "png", 10, 10, 180, 50);
 
   //doc.autoTable(tableColumn, tableRows, { startY: 70 });

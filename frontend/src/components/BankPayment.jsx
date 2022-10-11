@@ -3,12 +3,11 @@ import axios from "axios";
 import Loading from "./utils/loading/Loading";
 import "./AddBank.css";
 import Sidebar from "./Sidebar";
-import LoadingOverlay from 'react-loading-overlay';
-import PropagateLoader from 'react-spinners/PropagateLoader';
-import { confirmAlert } from 'react-confirm-alert';
-import { Store } from 'react-notifications-component'; 
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
-
+import LoadingOverlay from "react-loading-overlay";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import { confirmAlert } from "react-confirm-alert";
+import { Store } from "react-notifications-component";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function BankPayment() {
   const [loading, setLoading] = useState(false);
@@ -18,8 +17,9 @@ export default function BankPayment() {
   const [bankName, setBankName] = useState();
   const [branchName, setBranchName] = useState();
   const [image, setImage] = useState(false);
-  const [checkoutId, setCheckoutId] = useState(localStorage.getItem("checkoutId"));
-
+  const [checkoutId, setCheckoutId] = useState(
+    localStorage.getItem("checkoutId")
+  );
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -55,7 +55,6 @@ export default function BankPayment() {
     }
   };
 
-
   const handleDestroy = async () => {
     try {
       setLoading(true);
@@ -71,57 +70,54 @@ export default function BankPayment() {
     display: image ? "block" : "none",
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-      setLoading(true);
-      const newBank = {
-        uid,
-        Date,
-        invoiceNo,
-        bankName,
-        branchName,
-        image,
-        checkoutId
-      }
+    setLoading(true);
+    const newBank = {
+      uid,
+      Date,
+      invoiceNo,
+      bankName,
+      branchName,
+      image,
+      checkoutId,
+    };
 
-      console.log(newBank);
-      try {
-        await axios.post("/bankpay/", newBank).then((res) => {
+    console.log(newBank);
+    try {
+      await axios
+        .post("/bankpay/", newBank)
+        .then((res) => {
           console.log(res.data);
 
           Store.addNotification({
-          title: "Bank Details Saved Successfully",
-          message: "Your will recive your payments to this account",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          type: "success",
-          insert: "top",
-          container: "top-right",
-          
-          dismiss: {
-            duration: 1500,
-            onScreen: true,
-            showIcon: true
-          },
+            title: "Bank Details Saved Successfully",
+            message: "Your will recive your payments to this account",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            type: "success",
+            insert: "top",
+            container: "top-right",
 
-          width:400
-        }); 
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1500);
-        }).catch((err) => {
+            dismiss: {
+              duration: 1500,
+              onScreen: true,
+              showIcon: true,
+            },
+
+            width: 400,
+          });
+          setTimeout(() => {
+            window.location.href = "/allservices";
+          }, 1500);
+        })
+        .catch((err) => {
           console.log(err);
         });
-        
-        
-      } catch (err) {
-        alert(err);
-      }
-      setLoading(false);
-    
-    
+    } catch (err) {
+      alert(err);
+    }
+    setLoading(false);
   };
 
   const cancel = (e) => {
@@ -129,100 +125,96 @@ export default function BankPayment() {
     window.location.href = "/";
   };
 
-  
   return (
-    
     <div className="b-card-row">
       <Sidebar />
       <div className="b-card-column">
-        <LoadingOverlay
-              active={loading}
-              spinner={<PropagateLoader />}
-          >
-        <div className="bg-card">
-          <label className="title">Bank Deposit</label>
-          <div className="add_bank">
-
-            
-           
-            <form onSubmit={handleSubmit}>
-              
-                             
-
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="title" className="form-label">
-                    Invoice No
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="inv_number"
-                    id="inv_number"
-                    required
-                    onChange={(e) => setInvoiceNo(e.target.value)}
-                  />
+        <LoadingOverlay active={loading} spinner={<PropagateLoader />}>
+          <div className="bg-card">
+            <label className="title">Bank Deposit</label>
+            <div className="add_bank">
+              <form onSubmit={handleSubmit}>
+                <div className="row mt-4">
+                  <div className="col">
+                    <label htmlFor="title" className="form-label">
+                      Invoice No
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="inv_number"
+                      id="inv_number"
+                      required
+                      onChange={(e) => setInvoiceNo(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="row mt-4">
-                <div className="col">
-                  <label htmlFor="title" className="form-label">
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    name="acc_number"
-                    id="acc_number"
-                    required
-                    onChange={(e) => setDate(e.target.value)}
-                  />
+                <div className="row mt-4">
+                  <div className="col">
+                    <label htmlFor="title" className="form-label">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="acc_number"
+                      id="acc_number"
+                      required
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              
-              <div className="row mt-3">
-                <div className="col">
-                  <label htmlFor="categories" className="form-label">
-                    Bank
-                  </label>
-                  <select
-                    name="bank"
-                    className="form-control"
-                    onChange={(e) => setBankName(e.target.value)}
-                  >
-                    <option value="">Select a category</option>
-                    <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
-                    <option value="Sampath Bank Plc">Sampath Bank Plc</option>
-                    <option value="National Savings Bank">National Savings Bank</option>
-                    <option value="People’s Bank">People’s Bank</option>
-                    <option value="Hatton National Bank">Hatton National Bank</option>
-                    <option value="Seylan Bank Plc">Seylan Bank Plc</option>
-                    <option value="National Development Bank Plc">National Development Bank Plc</option>
-                    <option value="Nations Trust Bank Plc">Nations Trust Bank Plc</option>
-                    <option value="DFCC Bank">DFCC Bank</option>
-                  </select>
+                <div className="row mt-3">
+                  <div className="col">
+                    <label htmlFor="categories" className="form-label">
+                      Bank
+                    </label>
+                    <select
+                      name="bank"
+                      className="form-control"
+                      onChange={(e) => setBankName(e.target.value)}
+                    >
+                      <option value="">Select a category</option>
+                      <option value="Commercial Bank of Ceylon">
+                        Commercial Bank of Ceylon
+                      </option>
+                      <option value="Sampath Bank Plc">Sampath Bank Plc</option>
+                      <option value="National Savings Bank">
+                        National Savings Bank
+                      </option>
+                      <option value="People’s Bank">People’s Bank</option>
+                      <option value="Hatton National Bank">
+                        Hatton National Bank
+                      </option>
+                      <option value="Seylan Bank Plc">Seylan Bank Plc</option>
+                      <option value="National Development Bank Plc">
+                        National Development Bank Plc
+                      </option>
+                      <option value="Nations Trust Bank Plc">
+                        Nations Trust Bank Plc
+                      </option>
+                      <option value="DFCC Bank">DFCC Bank</option>
+                    </select>
+                  </div>
+                  <div className="col">
+                    <label htmlFor="location" className="form-label">
+                      Branch
+                    </label>
+                    <input
+                      type="text"
+                      name="branch"
+                      className="form-control"
+                      id="branch"
+                      required
+                      onChange={(e) => setBranchName(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="col">
-                  <label htmlFor="location" className="form-label">
-                    Branch
-                  </label>
-                  <input
-                    type="text"
-                    name="branch" 
-                    className="form-control"
-                    id="branch"
-                    required
-                    onChange={(e) => setBranchName(e.target.value)}
-                  />
-                </div>
-              </div>
 
-             
-
-              <div className="create_service">
-              <div className="upload">
+                <div className="create_service">
+                  <div className="upload">
                     <input
                       type="file"
                       name="file"
@@ -240,29 +232,23 @@ export default function BankPayment() {
                       </div>
                     )}
                   </div>
-
-
-              </div>
-              <div className="row ">
-                <div className="col flex_box">
-                  
+                </div>
+                <div className="row ">
+                  <div className="col flex_box">
                     <button onClick={cancel} className="btn btn-cancel">
                       Cancel
                     </button>
-              
-                  <button type="submit" className="btn btn-create">
-                    Save
-                  </button>
+
+                    <button type="submit" className="btn btn-create">
+                      Save
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-            
+              </form>
+            </div>
           </div>
-        </div>
         </LoadingOverlay>
       </div>
     </div>
-
-    
   );
 }

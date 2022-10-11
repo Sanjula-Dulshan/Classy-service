@@ -165,8 +165,10 @@ export default function UserAllServices() {
   };
 
   const filterData = (data, searchkey) => {
-    const result = data.filter((service) =>
-      service.title.toLowerCase().includes(searchkey)
+    const result = data.filter(
+      (service) =>
+        service.title.toLowerCase().includes(searchkey) ||
+        service.title.toLowerCase().includes(searchkey)
     );
 
     setServices(result);
@@ -227,7 +229,7 @@ export default function UserAllServices() {
           <div>
             <tr className=" float-end">
               <td>
-                <div className="search">
+                <div className="no-search">
                   <input
                     className="form-control"
                     type="search"

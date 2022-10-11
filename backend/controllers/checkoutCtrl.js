@@ -12,11 +12,9 @@ const checkoutCtrl = {
   getAllOrders: async (req, res) => {
     try {
       const { userEmail } = req.params;
-      console.log("userEmail", userEmail);
       const checkouts = await Checkout.find({
-        email: userEmail,
+        uid: userEmail,
       });
-      console.log("checkouts", checkouts);
       res.status(200).json(checkouts);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -24,7 +22,6 @@ const checkoutCtrl = {
   },
 
   createCheckout: async (req, res) => {
-    console.log("In ctrl ", req.body);
     try {
       const {
         uid,
@@ -66,9 +63,7 @@ const checkoutCtrl = {
       });
 
       await newCheckout.save();
-      console.log("save success");
-      //print the id of the new checkout
-      console.log(newCheckout._id);
+
       res.json({ msg: "Checkout added successfully!", id: newCheckout._id });
     } catch (err) {
       console.log(err.message);
@@ -126,8 +121,7 @@ const checkoutCtrl = {
     try {
       const { id } = req.params;
       const { status } = req.body;
-      console.log("id", id);
-      console.log("statusService", status);
+
       const data = await Checkout.findOneAndUpdate(
         { _id: id },
         { orderStatus: status }
@@ -187,8 +181,7 @@ const checkoutCtrl = {
     try {
       const { id } = req.params;
       const { feedbackStatus } = req.body;
-      console.log("id", id);
-      console.log("feedbackStatus", feedbackStatus);
+
       const data = await Checkout.findOneAndUpdate(
         { _id: id },
         { feedbackStatus: feedbackStatus }
@@ -204,12 +197,11 @@ const checkoutCtrl = {
   getOrdersByServiceProviderEmail: async (req, res) => {
     try {
       const { serviceProviderEmail } = req.params;
-      console.log("serviceProviderEmail", serviceProviderEmail);
 
       const orders = await Checkout.find({
         serviceProviderEmail: serviceProviderEmail,
       });
-      console.log("orders", orders);
+
       res.status(200).json(orders);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -236,6 +228,7 @@ const checkoutCtrl = {
         
       ]);
       //print feedbacks cursor data in console
+      console.log("feedbacks", feedbacks);
 
       feedbacks.forEach(doc => console.log(doc));
      

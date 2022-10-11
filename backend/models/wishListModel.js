@@ -12,13 +12,21 @@ const wishListSchema = new Schema(
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
     image: {
       type: Object,
     },
     userEmail: {
+      type: String,
+      required: true,
+    },
+    serviceProviderEmail: {
+      type: String,
+      required: true,
+    },
+    fee: {
       type: String,
       required: true,
     },

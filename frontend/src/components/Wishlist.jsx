@@ -63,12 +63,25 @@ export default function Wishlist() {
           width: 400,
         });
         window.location.reload(false);
-      
-
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const setData = (data) => {
+    let { title, fee, userEmail, serviceProviderEmail, image } = data;
+
+    localStorage.setItem("title", title);
+
+    localStorage.setItem("fee", fee);
+    localStorage.setItem("userEmail", userEmail);
+    localStorage.setItem("serviceProviderEmail", serviceProviderEmail);
+
+    localStorage.setItem("image", image.url);
+    localStorage.setItem("public_id", image.public_id);
+
+    console.log(data);
   };
 
   return (
@@ -106,12 +119,14 @@ export default function Wishlist() {
               key={index}
               style={{ backgroundColor: "#FBFDF3" }}
             >
+              {console.log(data)}
               <div className="row g-0 ">
                 <div className="col-md-2">
                   <img
                     src={data.image.url}
                     className="img mt-2"
                     style={{ height: "90%", width: "90%" }}
+                    alt="..."
                   />
                 </div>
                 <div className="col-md-8">
@@ -130,11 +145,12 @@ export default function Wishlist() {
                             <td>
                               <Link
                                 className="ui button"
-                                to={""}
+                                to={"/checkout"}
                                 style={{
                                   backgroundColor: "#FEA82F",
                                   color: "black",
                                 }}
+                                onClick={() => setData(data)}
                               >
                                 Buy
                               </Link>
@@ -155,7 +171,7 @@ export default function Wishlist() {
                         </div>
                       </div>
                     </p>
-
+                    <p className="card-text">Price: {data.fee}</p>
                     <p className="card-text">
                       <i className="bi bi-telephone ">{data.phone}</i>
                     </p>

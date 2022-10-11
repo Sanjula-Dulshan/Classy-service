@@ -41,7 +41,6 @@ import AcceptedOrders from "./components/AcceptedOrders";
 import AdminPage from "./components/AdminPage";
 import Home from "./components/Home";
 
-
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
@@ -79,7 +78,9 @@ function App() {
 
         <Header />
         <Routes>
-          <Route path="/" exact element={<Login />} />
+          <Route path="/" exact element={<Home />} />
+
+          <Route path="/login" exact element={<Login />} />
           <Route
             path="/allServices"
             exact
@@ -90,7 +91,7 @@ function App() {
             exact
             element={isLogged ? <AllServices /> : <NotFound />}
           />
-          
+
           <Route
             path="/addService"
             exact
@@ -127,7 +128,7 @@ function App() {
           <Route
             path="/user/activate/:activation_token"
             exact
-            element={<ActivationEmail />}
+            element={isLogged ? <ActivationEmail /> : <NotFound />}
           />
 
           <Route
@@ -146,11 +147,7 @@ function App() {
             exact
             element={isLogged ? <ViewService /> : <NotFound />}
           />
-          <Route
-            path="/home"
-            exact
-            element={<Home/>}
-          />
+
           <Route
             path="/viewServiceProfile"
             exact
@@ -162,21 +159,44 @@ function App() {
             element={isLogged ? <OrderList /> : <NotFound />}
           />
 
-          <Route path="/addBank" exact element={<AddBank />} />
-          <Route path="/editBank" exact element={<EditBank />} />
-          <Route path="/selectPayMethod" exact element={<SelectPayMethod />} />
+          <Route
+            path="/addBank"
+            exact
+            element={isLogged ? <AddBank /> : <NotFound />}
+          />
+          <Route
+            path="/editBank"
+            exact
+            element={isLogged ? <EditBank /> : <NotFound />}
+          />
+          <Route
+            path="/selectPayMethod"
+            exact
+            element={isLogged ? <SelectPayMethod /> : <NotFound />}
+          />
 
-          <Route path="/checkout" exact element={<Checkout />} />
+          <Route
+            path="/checkout"
+            exact
+            element={isLogged ? <Checkout /> : <NotFound />}
+          />
 
           <Route
             path="/transactionReport"
             exact
-            element={<TransactionReport />}
+            element={isAdmin ? <TransactionReport /> : <NotFound />}
           />
 
-
-          <Route path="/bankPayment" exact element={<BankPayment />} />
-          <Route path="/cardPayment" exact element={<CardPay />} />
+          <Route
+            path="/bankPayment"
+            exact
+            element={isLogged ? <BankPayment /> : <NotFound />}
+          />
+          <Route
+            path="/cardPayment"
+            exact
+            element={isLogged ? <CardPay /> : <NotFound />}
+          />
 
           <Route
             path="/admin"

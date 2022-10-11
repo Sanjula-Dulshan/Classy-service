@@ -7,6 +7,7 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import { confirmAlert } from "react-confirm-alert";
 import { Store } from "react-notifications-component";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import Sidebar from "./Sidebar";
 
 export default function EditBank() {
   const [loading, setLoading] = useState(false);
@@ -169,150 +170,148 @@ export default function EditBank() {
   // }
 
   return (
+    <div>
+      <Sidebar />
 
-    <div className="b-card-row">
-      <div className="b-card-column">
-        <LoadingOverlay
-              active={loading}
-              spinner={<PropagateLoader />}
-          >
-        <div className="bg-card">
-          <label className="title">EDIT BANK DETAILS</label>
-          <div className="add_bank">
-
-            
-           
-            <form onSubmit={handleSubmit}>
-                            
-                <div className="">
-                  <label htmlFor="title" className="form-label">
-                    Account Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="acc_name"
-                    id="acc_name"
-                    required
-                    value={accName}
-                    disabled={disabled}
-                    onChange={(e) => setAccName(e.target.value)}
-                  />
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col">
+      <div className="b-card-row">
+        <div className="b-card-column">
+          <LoadingOverlay active={loading} spinner={<PropagateLoader />}>
+            <div className="bg-card">
+              <label className="title">EDIT BANK DETAILS</label>
+              <div className="add_bank">
+                <form onSubmit={handleSubmit}>
+                  <div className="">
                     <label htmlFor="title" className="form-label">
-                      Account Number
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      name="acc_number"
-                      id="acc_number"
-                      disabled={disabled}
-                      required
-                      value={accNumber}
-                      onChange={(e) => setAccNumber(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col">
-                    <label htmlFor="categories" className="form-label">
-                      Bank
-                    </label>
-                    <select
-                      name="bank"
-                      className="form-control"
-                      id="bank"
-                      required
-                      disabled={disabled}
-                      value={bankName}
-                      onChange={(e) => setBankName(e.target.value)}
-                    >
-                      <option value="">Select a category</option>
-                      <option value="Commercial Bank of Ceylon">
-                        Commercial Bank of Ceylon
-                      </option>
-                      <option value="Sampath Bank Plc">Sampath Bank Plc</option>
-                      <option value="National Savings Bank">
-                        National Savings Bank
-                      </option>
-                      <option value="People’s Bank">People’s Bank</option>
-                      <option value="Hatton National Bank">
-                        Hatton National Bank
-                      </option>
-                      <option value="Seylan Bank Plc">Seylan Bank Plc</option>
-                      <option value="National Development Bank Plc">
-                        National Development Bank Plc
-                      </option>
-                      <option value="Nations Trust Bank Plc">
-                        Nations Trust Bank Plc
-                      </option>
-                      <option value="DFCC Bank">DFCC Bank</option>
-                    </select>
-                  </div>
-                  <div className="col">
-                    <label htmlFor="location" className="form-label">
-                      Branch
+                      Account Name
                     </label>
                     <input
                       type="text"
-                      name="branch"
                       className="form-control"
-                      id="branch"
+                      name="acc_name"
+                      id="acc_name"
                       required
+                      value={accName}
                       disabled={disabled}
-                      value={branchName}
-                      onChange={(e) => setBranchName(e.target.value)}
+                      onChange={(e) => setAccName(e.target.value)}
                     />
                   </div>
-                </div>
 
-                <div className="row mt-5">
-                  <div className="col">
-                    <div className="form-check">
-                      <div>
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          name="needBuyerAddress"
-                          id="exampleCheck1"
-                          onChange={(e) => setIsAgree(e.target.checked)}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleCheck1"
-                        >
-                          I accept terms and conditions
-                        </label>
+                  <div className="row mt-4">
+                    <div className="col">
+                      <label htmlFor="title" className="form-label">
+                        Account Number
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        name="acc_number"
+                        id="acc_number"
+                        disabled={disabled}
+                        required
+                        value={accNumber}
+                        onChange={(e) => setAccNumber(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row mt-3">
+                    <div className="col">
+                      <label htmlFor="categories" className="form-label">
+                        Bank
+                      </label>
+                      <select
+                        name="bank"
+                        className="form-control"
+                        id="bank"
+                        required
+                        disabled={disabled}
+                        value={bankName}
+                        onChange={(e) => setBankName(e.target.value)}
+                      >
+                        <option value="">Select a category</option>
+                        <option value="Commercial Bank of Ceylon">
+                          Commercial Bank of Ceylon
+                        </option>
+                        <option value="Sampath Bank Plc">
+                          Sampath Bank Plc
+                        </option>
+                        <option value="National Savings Bank">
+                          National Savings Bank
+                        </option>
+                        <option value="People’s Bank">People’s Bank</option>
+                        <option value="Hatton National Bank">
+                          Hatton National Bank
+                        </option>
+                        <option value="Seylan Bank Plc">Seylan Bank Plc</option>
+                        <option value="National Development Bank Plc">
+                          National Development Bank Plc
+                        </option>
+                        <option value="Nations Trust Bank Plc">
+                          Nations Trust Bank Plc
+                        </option>
+                        <option value="DFCC Bank">DFCC Bank</option>
+                      </select>
+                    </div>
+                    <div className="col">
+                      <label htmlFor="location" className="form-label">
+                        Branch
+                      </label>
+                      <input
+                        type="text"
+                        name="branch"
+                        className="form-control"
+                        id="branch"
+                        required
+                        disabled={disabled}
+                        value={branchName}
+                        onChange={(e) => setBranchName(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row mt-5">
+                    <div className="col">
+                      <div className="form-check">
+                        <div>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            name="needBuyerAddress"
+                            id="exampleCheck1"
+                            onChange={(e) => setIsAgree(e.target.checked)}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="exampleCheck1"
+                          >
+                            I accept terms and conditions
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="row ">
-                  <div className="col flex_box">
-                    <button onClick={handleEnable} className="btn btn-cancel">
-                      Edit
-                    </button>
-                    <button onClick={handleDelete} className="btn btn-del">
-                      Delete
-                    </button>
-                    <button
-                      disabled={disabled}
-                      type="submit"
-                      className="btn btn-create"
-                    >
-                      Save
-                    </button>
+                  <div className="row ">
+                    <div className="col flex_box">
+                      <button onClick={handleEnable} className="btn btn-cancel">
+                        Edit
+                      </button>
+                      <button onClick={handleDelete} className="btn btn-del">
+                        Delete
+                      </button>
+                      <button
+                        disabled={disabled}
+                        type="submit"
+                        className="btn btn-create"
+                      >
+                        Save
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
-          </div>
-        </LoadingOverlay>
+          </LoadingOverlay>
+        </div>
       </div>
     </div>
   );

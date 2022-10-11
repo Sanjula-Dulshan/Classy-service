@@ -1,6 +1,6 @@
 import "./CSS/userFunction.css";
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { showErrMsg, showSuccessMsg } from "./utils/notification/Notification";
 import { isEmpty, isEmail, isLength } from "./utils/validation/Validation.js";
@@ -65,7 +65,7 @@ function Register() {
       });
 
       setUser({ ...user, err: "", success: res.data.msg });
-      navigate('/');
+      navigate("/");
     } catch (err) {
       err.response.data.msg &&
         setUser({ ...user, err: err.response.data.msg, success: "" });
@@ -163,14 +163,16 @@ function Register() {
                 Mobile Number
               </label>
               <input
-                type="text"
+                type="tel"
                 style={{ width: "450px" }}
                 className="inp-fields"
                 id="mobile"
-                placeholder="Enter Mobile Number"
                 value={mobile}
                 name="mobile"
                 onChange={handleChangeInput}
+                pattern="07[1,2,5,6,7,8,9,0][0-9]{7}"
+                maxLength="10"
+                placeholder="07xxxxxxxx"
                 required
               />
             </div>

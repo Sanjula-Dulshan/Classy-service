@@ -24,7 +24,7 @@ function NotFound() {
               <span className="text-danger">Opps!</span> Page not found.
             </p>
             <p className="lead">The page you’re looking for doesn’t exist.</p>
-            <a href="/" className="btn btn-warning">
+            <a href="/login" className="btn btn-warning">
               Go To Login
             </a>
           </div>

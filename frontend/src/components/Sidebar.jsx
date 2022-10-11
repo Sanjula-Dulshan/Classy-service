@@ -60,6 +60,29 @@ export default function Sidebar() {
                   },
                 ],
               },
+              {
+                title: "",
+                itemId: "#",
+                elemBefore: () => (
+                  <span className="fw-bold fs-5">Bank Details</span>
+                ),
+                subNav: [
+                  {
+                    title: "Add Bank Details",
+                    itemId: "/addBank",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/ios-glyphs/20/000000/add--v1.png" />
+                    ),
+                  },
+                  {
+                    title: "View Bank Details",
+                    itemId: "/editBank",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/ios-filled/20/000000/merchant-account.png" />
+                    ),
+                  },
+                ],
+              },
             ]}
           />
         ) : (

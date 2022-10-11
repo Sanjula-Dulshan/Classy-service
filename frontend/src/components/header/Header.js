@@ -49,10 +49,14 @@ export default function Header() {
 
         <ul style={transForm}>
           <li>
-            <Link className="header-al" to="/allServices">
-              {" "}
-              Home
-            </Link>
+            {iscustomer ? (
+              <Link className="header-al" to="/allServices">
+                {" "}
+                Home
+              </Link>
+            ) : (
+              ""
+            )}
           </li>
 
           <li>
@@ -60,6 +64,16 @@ export default function Header() {
               <Link className="header-al" to="/wishlist">
                 {" "}
                 My Wishlist
+              </Link>
+            ) : (
+              ""
+            )}
+          </li>
+          <li>
+            {iscustomer ? (
+              <Link className="header-al" to="/viewOrder">
+                {" "}
+                My orders
               </Link>
             ) : (
               ""
