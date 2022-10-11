@@ -27,6 +27,7 @@ export default function AllServices() {
 
       .then((res) => {
         setServices(res.data);
+        console.log("30", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -76,8 +77,17 @@ export default function AllServices() {
   };
 
   const setData = (data) => {
-    let { title, description, category, location, fee, phone, userEmail } =
-      data;
+    let {
+      title,
+      description,
+      category,
+      location,
+      fee,
+      phone,
+      userEmail,
+      serviceProviderEmail,
+      image,
+    } = data;
     localStorage.setItem("title", title);
     localStorage.setItem("description", description);
     localStorage.setItem("category", category);
@@ -85,6 +95,8 @@ export default function AllServices() {
     localStorage.setItem("fee", fee);
     localStorage.setItem("phone", phone);
     localStorage.setItem("userEmail", userEmail);
+    localStorage.setItem("serviceProviderEmail", serviceProviderEmail);
+    localStorage.setItem("image", image);
 
     console.log(data);
   };

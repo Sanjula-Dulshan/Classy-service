@@ -67,11 +67,9 @@ const userCtrl = {
       if (check)
         return res.status(400).json({ msg: "This email already exists." });
       if (checknic)
-        return res
-          .status(400)
-          .json({
-            msg: "There is an existing account under your NIC number!.",
-          });
+        return res.status(400).json({
+          msg: "There is an existing account under your NIC number!.",
+        });
       const newUser = new Users({
         name,
         email,
@@ -144,7 +142,6 @@ const userCtrl = {
       }).select("-password");
 
       res.json(user);
-      console.log(user);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

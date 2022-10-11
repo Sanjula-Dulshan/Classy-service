@@ -26,6 +26,17 @@ const feedbackCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  //get all feedbacks by email of service provider
+  getFeedbacksByEmail: async (req, res) => {
+    try {
+      const feedbacks = await Feedback.find({ email: req.params.email });
+
+      res.status(200).json(feedbacks);
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
   updateFeedback: async (req, res) => {
     try {
       const { rating, comment } = req.body;

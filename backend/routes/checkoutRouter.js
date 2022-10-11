@@ -15,6 +15,18 @@ checkoutRouter.get("/", CheckoutCtrl.getCheckouts);
 //Get all orders by user email
 checkoutRouter.get("/:userEmail", CheckoutCtrl.getAllOrders);
 
+//Get all orders by service provider email
+checkoutRouter.get(
+  "/serviceProvider/:serviceProviderEmail",
+  CheckoutCtrl.getOrdersByServiceProviderEmail
+);
+
+//get feedbacks
+checkoutRouter.get(
+  "/feedback/:serviceProviderEmail",
+  CheckoutCtrl.getFeedbacks
+);
+
 //Update checkout
 // checkoutRouter.put("/:id", CheckoutCtrl.updateCheckout);
 

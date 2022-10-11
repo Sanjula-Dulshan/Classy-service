@@ -13,6 +13,7 @@ import RiseLoader from "react-spinners/RiseLoader";
 import { useNavigate } from "react-router-dom";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "./ratings/rstyle.css";
+import generatePDF from "./MyOrderReport";
 
 import Sidebar from "./Sidebar";
 
@@ -28,9 +29,59 @@ export default function OrderList() {
   const [orderID, setOrderID] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
+  const [feedback, setFeedbacks] = useState([]);
+  const [rate, setRate] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [updateID, setUpdateID] = useState("");
+
+  const [onEdit, setOnEdit] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const { email } = auth.user;
+
+    axios
+      .get(`/orders/${email}`)
+      .then((res) => {
+        setOrders(res.data);
+        console.log("res.data: ", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [auth.user, loading]);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get("/feedback/")
+
+        .then((res) => {
+          setFeedbacks(res.data);
+          setRate(res.data.rating);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+    if (onEdit) {
+      feedback.forEach((feedbackData) => {
+        if (feedbackData._id === updateID) {
+          setReview(feedbackData);
+
+          console.log("feedback ", feedbackData);
+        }
+      });
+    }
+  }, [loading, onEdit]);
   const handleChangeInput = (e) => {
     console.log("e.target: ", e.target);
     const { name, value } = e.target;
@@ -72,6 +123,7 @@ export default function OrderList() {
 
         setModal(false);
         setLoading(false);
+        setOnEdit(false);
         //window.location.reload(false);
       });
     } catch (err) {
@@ -84,58 +136,23 @@ export default function OrderList() {
     setModal(!modal);
   };
 
-  useEffect(() => {
-    const { email } = auth.user;
-
-    axios
-      .get(`/orders/${email}`)
-      .then((res) => {
-        setOrders(res.data);
-        console.log("res.data: ", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [auth.user, loading]);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
-
   //rating
   const ratings = {
     size: 20,
     count: 5,
     color: "black",
     activeColor: "red",
-    value: 0,
+    value: review.rating,
+
     a11y: true,
     emptyIcon: <i className="far fa-star" />,
     halfIcon: <i className="fa fa-star-half-alt" />,
     filledIcon: <i className="fa fa-star" />,
+
     onChange: (newValue) => {
       setReview({ ...review, rating: newValue });
     },
   };
-
-  //get all feedbacks
-  const [feedback, setFeedbacks] = useState([]);
-  const [rate, setRate] = useState(0);
-  useEffect(() => {
-    axios
-      .get("/feedback/")
-
-      .then((res) => {
-        setFeedbacks(res.data);
-        setRate(res.data.rating);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [loading]);
 
   const handleClose = () => {
     setIsOpen(!isOpen);
@@ -169,54 +186,44 @@ export default function OrderList() {
 
   const toggleEdit = (_id) => {
     setUpdateID(_id);
+    setOnEdit(true);
     setModal(!modal);
   };
-  //update feedback
-  const [update, setUpdate] = useState(false);
-  const [updateID, setUpdateID] = useState("");
-  const [updateRating, setUpdateRating] = useState(0);
-  const [updateComment, setUpdateComment] = useState("");
-  const [onEdit, setOnEdit] = useState(false);
-
-  const onUpdate = (_id) => {
-    setUpdate(true);
-    setUpdateID(_id);
-  };
 
   //update feedback
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    const newFeedback = {
-      rating: updateRating,
-      comment: updateComment,
-    };
-
+  const handleUpdate = async () => {
     try {
-      await axios.put(`/feedback/${updateID}`, newFeedback);
+      setLoading(true);
+      await axios.put(`/feedback/${updateID}`, review).then(() => {
+        Store.addNotification({
+          title: "Feedback Updated Successfully",
+          message: "Thank you for your feedback",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          type: "success",
+          insert: "top",
+          container: "top-right",
 
-      Store.addNotification({
-        title: "Feedback Updated Successfully",
-        message: "Thank you for your feedback",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        type: "success",
-        insert: "top",
-        container: "top-right",
+          dismiss: {
+            duration: 1500,
+            onScreen: true,
+            showIcon: true,
+          },
 
-        dismiss: {
-          duration: 1500,
-          onScreen: true,
-          showIcon: true,
-        },
-
-        width: 400,
+          width: 400,
+        });
       });
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1500);
+      setModal(false);
+      setLoading(false);
     } catch (err) {
       alert(err);
     }
+  };
+
+  const handleCancel = () => {
+    setModal(false);
+    setOnEdit(false);
+    setReview(initialState);
   };
 
   return (
@@ -228,6 +235,11 @@ export default function OrderList() {
         </div>
       ) : (
         <div>
+          <div className="report">
+            <button onClick={() => generatePDF(orders)}>
+              Download My Orders
+            </button>
+          </div>
           <div className="mt-4 container">
             <div style={{ position: "absolute", zIndex: "704" }}>
               <ConfirmBox // Note : in this example all props are required
@@ -264,7 +276,7 @@ export default function OrderList() {
                   <div className="row g-0 ">
                     <div className="col-md-2">
                       <img
-                        src={orderData.image.url}
+                        // src={orderData.image.url}
                         className="img mt-2"
                         style={{ height: "60%", width: "80%" }}
                       />
@@ -350,7 +362,7 @@ export default function OrderList() {
                                                     color: "white",
                                                   }}
                                                   onClick={() =>
-                                                    toggle(orderData._id)
+                                                    toggleEdit(feedbackData._id)
                                                   }
                                                 >
                                                   <FontAwesomeIcon
@@ -440,7 +452,15 @@ export default function OrderList() {
               toggle={() => setModal(!modal)}
             >
               <ModalHeader toggle={() => setModal(!modal)}>
-                <h5>Add Feedback</h5>
+                {onEdit ? (
+                  <div>
+                    <h5>Update Feedback</h5>
+                  </div>
+                ) : (
+                  <div>
+                    <h5>Add Feedback</h5>
+                  </div>
+                )}
               </ModalHeader>
 
               <ModalBody>
@@ -448,10 +468,14 @@ export default function OrderList() {
                   <div className="form-group">
                     <label>Title: </label>
                     <div className="rating">
+                      {console.log("rating: ", review.rating)}
+
                       <ReactStars
-                        {...ratings}
-                        name="rating"
-                        onchange={handleChangeInput}
+                        {...{
+                          size: 20,
+                          value: review.rating,
+                          edit: false,
+                        }}
                       />
                     </div>
                   </div>
@@ -461,6 +485,7 @@ export default function OrderList() {
                       className="form-control"
                       rows="3"
                       name="comment"
+                      value={review.comment}
                       onChange={handleChangeInput}
                     />
                   </div>
@@ -470,19 +495,34 @@ export default function OrderList() {
                 <button
                   className="btn btn-danger"
                   data-bs-dismiss="modal"
-                  // onClick={() => handleDelete(noteid)}
+                  onClick={handleCancel}
                 >
-                  <i className="fas fa-trash-alt"></i>&nbsp;Delete
+                  <i className=""></i>&nbsp;Cancel
                 </button>
 
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  data-bs-dismiss="modal"
-                  onClick={(e) => handleFeedback(e)}
-                >
-                  Save
-                </button>
+                {onEdit ? (
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      data-bs-dismiss="modal"
+                      onClick={handleUpdate}
+                    >
+                      Update
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={(e) => handleFeedback(e)}
+                    >
+                      Save
+                    </button>
+                  </div>
+                )}
               </ModalFooter>
             </Modal>
           </div>
