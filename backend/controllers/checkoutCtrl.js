@@ -24,6 +24,7 @@ const checkoutCtrl = {
   },
 
   createCheckout: async (req, res) => {
+    console.log("In ctrl ", req.body);
     try {
       const {
         uid,
@@ -60,13 +61,17 @@ const checkoutCtrl = {
         serviceProviderEmail,
         serviceTitle,
         amount,
+
         image,
       });
 
       await newCheckout.save();
-
-      res.json({ msg: "Checkout added successfully!" });
+      console.log("save success");
+      //print the id of the new checkout
+      console.log(newCheckout._id);
+      res.json({ msg: "Checkout added successfully!", id: newCheckout._id });
     } catch (err) {
+      console.log(err.message);
       return res.status(500).json({ msg: err.message });
     }
   },
@@ -177,6 +182,7 @@ const checkoutCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   updateFeedbackStatus: async (req, res) => {
     try {
       const { id } = req.params;

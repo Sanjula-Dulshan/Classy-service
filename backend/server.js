@@ -17,6 +17,7 @@ import payRouter from "./routes/payMethodRouter.js";
 import checkoutRouter from "./routes/checkoutRouter.js";
 import feedbackRouter from "./routes/feedbackRoute.js";
 import bankPayRouter from "./routes/bankPayRouter.js";
+import cardPayRouter from "./routes/cardPayRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -38,6 +39,7 @@ app.use("/checkout", checkoutRouter);
 app.use("/orders", checkoutRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/bankpay", bankPayRouter);
+app.use("/cardpay", cardPayRouter);
 
 // Connect to MongoDB
 mongoose

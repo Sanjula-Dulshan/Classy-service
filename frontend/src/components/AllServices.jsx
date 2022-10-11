@@ -102,6 +102,7 @@ export default function AllServices() {
   };
 
   const setData = (data) => {
+
     let {
       title,
       description,
@@ -113,6 +114,8 @@ export default function AllServices() {
       serviceProviderEmail,
       image,
     } = data;
+
+    
     localStorage.setItem("title", title);
     localStorage.setItem("description", description);
     localStorage.setItem("category", category);
@@ -120,11 +123,18 @@ export default function AllServices() {
     localStorage.setItem("fee", fee);
     localStorage.setItem("phone", phone);
     localStorage.setItem("userEmail", userEmail);
+
     localStorage.setItem("serviceProviderEmail", serviceProviderEmail);
     localStorage.setItem("image", image);
 
+    localStorage.setItem("image", image.url);
+    localStorage.setItem("public_id",image.public_id);
+
+
     console.log(data);
   };
+
+
 
   return (
     <div>
@@ -182,7 +192,7 @@ export default function AllServices() {
                           data-tip="Add to Wishlist"
                         />
                       </a>
-                      <ReactTooltip globalEventOff="click" />
+                      
                     </div>
 
                     <img
@@ -207,12 +217,13 @@ export default function AllServices() {
                         <td>
                           <Link
                             className="ui button"
-                            to={"/addBank"}
+                            to={"/checkout"}
                             data-tip="Click to Buy service"
                             style={{
                               backgroundColor: "#FEA82F",
                               color: "black",
                             }}
+                            onClick={() => setData(data)}
                           >
                             Buy
                           </Link>
@@ -236,8 +247,13 @@ export default function AllServices() {
                     </div>
                   </div>
                 </div>
+
+
               ))}
-           
+
+              <ReactTooltip />
+
+
             </div>
           )}
         </div>

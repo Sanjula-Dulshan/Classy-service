@@ -60,7 +60,9 @@ export default function ViewService() {
       ) : (
         <div className="container ">
           <div className="mt-5 ">
+
             <Link to="/allServices">
+
               <i
                 className="fas fa-arrow-circle-left"
                 style={{

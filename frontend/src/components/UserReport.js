@@ -41,11 +41,11 @@ const generatePDF = (report) => {
     tableRows.push(reportData);
   });
 
-  // startY is basically margin-top
-//   var img = new Image();
-//   img.src =
-//     "https://res.cloudinary.com/waste123/image/upload/v1663836090/u1icfoijw55ertgv7rvo.png";
-//   doc.addImage(img, "png", 10, 10, 180, 50);
+  //startY is basically margin-top
+  var img = new Image();
+  img.src =
+    "https://res.cloudinary.com/dl99x/image/upload/v1665252716/Report_image_t36ow7.jpg";
+  doc.addImage(img, "jpg", 3, 3, 200, 60);
 
   //doc.autoTable(tableColumn, tableRows, { startY: 70 });
 
