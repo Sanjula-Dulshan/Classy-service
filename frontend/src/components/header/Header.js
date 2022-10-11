@@ -14,9 +14,9 @@ export default function Header() {
       await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
       localStorage.clear();
-      window.location.href = "/";
+      window.location.href = "/login";
     } catch (err) {
-      window.location.href = "/";
+      window.location.href = "/login";
     }
   };
 
@@ -26,7 +26,7 @@ export default function Header() {
         <Link to="/profile" className="avatar">
           <img src={user.avatar} alt="" />{" "}
           <li>
-            <Link className="header-al" to="/" onClick={handleLogout}>
+            <Link className="header-al" to="/login" onClick={handleLogout}>
               Logout
             </Link>
           </li>
