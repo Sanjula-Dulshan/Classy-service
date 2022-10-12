@@ -34,7 +34,7 @@ const userSchema = new Schema({
     },
     avatar: {
         type: String,
-        default:"https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png"
+        default:"https://res.cloudinary.com/dl99x/image/upload/v1665520140/avatar_cugq40_osziik.png"
     },
     savedDate: {
         type: String
