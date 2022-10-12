@@ -1,21 +1,28 @@
 import Feedback from "../models/feedbackModel.js";
+import mongodb from "mongodb";
+const ObjectId = mongodb.ObjectId
 
 const feedbackCtrl = {
   createFeedback: async (req, res) => {
     try {
       const { rating, comment, orderID } = req.body;
+      const oId = new ObjectId(orderID)
+    
+
 
       const newFeedback = new Feedback({
         rating,
         comment,
-        orderID,
+        orderID:oId,
       });
 
       await newFeedback.save();
+    
 
       res.status(200).json({ msg: "Feedback created" });
     } catch (err) {
-      return res.status(500).json({ msg: err.message });
+      res.status(500).json({ msg: err.message });
+      console.log("err: ",err)
     }
   },
   getAllFeedbacks: async (req, res) => {

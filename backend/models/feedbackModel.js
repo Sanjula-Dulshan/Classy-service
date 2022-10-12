@@ -12,7 +12,7 @@ const feedbackSchema = new Schema(
       required: true,
     },
     orderID: {
-      type: String,
+      type: Object,
       required: true,
     },
   },

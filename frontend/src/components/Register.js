@@ -92,7 +92,7 @@ function Register() {
           <label className="subLable2">Already a member?</label>
         </div>
         <br />
-        <Link to="/">
+        <Link to="/login">
           <button type="submit" className="side-btn">
             Login Here
           </button>
