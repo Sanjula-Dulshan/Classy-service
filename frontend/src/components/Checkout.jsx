@@ -9,9 +9,13 @@ import { confirmAlert } from "react-confirm-alert";
 import { Store } from "react-notifications-component";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useSelector } from "react-redux";
+import { Hint } from 'react-autocomplete-hint';
+import cities from './constants.js';
 
 export default function Checkout() {
   const auth = useSelector((state) => state.auth);
+
+  const hintArray = [ "Matara", "Galle", "Hambanthota"]
 
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("yasanthamax@gmail.com");
@@ -264,14 +268,16 @@ export default function Checkout() {
                     <label htmlFor="location" className="form-label">
                       City
                     </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      className="form-control thick-border"
-                      id="lastName"
-                      required
-                      onChange={(e) => setCity(e.target.value)}
-                    />
+                    <Hint options={cities} allowTabFill>
+                      <input
+                        type="text"
+                        name="lastName"
+                        className="form-control thick-border"
+                        id="lastName"
+                        required
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                    </Hint>
                   </div>
                 </div>
 

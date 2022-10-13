@@ -8,6 +8,8 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import { confirmAlert } from "react-confirm-alert";
 import { Store } from "react-notifications-component";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { Hint } from "react-autocomplete-hint";
+import cities from "./constants";
 
 export default function BankPayment() {
   const [loading, setLoading] = useState(false);
@@ -203,6 +205,7 @@ export default function BankPayment() {
                     <label htmlFor="location" className="form-label">
                       Branch
                     </label>
+                    <Hint options={cities} allowTabFill>
                     <input
                       type="text"
                       name="branch"
@@ -211,6 +214,7 @@ export default function BankPayment() {
                       required
                       onChange={(e) => setBranchName(e.target.value)}
                     />
+                    </Hint>
                   </div>
                 </div>
                 <label htmlFor="location" className="form-label" style={{paddingLeft:"15px", paddingTop:"15px"}}> Upload Deposit Slip</label>
