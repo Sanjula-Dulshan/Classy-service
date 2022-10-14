@@ -235,6 +235,12 @@
   padding: 0 10px;
 }
 
+.tr-card-column2 {
+  float: right;
+  width: 80%;
+  padding: 0 10px;
+}
+
 .card-row2 {
   margin: 0 -5px;
 }
@@ -272,9 +278,9 @@
 
 .t-list-tb-container {
   align-content: center;
-  margin-left: 10%;
+  margin-left: 0%;
   margin-top: 40px;
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .t-table {
@@ -395,4 +401,13 @@
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);      
+}
+
+.report-text {
+  display: flex;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+  margin-left: 2%;
+  margin-top: -2%;
 }

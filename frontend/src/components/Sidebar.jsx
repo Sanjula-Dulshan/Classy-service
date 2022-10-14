@@ -8,7 +8,7 @@ import "./sideBar.css";
 
 export default function Sidebar() {
   const auth = useSelector((state) => state.auth);
-  const { user, isLogged, isWorker, iscustomer } = auth;
+  const { user, isLogged, isWorker, iscustomer, isAdmin } = auth;
 
   const navigate = useNavigate();
   return (
@@ -149,7 +149,44 @@ export default function Sidebar() {
         ) : (
           ""
         )}
-      </>
+
+        {isAdmin ? (
+          <Navigation
+
+            // you can use your own router's api to get pathname
+            activeItemId="/management/members"
+            onSelect={({ itemId }) => {
+              navigate(itemId);
+              // maybe push to the route
+            }}
+
+            items={[
+              
+              {
+                title: "",
+                itemId: "#",
+                elemBefore: () => (
+                  <span className="fw-bold fs-5">Transactions</span>
+                ),
+                subNav: [
+                  {
+                    title: "View transactions",
+                    itemId: "/transactionreport",
+                    elemBefore: () => (
+                      <img src="https://img.icons8.com/ios-filled/20/000000/merchant-account.png" />
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        ) : (
+          ""
+        )}
+
+        </>
+
+   
     </div>
   );
 }

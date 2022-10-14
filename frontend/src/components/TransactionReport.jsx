@@ -55,7 +55,7 @@ export default function TransactionReport() {
   return (
     <div className="card-row2">
       <Sidebar />
-      <div className="card-column2">
+      <div className="tr-card-column2">
         <div>
           <label className="title">Transaction History</label>
 
@@ -91,6 +91,23 @@ export default function TransactionReport() {
 
 
           <div className="t-list-tb-container">
+          <div className="bg-card">
+
+             {/* display no of records in request */} <br/>
+             <label className="report-text ">Total Records: <div style={{color:"blue"}}>{request.length} </div> </label>< br />
+
+            <label className="report-text ">Total Income: <div style={{color:"#03a311"}}>{request.map((data)=> Number(data.amount.toString().replace("$",""))).reduce((prev,curr)=>prev+curr,0)}.00 </div></label> < br />
+           
+            {/* display total for card method */}
+            <label className="report-text ">Total Card Payments: <div style={{color:"#c49704"}}>Rs.{request.filter((data)=>data.paymentMethod=="card").map((data)=> Number(data.amount.toString().replace("$",""))).reduce((prev,curr)=>prev+curr,0)}.00 </div> </label>< br />
+            {/* display total for bank method */}
+            <label className="report-text ">Total Bank Payments: <div style={{color:"#c49704"}}>Rs.{request.filter((data)=>data.paymentMethod=="bank").map((data)=> Number(data.amount.toString().replace("$",""))).reduce((prev,curr)=>prev+curr,0)}.00 </div> </label>< br />
+            {/* display total for cod  method */}
+            <label className="report-text ">Total COD Payments: <div style={{color:"#c49704"}}>Rs.{request.filter((data)=>data.paymentMethod=="Cash On Delivery").map((data)=> Number(data.amount.toString().replace("$",""))).reduce((prev,curr)=>prev+curr,0)}.00 </div>  </label>< br />
+
+            {/* display total refunds*/}
+            <label className="report-text ">Total Refunds: <div style={{color:"red"}}>Rs.{request.filter((data)=>data.orderStatus=="reject").map((data)=> Number(data.amount.toString().replace("$",""))).reduce((prev,curr)=>prev+curr,0)}.00 </div> </label>
+          </div>  
             <LoadingOverlay active={loading} spinner={<PropagateLoader />}>
               <table className="t-table table-striped table-hover">
                 <thead>
@@ -99,7 +116,7 @@ export default function TransactionReport() {
                     <th scope="col">Transaction ID</th>
                     <th scope="col">Reciver</th>
                     <th scope="col">Timestamp</th>
-                    <th scope="col">Payment Method</th>
+                    <th scope="col">Payment Status</th>
                     <th scope="col">Amount</th>
                   </tr>
                 </thead>

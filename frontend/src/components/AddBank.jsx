@@ -8,6 +8,8 @@ import PropagateLoader from 'react-spinners/PropagateLoader';
 import { confirmAlert } from 'react-confirm-alert';
 import { Store } from 'react-notifications-component'; 
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import { Hint } from 'react-autocomplete-hint';
+import cities from './constants.js';
 
 
 export default function AddBank() {
@@ -95,7 +97,7 @@ export default function AddBank() {
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control thick-border"
                     name="acc_name"
                     id="acc_name"
                     required
@@ -111,7 +113,7 @@ export default function AddBank() {
                   </label>
                   <input
                     type="number"
-                    className="form-control"
+                    className="form-control thick-border"
                     name="acc_number"
                     id="acc_number"
                     required
@@ -128,8 +130,9 @@ export default function AddBank() {
                   </label>
                   <select
                     name="bank"
-                    className="form-control"
+                    className="form-control thick-border"
                     onChange={(e) => setBankName(e.target.value)}
+                    required
                   >
                     <option value="">Select a category</option>
                     <option value="Commercial Bank of Ceylon">Commercial Bank of Ceylon</option>
@@ -147,14 +150,16 @@ export default function AddBank() {
                   <label htmlFor="location" className="form-label">
                     Branch
                   </label>
+                  <Hint options={cities} allowTabFill>
                   <input
                     type="text"
                     name="branch" 
-                    className="form-control"
+                    className="form-control thick-border"
                     id="branch"
                     required
                     onChange={(e) => setBranchName(e.target.value)}
                   />
+                  </Hint>
                 </div>
               </div>
 
