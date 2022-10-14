@@ -61,6 +61,7 @@ const servicesCtrl = {
   getServicesByCategory: async (req, res) => {
     try {
       const { category } = req.params;
+      console.log("category: ", category);
 
       const services = await Services.find({ category });
 

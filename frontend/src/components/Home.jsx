@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 
 export default function Home() {
   const auth = useSelector((state) => state.auth);
-  const { isLogged } = auth;
+  console.log("auth: ", auth);
+  const { isLogged, isWorker, iscustomer } = auth;
   return (
     <div>
       <div className="container-fluid banner">
@@ -19,9 +20,15 @@ export default function Home() {
             </p>
             {isLogged ? (
               <div>
-                <a href="/allServices" className="btn btn-md text-center">
-                  GET STARTED
-                </a>
+                {iscustomer ? (
+                  <a href="/allServices" className="btn btn-md text-center">
+                    GET STARTED
+                  </a>
+                ) : (
+                  <a href="/userServices" className="btn btn-md text-center">
+                    GET STARTED
+                  </a>
+                )}
               </div>
             ) : (
               <div>

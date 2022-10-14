@@ -21,24 +21,13 @@ export default function AllServices() {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-
-    axios
-      .get("/services/")
-
-      .then((res) => {
-        setServices(res.data);
-        console.log("30", res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, [param]);
 
   useEffect(() => {
     console.log("param.category: ", param.category);
 
     if (param.category) {
-      const getServices = async () => {
+      const getServicesByCategory = async () => {
         const res = await axios.get(`/services/filter/${param.category}`);
         setServices(res.data);
         if (res.data.length === 0) {
@@ -46,8 +35,22 @@ export default function AllServices() {
         } else {
           setFilterEmpty(false);
         }
-        console.log("27 ", res);
+        console.log("getServicesByCategory ", res.data);
       };
+
+      getServicesByCategory();
+    } else {
+      const getServices = async () => {
+        const res = await axios.get(`/services`);
+        setServices(res.data);
+        if (res.data.length === 0) {
+          setFilterEmpty(true);
+        } else {
+          setFilterEmpty(false);
+        }
+        console.log("getServices ", res.data);
+      };
+
       getServices();
     }
   }, [param]);

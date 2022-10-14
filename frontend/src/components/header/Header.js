@@ -14,9 +14,9 @@ export default function Header() {
       await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (err) {
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   };
 
@@ -26,7 +26,7 @@ export default function Header() {
         <Link to="/profile" className="avatar">
           <img src={user.avatar} alt="" />{" "}
           <li>
-            <Link className="header-al" to="/login" onClick={handleLogout}>
+            <Link className="header-al" to="/" onClick={handleLogout}>
               Logout
             </Link>
           </li>
@@ -48,19 +48,6 @@ export default function Header() {
         </h1>
 
         <ul style={transForm}>
-        <li>
-            <Link className="header-al" to="#">
-              {" "}
-              About
-            </Link>
-          </li>
-          <li>
-            <Link className="header-al" to="#">
-              {" "}
-              Contact Us
-            </Link>
-          </li>
-
           <li>
             {iscustomer ? (
               <Link className="header-al" to="/allServices">
@@ -92,6 +79,7 @@ export default function Header() {
               ""
             )}
           </li>
+
           <li>
             {isWorker ? (
               <Link className="header-al" to="/userServices">
@@ -112,7 +100,7 @@ export default function Header() {
               ""
             )}
           </li>
-         
+
           <li>
             {isAdmin ? (
               <Link className="header-al" to="/admin">
@@ -122,6 +110,19 @@ export default function Header() {
             ) : (
               ""
             )}
+          </li>
+
+          <li>
+            <Link className="header-al" to="#">
+              {" "}
+              About
+            </Link>
+          </li>
+          <li>
+            <Link className="header-al" to="#">
+              {" "}
+              Contact Us
+            </Link>
           </li>
         </ul>
       </div>
