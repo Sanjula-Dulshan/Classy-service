@@ -84,7 +84,7 @@ export default function CardPay() {
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control thick-border"
                     name="acc_name"
                     id="acc_name"
                     required
@@ -99,7 +99,7 @@ export default function CardPay() {
                     </label>
                     <input
                       type="number"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="acc_number"
                       id="acc_number"
                       required
@@ -115,7 +115,7 @@ export default function CardPay() {
                     </label>
                     <input
                       type="tel"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="bank_name"
                       id="bank_name"
                       pattern="[0-9]{3}"
@@ -132,7 +132,7 @@ export default function CardPay() {
                     <input
                       type="month"
                       name="branch"
-                      className="form-control"
+                      className="form-control thick-border"
                       id="branch"
                       required
                       onChange={(e) => setExpiryDate(e.target.value)}
@@ -146,7 +146,7 @@ export default function CardPay() {
                       <div>
                         <input
                           type="checkbox"
-                          className="form-check-input"
+                          className="form-check-input thick-border"
                           name="needBuyerAddress"
                           id="exampleCheck1"
                           onChange={(e) => setIsAgree(e.target.checked)}

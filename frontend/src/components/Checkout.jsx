@@ -9,9 +9,13 @@ import { confirmAlert } from "react-confirm-alert";
 import { Store } from "react-notifications-component";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useSelector } from "react-redux";
+import { Hint } from 'react-autocomplete-hint';
+import cities from './constants.js';
 
 export default function Checkout() {
   const auth = useSelector((state) => state.auth);
+
+  const hintArray = [ "Matara", "Galle", "Hambanthota"]
 
   const [loading, setLoading] = useState(false);
   const [uid, setUid] = useState("yasanthamax@gmail.com");
@@ -123,7 +127,7 @@ export default function Checkout() {
                     <input
                       name="fname"
                       type="text"
-                      className="form-control"
+                      className="form-control thick-border"
                       onChange={(e) => setFirstName(e.target.value)}
                     ></input>
                   </div>
@@ -134,7 +138,7 @@ export default function Checkout() {
                     <input
                       type="text"
                       name="lastName"
-                      className="form-control"
+                      className="form-control thick-border"
                       id="lastName"
                       required
                       onChange={(e) => setLastName(e.target.value)}
@@ -149,7 +153,7 @@ export default function Checkout() {
                     </label>
                     <input
                       type="email"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="email"
                       id="email"
                       required
@@ -165,7 +169,7 @@ export default function Checkout() {
                     </label>
                     <input
                       type="tel"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="phone"
                       id="phone"
                       required
@@ -185,7 +189,7 @@ export default function Checkout() {
                     <input
                       name="fname"
                       type="date"
-                      className="form-control"
+                      className="form-control thick-border"
                       onChange={(e) => setDate(e.target.value)}
                     ></input>
                   </div>
@@ -196,7 +200,7 @@ export default function Checkout() {
                     <input
                       type="time"
                       name="lastName"
-                      className="form-control"
+                      className="form-control thick-border"
                       id="lastName"
                       required
                       onChange={(e) => setTime(e.target.value)}
@@ -211,7 +215,7 @@ export default function Checkout() {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="ad1"
                       id="ad1"
                       required
@@ -227,7 +231,7 @@ export default function Checkout() {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="ad2"
                       id="ad2"
                       required
@@ -244,9 +248,11 @@ export default function Checkout() {
                     <select
                       name="fname"
                       type="text"
-                      className="form-control"
+                      className="form-control thick-border"
                       onChange={(e) => setProvincee(e.target.value)}
+                      required
                     >
+                      <option value="">Select One</option>
                       <option value="Western">Western</option>
                       <option value="Southern">Southern</option>
                       <option value="Central">Central</option>
@@ -262,14 +268,16 @@ export default function Checkout() {
                     <label htmlFor="location" className="form-label">
                       City
                     </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      className="form-control"
-                      id="lastName"
-                      required
-                      onChange={(e) => setCity(e.target.value)}
-                    />
+                    <Hint options={cities} allowTabFill>
+                      <input
+                        type="text"
+                        name="lastName"
+                        className="form-control thick-border"
+                        id="lastName"
+                        required
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                    </Hint>
                   </div>
                 </div>
 

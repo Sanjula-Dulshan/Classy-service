@@ -8,6 +8,8 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 import { confirmAlert } from "react-confirm-alert";
 import { Store } from "react-notifications-component";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { Hint } from "react-autocomplete-hint";
+import cities from "./constants";
 
 export default function BankPayment() {
   const [loading, setLoading] = useState(false);
@@ -128,9 +130,9 @@ export default function BankPayment() {
   return (
     <div className="b-card-row">
       <Sidebar />
-      <div className="b-card-column">
+      <div className="b-card-column ">
         <LoadingOverlay active={loading} spinner={<PropagateLoader />}>
-          <div className="bg-card">
+          <div className="bg-card ">
             <label className="title">Bank Deposit</label>
             <div className="add_bank">
               <form onSubmit={handleSubmit}>
@@ -141,7 +143,7 @@ export default function BankPayment() {
                     </label>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="inv_number"
                       id="inv_number"
                       required
@@ -157,7 +159,7 @@ export default function BankPayment() {
                     </label>
                     <input
                       type="date"
-                      className="form-control"
+                      className="form-control thick-border"
                       name="acc_number"
                       id="acc_number"
                       required
@@ -173,8 +175,9 @@ export default function BankPayment() {
                     </label>
                     <select
                       name="bank"
-                      className="form-control"
+                      className="form-control thick-border"
                       onChange={(e) => setBankName(e.target.value)}
+                      required
                     >
                       <option value="">Select a category</option>
                       <option value="Commercial Bank of Ceylon">
@@ -202,23 +205,26 @@ export default function BankPayment() {
                     <label htmlFor="location" className="form-label">
                       Branch
                     </label>
+                    <Hint options={cities} allowTabFill>
                     <input
                       type="text"
                       name="branch"
-                      className="form-control"
+                      className="form-control thick-border"
                       id="branch"
                       required
                       onChange={(e) => setBranchName(e.target.value)}
                     />
+                    </Hint>
                   </div>
                 </div>
-
-                <div className="create_service">
-                  <div className="upload">
+                <label htmlFor="location" className="form-label" style={{paddingLeft:"15px", paddingTop:"15px"}}> Upload Deposit Slip</label>
+                <div className="create_service thick-border">
+                
+                  <div className="b-upload">
                     <input
                       type="file"
                       name="file"
-                      id="file_up"
+                      id="b-file_up"
                       onChange={handleUpload}
                     />
                     {loading ? (

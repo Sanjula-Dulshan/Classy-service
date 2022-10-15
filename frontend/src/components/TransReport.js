@@ -18,7 +18,7 @@ const generatePDF = (report) => {
 
   // define the columns we want and their titles
 
-  const tableColumn = ["No", "Transaction ID", "Reciver","Payment status" ,"Amount"];
+  const tableColumn = ["No", "Transaction ID", "Reciver","Payment Method", "Payment Status" ,"Amount"];
 
   // define an empty array of rows
 
@@ -34,6 +34,7 @@ const generatePDF = (report) => {
       report._id,
       report.serviceProviderEmail,
       report.paymentMethod,
+      report.orderStatus,
       report.amount,
 
       // called date-fns to format the date on the report

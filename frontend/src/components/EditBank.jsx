@@ -8,6 +8,7 @@ import { confirmAlert } from "react-confirm-alert";
 import { Store } from "react-notifications-component";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Sidebar from "./Sidebar";
+import NotFoundContent from "./utils/NotFound/NotFoundContent";
 
 export default function EditBank() {
   const [loading, setLoading] = useState(false);
@@ -151,23 +152,12 @@ export default function EditBank() {
     });
   };
 
-  // const handleDelete = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
+  if (accName === undefined) {
+    return (
+      <><Sidebar /><NotFoundContent /></>
+    )
+  }
 
-  //   //confirm delete
-  //   if (window.confirm("Are you sure you want to delete this bank account?")) {
-
-  //     try {
-  //       await axios.delete("/bank/"+id);
-  //       alert("Bank account deleted successfully");
-  //       window.location.replace("/");
-  //     } catch (err) {
-  //       alert(err);
-  //     }
-  //   }
-  //   setLoading(false);
-  // }
 
   return (
     <div>

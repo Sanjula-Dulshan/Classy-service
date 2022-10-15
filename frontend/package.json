@@ -18,6 +18,7 @@
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.25",
         "react": "^18.2.0",
+        "react-autocomplete-hint": "^2.0.0",
         "react-bootstrap": "^2.5.0",
         "react-confirm-alert": "^3.0.6",
         "react-datepicker": "^4.8.0",
