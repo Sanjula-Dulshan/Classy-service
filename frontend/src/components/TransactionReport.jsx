@@ -115,6 +115,7 @@ export default function TransactionReport() {
                     <th scope="col">#</th>
                     <th scope="col">Transaction ID</th>
                     <th scope="col">Reciver</th>
+                    <th scope="col">Buyer</th>
                     <th scope="col">Timestamp</th>
                     <th scope="col">Payment Status</th>
                     <th scope="col">Amount</th>
@@ -127,6 +128,7 @@ export default function TransactionReport() {
                        <th scope="row">{index+1}</th>
                        <td>{data._id}</td>
                        <td>{ data.serviceProviderEmail}</td>
+                       <td>{ data.uid}</td>
                        <td>{ data.createdAt}</td>
                        <td>{ data.orderStatus}</td>   
                        <td>
