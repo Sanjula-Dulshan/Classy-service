@@ -137,7 +137,7 @@ export default function EditBank() {
                 });
                 //wait for 1.5 seconds and redirect to the home page
                 setTimeout(() => {
-                  window.location.href = "/";
+                  window.location.href = "/userServices";
                 }, 1500);
               })
               .catch((err) => {
