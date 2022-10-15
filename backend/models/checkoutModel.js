@@ -92,6 +92,7 @@ const checkoutSchema = new Schema(
 
     paymentMethod: {
       type: String,
+      default: "Cash on Delivery",
     },
   },
   {
