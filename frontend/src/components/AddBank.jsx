@@ -71,7 +71,7 @@ export default function AddBank() {
 
   const cancel = (e) => {
     e.preventDefault();
-    window.location.href = "/";
+    window.location.href = "/userServices";
   };
 
   
