@@ -23,9 +23,9 @@ Node JS<br>
 ## How to get started with your app
 
 ### Prerequisites
-1.
-2.
-3.
+1. Must have an Installed [Node.js](https://nodejs.org/en/) to your local machine
+2. Must have a [MongoDB](https://www.mongodb.com/) Account
+3. Must have a [Cloudanary](https://www.cloudimage.io/en/home) Account
 
 ### Procedure of setting up prerequisites and run the project
 
