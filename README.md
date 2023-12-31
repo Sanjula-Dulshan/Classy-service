@@ -52,9 +52,9 @@ Classy service is a portal which connect different types of service providers to
       CLOUD_API_KEY = 
       CLOUD_API_SECRET = 
       
-      ACTIVATION_TOKEN_SECRET = %Y/7jNMP;b_46Ja^L^^huX4:{Wax2WEbV?Ug6@$.Fuet)Qg4L7
-      ACCESS_TOKEN_SECRET = %Y/7jNMP;b_46Ja^L^^huX4:{Wax2W
-      REFRESH_TOKEN_SECRET = zDK:8wmFLU`tL>!.NLSh{GmGU`B%??)+M)cRP5q(Yw=P
+      ACTIVATION_TOKEN_SECRET = 
+      ACCESS_TOKEN_SECRET = 
+      REFRESH_TOKEN_SECRET = 
 
  
    ```
